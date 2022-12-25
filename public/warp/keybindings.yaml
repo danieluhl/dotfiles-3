@@ -1,0 +1,4 @@
+---
+"terminal:select_all_blocks": shift-cmd-A
+"input:clear_screen": shift-cmd-L
+"terminal:select_next_block": shift-cmd-down

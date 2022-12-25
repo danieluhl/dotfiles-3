@@ -1,0 +1,7 @@
+{
+  "parser": "babel",
+  "printWidth": 80,
+  "singleQuote": true,
+  "bracketSpacing": false,
+  "trailingComma": "es5"
+}

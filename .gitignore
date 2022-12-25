@@ -1,0 +1,8 @@
+public/config/gh
+.history
+*.sw
+*~
+wayfair
+local
+public/config/exercism
+

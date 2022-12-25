@@ -1,0 +1,92 @@
+[
+  {
+    "key": "cmd+alt+enter",
+    "command": "editor.action.openLink"
+  },
+  {
+    "key": "f8",
+    "command": "workbench.action.debug.continue",
+    "when": "inDebugMode"
+  },
+  {
+    "key": "ctrl+shift+cmd+space",
+    "command": "editor.emmet.action.matchingPair"
+  },
+  {
+    "key": "cmd+shift+n",
+    "command": "workbench.action.files.newUntitledFile"
+  },
+  {
+    "key": "ctrl+space",
+    "command": "editor.action.triggerSuggest",
+    "when": "editorHasCompletionItemProvider && editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "cmd+alt+u",
+    "command": "workbench.files.action.collapseExplorerFolders"
+  },
+  {
+    "key": "alt+shift+e",
+    "command": "eslint.executeAutofix"
+  },
+  {
+    "key": "ctrl+left",
+    "command": "subwordNavigation.cursorSubwordLeft",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+right",
+    "command": "subwordNavigation.cursorSubwordRight",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+left",
+    "command": "subwordNavigation.cursorSubwordLeftSelect",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+right",
+    "command": "subwordNavigation.cursorSubwordRightSelect",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+backspace",
+    "command": "subwordNavigation.deleteSubwordLeft",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+delete",
+    "command": "subwordNavigation.deleteSubwordRight",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+cmd+down",
+    "command": "editor.action.goToDeclaration"
+  },
+  {
+    "key": "alt+cmd+down",
+    "command": "-editor.action.goToDeclaration"
+  },
+  {
+    "key": "alt+space",
+    "command": "toggleSuggestionDetails",
+    "when": "suggestWidgetVisible && textInputFocus"
+  },
+  {
+    "key": "ctrl+space",
+    "command": "-toggleSuggestionDetails",
+    "when": "suggestWidgetVisible && textInputFocus"
+  },
+  {
+    "key": "ctrl+shift+cmd+space",
+    "command": "javascriptBooster.executeCodeMod"
+  },
+  {
+    "key": "alt+space",
+    "command": "javascriptBooster.extendSelection"
+  },
+  {
+    "key": "shift+alt+space",
+    "command": "javascriptBooster.shrinkSelection"
+  }
+]

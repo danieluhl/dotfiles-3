@@ -1,0 +1,66 @@
+# Compiled source #
+###################
+#*.com
+#*.class
+#*.dll
+#*.exe
+#*.o
+#*.so
+
+# VS Code #
+configjs.json
+.history/
+.vscode/
+
+# Packages #
+############
+## it's better to unpack these files and commit the raw source
+## git has its own built in compression methods
+#*.7z
+#*.dmg
+#*.gz
+#*.iso
+#*.jar
+#*.rar
+#*.tar
+#*.zip
+
+# Logs and databases #
+######################
+#*.log
+#*.sql
+#*.sqlite
+
+# OS generated files #
+######################
+#.DS_Store
+#.DS_Store?
+#._*
+#.Spotlight-V100
+#.Trashes
+#ehthumbs.db
+#Thumbs.db
+
+# Node + Grunt stuff
+.grunt/
+#bin
+junit/
+nbproject/
+_SpecRunner.html
+.treecache
+.scss_map
+Thumbs.db
+npm-debug.log
+raycast
+
+# Misc
+sftp-config.json
+.realsync
+.DS_Store
+
+# Cylance Files
+*.cyl
+
+# VIM users
+*.swp
+

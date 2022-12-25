@@ -1,0 +1,74 @@
+{
+  "editor.fontSize": 16,
+  "editor.tabSize": 2,
+  "editor.renderWhitespace": "boundary",
+  "editor.minimap.enabled": false,
+  "editor.cursorStyle": "block",
+  "editor.snippetSuggestions": "top",
+  "editor.renderIndentGuides": true,
+  "editor.wordWrap": "off",
+  "editor.formatOnSave": true,
+  "editor.cursorBlinking": "solid",
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "window.zoomLevel": 0,
+  "workbench.activityBar.visible": false,
+  "files.trimTrailingWhitespace": true,
+  "emmet.syntaxProfiles": {
+    "javascript": "js",
+    "javascriptreact": "js"
+  },
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/.history": true,
+    "**/.npm": true,
+    "**/node_modules": true,
+    "**/node_scripts": true
+  },
+  "files.watcherExclude": {
+    "**/.git/objects": true,
+    "**/.npm": true,
+    "**/node_modules": true
+  },
+  "window.title": "${activeEditorLong}",
+  "window.newWindowDimensions": "inherit",
+  "workbench.sideBar.location": "left",
+  "php.validate.executablePath": "/usr/local/bin/php",
+  "files.eol": "\n",
+  "workbench.startupEditor": "none",
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
+  "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+  "editor.rulers": [
+    80,
+    120
+  ],
+  "editor.multiCursorModifier": "ctrlCmd",
+  "javascript.format.enable": true,
+  "workbench.statusBar.feedback.visible": false,
+  "debug.showInStatusBar": "never",
+  "eslint.autoFixOnSave": false,
+  "sasslint.configFile": "~/git/sync/resources/st4/includes/.sass-lint.yml",
+  "javascript.validate.enable": true,
+  "files.associations": {
+    "*.js": "javascriptreact"
+  },
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "html.format.maxPreserveNewLines": 1,
+  "html.format.wrapLineLength": 80,
+  "workbench.colorTheme": "Night Owl",
+  "bracketPairColorizer.forceIterationColorCycle": true,
+  "editor.fontFamily": "Dank Mono",
+  "editor.fontLigatures": true,
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#000C1D",
+    "activityBar.border": "#102a44",
+    "sideBar.background": "#001122",
+    "sideBar.border": "#102a44",
+    "sideBar.foreground": "#8BADC1",
+    "editorIndentGuide.activeBackground": "#bbd2f7"
+  },
+  "terminal.integrated.fontSize": 16
+}
