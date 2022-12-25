@@ -9,7 +9,7 @@
 # git clone --depth 1 https://github.com/wbthomason/packer.nvim\
 # ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
-DOTFILES_PATH="~/Google\ Drive/My\ Drive/git/dotfiles"
+DOTFILES_PATH="~/git/dotfiles"
 
 # Setup
 alias runsetup="bash $DOTFILES_PATH/public/setup.sh"
@@ -46,7 +46,7 @@ export DEFAULT_BRANCH='main'
 #     fi
 # }
 
-alias dot='cd ~/Google\ Drive/My\ Drive/git/dotfiles && nvim .'
+alias dot='cd ~/git/dotfiles && nvim .'
 alias packs='cd ~/.local/share/nvim/site/pack/packer/'
 alias scratch='cd ~/git && nvim scratchpad.txt'
 alias aliases='nvim ~/.aliases'
@@ -279,16 +279,10 @@ function addRemoteOrigin()
   eval "git remote add origin git@github.com:danieluhl/$repo.git";
 }
 
-# simple server
-alias serve='python -m http.server 8000'
-alias localhost='open -a "Google Chrome" "http://localhost:8000"'
-
 alias nginx-serve='cp . /usr/local/var/www/'
-
 
 # Include custom aliases
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
-
 
 # opam (ocaml package manager) init
 alias opamConfig='eval `opam config env`'
