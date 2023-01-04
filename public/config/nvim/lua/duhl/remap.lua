@@ -41,10 +41,10 @@ local nmaps = {
 	-- ["<leader>e"] = "<CMD>NvimTreeFocus<CR>",
 	["<leader>e"] = "<CMD>NvimTreeFindFile<CR>",
 	["<S-e>"] = "<CMD>NvimTreeToggle<CR>",
-	["<leader>mn"] = require("nvim-tree.api").marks.navigate.next,
-	["<leader>mp"] = require("nvim-tree.api").marks.navigate.previous,
-	["<leader>mv"] = require("nvim-tree.api").marks.bulk.move,
-	["<leader>ml"] = require("nvim-tree.api").marks.list,
+	-- ["<leader>mn"] = require("nvim-tree.api").marks.navigate.next,
+	-- ["<leader>mp"] = require("nvim-tree.api").marks.navigate.previous,
+	-- ["<leader>mv"] = require("nvim-tree.api").marks.bulk.move,
+	-- ["<leader>ml"] = require("nvim-tree.api").marks.list,
 
 	-- Search under cursor
 	["<leader>s"] = ":%s/",
@@ -53,10 +53,10 @@ local nmaps = {
 	-- BUFFERS
 	-- Delete all buffers but the current one
 	["<leader>bd"] = "<CMD>%bd<bar>e#<CR>",
-
 	-- cycle through buffers
 	["<S-l>"] = "<CMD>bnext<CR>",
 	["<S-h>"] = "<CMD>bprevious<CR>",
+	-- jump to splits
 	["<C-l>"] = "<C-w>l",
 	["<C-h>"] = "<C-w>h",
 	["<C-k>"] = "<C-w>k",
@@ -65,6 +65,20 @@ local nmaps = {
 	-- ["<leader>wv"] = "<C-w>v<C-w>l",
 	-- ["<leader>ws"] = "<C-w>s<C-w>j",
 	-- ["<leader>wo"] = "<C-w><C-o>",
+
+	-- Marks
+	["mf"] = "mF",
+	["'f"] = "'F",
+	-- ["`f"] = "`F",
+	["md"] = "mD",
+	["'d"] = "'D",
+	-- ["`d"] = "`D",
+	["ms"] = "mS",
+	["'s"] = "'S",
+	-- ["`s"] = "`S",
+	["ma"] = "mA",
+	["'a"] = "'A",
+	-- ["`a"] = "`A",
 
 	-- print from 0 register
 	["<leader>0"] = '"0p',
@@ -117,20 +131,6 @@ local nmaps = {
 	["<leader>ff"] = ":lua vim.lsp.buf.format({}, 1000) vim.api.nvim_command('write')<CR>",
 	-- ["<leader>fp"] = ":lua vim.lsp.buf.format({}, 10000) vim.api.nvim_command('write')<CR>",
 	["<leader>ca"] = ":lua vim.lsp.buf.code_action()<CR>",
-
-	-- Marks
-	["mf"] = "mF",
-	["'f"] = "'F",
-	-- ["`f"] = "`F",
-	["md"] = "mD",
-	["'d"] = "'D",
-	-- ["`d"] = "`D",
-	["ms"] = "mS",
-	["'s"] = "'S",
-	-- ["`s"] = "`S",
-	["ma"] = "mA",
-	["'a"] = "'A",
-	-- ["`a"] = "`A",
 
 	-- Seamlessly treat visual lines as actual lines when moving around.
 	["j"] = "gj",
