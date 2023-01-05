@@ -5,4 +5,4 @@ public/config/gh
 wayfair
 local
 public/config/exercism
-
+public/config/nvim/plugin/packer_compiled.lua

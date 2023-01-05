@@ -19,7 +19,6 @@ null_ls.setup({
 		formatting.prettierd,
 		require("typescript.extensions.null-ls.code-actions"),
 		diagnostics.tsc,
-
 		-- JSON
 		-- formatting.fixjson,
 

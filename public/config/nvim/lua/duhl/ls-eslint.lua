@@ -4,7 +4,7 @@ local eslint = require("eslint")
 null_ls.setup()
 
 eslint.setup({
-  bin = 'eslint', -- or `eslint_d`
+  bin = "eslint", -- or `eslint_d`
   code_actions = {
     enable = true,
     apply_on_save = {
@@ -17,6 +17,7 @@ eslint.setup({
     -- },
   },
   diagnostics = {
+    underline = true,
     enable = true,
     -- report_unused_disable_directives = false,
     run_on = "save", -- or `save`

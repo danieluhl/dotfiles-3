@@ -4,8 +4,8 @@ local nnoremap = require("duhl.keymap").nnoremap
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = true }
 nnoremap("<leader>k", vim.diagnostic.open_float, opts)
-nnoremap("<leader>[d", vim.diagnostic.goto_prev, opts)
-nnoremap("<leader>]d", vim.diagnostic.goto_next, opts)
+-- nnoremap("<leader>[d", vim.diagnostic.goto_prev, opts)
+-- nnoremap("<leader>]d", vim.diagnostic.goto_next, opts)
 -- nnoremap("<space>q", vim.diagnostic.setloclist, opts)
 
 -- Use an on_attach function to only map the following keys
@@ -13,9 +13,6 @@ nnoremap("<leader>]d", vim.diagnostic.goto_next, opts)
 local on_attach = function(client, bufnr)
 	-- Enable completion triggered by <c-x><c-o>
 	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
-	vim.api.nvim_set_hl(0, "LineNr", { fg = "#696979" })
-	vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#bbccff" })
 
 	-- Mappings.
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -102,4 +99,17 @@ require("typescript").setup({
 			on_attach(client, bufnr)
 		end,
 	},
+})
+
+-- diagnostics global defaults
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+	-- Disable underline, it's very annoying
+	underline = true,
+	virtual_text = true,
+	-- Enable virtual text, override spacing to 4
+	-- virtual_text = {spacing = 4},
+	-- Use a function to dynamically turn signs off
+	-- and on, using buffer local variables
+	signs = true,
+	-- update_in_insert = false,
 })

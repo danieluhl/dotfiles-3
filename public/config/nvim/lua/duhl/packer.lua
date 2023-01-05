@@ -39,6 +39,9 @@ return require("packer").startup(function()
 	-- Packer can manage itself
 	use("wbthomason/packer.nvim")
 	use("haishanh/night-owl.vim")
+	use("morhetz/gruvbox")
+	use("EdenEast/nightfox.nvim")
+
 	-- Telescope
 	use("nvim-telescope/telescope-fzy-native.nvim")
 
