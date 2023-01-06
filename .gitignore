@@ -1,8 +1,8 @@
-public/config/gh
-.history
+/public/config/gh
+/.history
 *.sw
 *~
 wayfair
 local
-public/config/exercism
-public/config/nvim/plugin/packer_compiled.lua
+/public/config/exercism
+/public/config/nvim/plugin
