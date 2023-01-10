@@ -33,8 +33,9 @@ require("nightfox").setup({
   -- groups = {},
 })
 vim.cmd("colorscheme duskfox")
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "Normal", { bg = "#011627" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 vim.api.nvim_set_hl(0, "NvimTreeNormal", { bg = "none" })
 vim.api.nvim_set_hl(0, "LineNr", { fg = "#696979" })
 vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#bbccff" })
+vim.api.nvim_set_hl(0, "Comment", { italic = true, fg = "#75718f" })

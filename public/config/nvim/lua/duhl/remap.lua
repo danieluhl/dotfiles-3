@@ -88,7 +88,9 @@ local nmaps = {
 
 	-- Scroll screen up and down
 	["<C-e>"] = "5<C-e>",
-	["<C-y>"] = "5<C-y>",
+	-- Not sure why but <S-Tab> is sending <C-y>
+	["<C-y>"] = "<C-^>",
+	-- ["<S-Tab>"] = "<C-^>",
 
 	-- Paste in quotes
 	["<leader>'"] = "i''<esc>P",
@@ -143,12 +145,12 @@ local nmaps = {
 	["<A-Down>"] = ":m '>+1<CR>gv=gv",
 
 	-- resize windows
-	-- ["<C-Up>"] = ":resize +2<CR>",
-	-- ["<C-Down>"] = ":resize -2<CR>",
+	["<C-Up>"] = ":resize -2<CR>",
+	["<C-Down>"] = ":resize +2<CR>",
 	["<A-k>"] = ":m .-2<CR>==",
 	["<A-j>"] = ":m .+1<CR>==",
-	["<C-Right>"] = ":vertical resize -2<CR>",
-	["<C-Left>"] = ":vertical resize +2<CR>",
+	["<C-Right>"] = ":vertical resize +2<CR>",
+	["<C-Left>"] = ":vertical resize -2<CR>",
 }
 
 local vmaps = {
