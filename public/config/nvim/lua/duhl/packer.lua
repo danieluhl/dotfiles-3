@@ -75,6 +75,7 @@ return require("packer").startup(function()
 	use("williamboman/nvim-lsp-installer")
 	use("jose-elias-alvarez/null-ls.nvim")
 	use("udalov/kotlin-vim")
+	use("leafOfTree/vim-svelte-plugin")
 
 	-- Language server plugins (so you don't have to install these on every machine)
 	use("jose-elias-alvarez/typescript.nvim")
