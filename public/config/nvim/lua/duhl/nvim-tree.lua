@@ -91,5 +91,5 @@ require("nvim-tree").setup({
   },
 })
 
--- local events = require("nvim-tree.api").events.Event
--- events.Resize = 25
+local events = require("nvim-tree.api").events.Event
+events.Resize = 50
