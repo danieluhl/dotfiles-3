@@ -14,4 +14,5 @@ vim.cmd([[
 
 	" dont add mappings from context for <S-h>
 	let g:context_add_mappings = 0
+
 ]])
