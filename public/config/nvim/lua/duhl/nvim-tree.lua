@@ -19,12 +19,13 @@ require("nvim-tree").setup({
     },
   },
   view = {
-    adaptive_size = false,
+    adaptive_size = true,
     mappings = {
       list = {
         { key = "u", action = "dir_up" },
         { key = "J", action = "expand" },
         { key = "K", action = "expand" },
+        { key = "H", action = "expand" },
       },
     },
   },
@@ -89,7 +90,9 @@ require("nvim-tree").setup({
   filters = {
     dotfiles = false,
   },
+  -- track active file as I bounce around
+  update_focused_file = { enable = true },
 })
 
-local events = require("nvim-tree.api").events.Event
-events.Resize = 50
+-- local events = require("nvim-tree.api").events.Event
+-- events.Resize = 50

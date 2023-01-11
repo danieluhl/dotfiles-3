@@ -37,14 +37,11 @@ local nmaps = {
 	["<leader>q"] = "<CMD>q<CR>",
 	["<leader>!"] = "<CMD>q!<CR>",
 
-	-- nvim tree stuff
-	-- ["<leader>e"] = "<CMD>NvimTreeFocus<CR>",
+	-- nvim-tree plugin remaps
+	-- jump to current file in nav
 	["<leader>e"] = "<CMD>NvimTreeFindFile<CR>",
-	["<S-e>"] = "<CMD>NvimTreeToggle<CR>",
-	-- ["<leader>mn"] = require("nvim-tree.api").marks.navigate.next,
-	-- ["<leader>mp"] = require("nvim-tree.api").marks.navigate.previous,
-	-- ["<leader>mv"] = require("nvim-tree.api").marks.bulk.move,
-	-- ["<leader>ml"] = require("nvim-tree.api").marks.list,
+	-- Show/hide nav
+	["<S-e>"] = "<CMD>NvimTreeToggle<CR><C-w>l",
 
 	-- Search under cursor
 	["<leader>s"] = ":%s/",
