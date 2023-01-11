@@ -77,6 +77,7 @@ cmp.setup({
 	enabled = function()
 		if require("cmp.config.context").in_treesitter_capture("comment") == true
 				or require("cmp.config.context").in_syntax_group("Comment")
+				or vim.bo.buftype == "prompt"
 		then
 			return false
 		else
