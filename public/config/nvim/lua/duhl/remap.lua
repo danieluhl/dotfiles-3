@@ -12,6 +12,8 @@ local nmaps = {
 	["<leader>p"] = "ciw<C-r>0<esc>",
 	-- delete word to no register
 	["<leader>d"] = '"_d',
+	["<leader>D"] = '"_D',
+	["<leader>c"] = '"_c',
 
 	-- Typescript Plugin
 	["<leader>to"] = ":TypescriptOrganizeImports<CR>",
