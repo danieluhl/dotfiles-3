@@ -125,3 +125,7 @@ if [ -f '/Users/danieluhl/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users
 
 # eval "$(starship init zsh)"
 
+# Run startup script
+cd ~/git/dotfiles/public
+bash login.sh
+
