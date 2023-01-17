@@ -126,6 +126,10 @@ if [ -f '/Users/danieluhl/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users
 # eval "$(starship init zsh)"
 
 # Run startup script
-cd ~/git/dotfiles/public
-bash login.sh
+local lastLogin=$(ls -lart ~/git/dotfiles/public/login.sh | cut -f10 -d" ")
+local today=$(date | cut -f3 -d" ")
+if [ $lastLogin != $today ]
+then
+  bash ~/git/dotfiles/public/login.sh
+fi
 
