@@ -117,6 +117,7 @@ return require("packer").startup(function()
 	-- Maybe Future Things I Want
 	use("mbbill/undotree")
 	use("jeetsukumaran/vim-indentwise")
+	use("ThePrimeagen/harpoon")
 
 	-- Github Plugins
 	use("tyru/open-browser.vim")
