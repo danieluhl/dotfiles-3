@@ -23,5 +23,7 @@ prettier.setup({
 		tab_width = 2,
 		trailing_comma = "es5",
 		use_tabs = false,
+		single_quote = true,
+		jsx_single_quote = false,
 	},
 })

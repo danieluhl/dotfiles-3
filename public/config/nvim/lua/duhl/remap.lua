@@ -78,6 +78,7 @@ local nmaps = {
 	["ma"] = "mA",
 	["'a"] = "'A",
 	-- ["`a"] = "`A",
+	-- ["'a"] = ":lua require('harpoon.mark').add_file()",
 
 	-- print from 0 register
 	["<leader>0"] = '"0p',
@@ -181,6 +182,9 @@ local vmaps = {
 	["<S-j>"] = "5j",
 	["<S-k>"] = "5k",
 	-- ["<Leader>a="] = "<CMD>Tabularize /<bar><CR>",
+	["."] = ":norm .<cr>",
+	-- jump to bottom after yank
+	["<leader>y"] = "y']",
 }
 
 local imaps = {
@@ -200,6 +204,8 @@ local imaps = {
 	["<A-j>"] = "<esc>:m .+1<CR>==gi",
 	-- ["<A-k>"] = "<esc>:m .-2<CR>==gi",
 	-- ["<A-j>"] = "<esc>:m .+1<CR>==gi",
+
+	["<C-c>"] = "<esc>",
 }
 
 local xmaps = {
@@ -207,7 +213,7 @@ local xmaps = {
 	["A"] = "$A",
 	-- Copy visual selection to clipboard
 	["<leader>y"] = '"+y',
-	["<leader>p"] = '"_dP',
+	-- ["<leader>p"] = '"_dP',
 }
 
 for k, v in pairs(imaps) do
