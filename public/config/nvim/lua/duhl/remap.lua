@@ -129,11 +129,6 @@ local nmaps = {
 	-- Tabularize - for formatting markdown tables
 	-- ["<Leader>a="] = "<CMD>Tabularize /<bar><CR>",
 
-	-- Format dat code (for lsp stuff see lspconfig.lua)
-	["<leader>ff"] = ":lua vim.lsp.buf.format({}, 1000) vim.api.nvim_command('write')<CR>",
-	-- ["<leader>fp"] = ":lua vim.lsp.buf.format({}, 10000) vim.api.nvim_command('write')<CR>",
-	["<leader>ca"] = ":lua vim.lsp.buf.code_action()<CR>",
-
 	-- Seamlessly treat visual lines as actual lines when moving around.
 	["j"] = "gj",
 	["k"] = "gk",
@@ -151,6 +146,27 @@ local nmaps = {
 	["<A-j>"] = ":m .+1<CR>==",
 	["<C-Right>"] = ":vertical resize +2<CR>",
 	["<C-Left>"] = ":vertical resize -2<CR>",
+
+	-- LSP Mappings
+	-- See `:help vim.lsp.*` for documentation on any of the below functions
+	-- local bufopts = { noremap = true, silent = true, buffer = bufnr }
+	["<leader>ff"] = ":lua vim.lsp.buf.format({}, 1000) vim.api.nvim_command('write')<CR>",
+	-- ["<leader>fp"] = ":lua vim.lsp.buf.format({}, 10000) vim.api.nvim_command('write')<CR>",
+	["gD"] = ":lua vim.lsp.buf.declaration()<cr>",
+	["gd"] = ":lua vim.lsp.buf.definition()<cr>",
+	["<leader>gi"] = ":lua vim.lsp.buf.implementation()<cr>",
+	["<leader>gr"] = ":lua vim.lsp.buf.references()<cr>",
+	-- ["<leader>k"] = ":lua vim.lsp.buf.hover()<cr>",
+	["<leader>sh"] = ":lua vim.lsp.buf.signature_help()<cr>",
+	-- ["<leader>wa"] = ":lua vim.lsp.buf.add_workspace_folder()<cr>",
+	-- ["<leader>wr"] = ":lua vim.lsp.buf.remove_workspace_folder()<cr>",
+	-- ["<leader>wl"] = ":lua function()
+	-- 	print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+	-- end] = ":lua bufopts)
+	["<leader>gt"] = ":lua vim.lsp.buf.type_definition()<cr>",
+	["<leader>rn"] = ":lua vim.lsp.buf.rename()<cr>",
+	["<leader>ca"] = ":lua vim.lsp.buf.code_action()<cr>",
+	-- ["<leader>ff"] = ":lua vim.lsp.buf.format()<cr>",
 }
 
 local vmaps = {
