@@ -18,6 +18,8 @@ local file_ignore_patterns = {
   ".next",
   ".git",
   "build",
+  -- for rust builds
+  "target",
 }
 local function find_files()
   local telescope_builtin = require("telescope.builtin")

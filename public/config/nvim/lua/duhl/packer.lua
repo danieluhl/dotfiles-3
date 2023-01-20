@@ -134,6 +134,10 @@ return require("packer").startup(function()
 
 	-- extra support for react jsx
 	use("neoclide/vim-jsx-improve")
+
+	use("simrat39/rust-tools.nvim")
+	use("mfussenegger/nvim-dap")
+
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
 	if PACKER_BOOTSTRAP then

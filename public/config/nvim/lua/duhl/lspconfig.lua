@@ -66,25 +66,10 @@ lspconfig.sumneko_lua.setup({
 	},
 	on_attach = on_attach,
 })
-lspconfig.eslint.setup({ on_attach = on_attach })
-lspconfig.tailwindcss.setup({ on_attach = on_attach })
 
--- using typescript plugin instead because it gives some
---  extra commands like rename file and sort imports by
---  default
--- lspconfig.tsserver.setup({
--- 	on_attach = function(client, bufnr)
--- 		client.server_capabilities.documentFormattingProvider = false
--- 		client.server_capabilities.documentRangeFormattingProvider = false
--- 		on_attach(client, bufnr)
--- 	end,
--- 	commands = {
--- 		OrganizeImports = {
--- 			organize_imports,
--- 			description = "Organize Imports",
--- 		},
--- 	},
--- })
+lspconfig.eslint.setup({ on_attach = on_attach })
+
+lspconfig.tailwindcss.setup({ on_attach = on_attach })
 
 require("typescript").setup({
 	-- disable_commands = false, -- prevent the plugin from creating Vim commands
@@ -97,6 +82,17 @@ require("typescript").setup({
 			client.server_capabilities.documentFormattingProvider = false
 			client.server_capabilities.documentRangeFormattingProvider = false
 			on_attach(client, bufnr)
+		end,
+	},
+})
+
+require("rust-tools").setup({
+	server = {
+		on_attach = function(_, bufnr)
+			-- Hover actions
+			vim.keymap.set("n", "<leader>h", rt.hover_actions.hover_actions, { buffer = bufnr })
+			-- Code action groups
+			vim.keymap.set("n", "<leader>ca", rt.code_action_group.code_action_group, { buffer = bufnr })
 		end,
 	},
 })

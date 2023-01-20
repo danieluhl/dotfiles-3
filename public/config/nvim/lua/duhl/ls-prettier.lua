@@ -19,7 +19,6 @@ prettier.setup({
 	cli_options = {
 		arrow_parens = "always",
 		bracket_spacing = false,
-		bracketSpacing = false,
 		print_width = 80,
 		tab_width = 2,
 		trailing_comma = "es5",

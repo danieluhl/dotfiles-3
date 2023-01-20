@@ -150,7 +150,8 @@ local nmaps = {
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	-- local bufopts = { noremap = true, silent = true, buffer = bufnr }
 	["<leader>ff"] = ":lua vim.lsp.buf.format({}, 1000) vim.api.nvim_command('write')<CR>",
-	-- ["<leader>fp"] = ":lua vim.lsp.buf.format({}, 10000) vim.api.nvim_command('write')<CR>",
+	["<leader>ff"] = ":lua vim.lsp.buf.format({}, 1000) vim.api.nvim_command('write')<CR>",
+	["<leader>fp"] = ":Prettier<CR>:lua vim.api.nvim_command('write')<CR>",
 	["gD"] = ":lua vim.lsp.buf.declaration()<cr>",
 	["gd"] = ":lua vim.lsp.buf.definition()<cr>",
 	["<leader>gi"] = ":lua vim.lsp.buf.implementation()<cr>",
@@ -165,7 +166,6 @@ local nmaps = {
 	["<leader>gt"] = ":lua vim.lsp.buf.type_definition()<cr>",
 	["<leader>rn"] = ":lua vim.lsp.buf.rename()<cr>",
 	["<leader>ca"] = ":lua vim.lsp.buf.code_action()<cr>",
-	-- ["<leader>ff"] = ":lua vim.lsp.buf.format()<cr>",
 }
 
 local vmaps = {

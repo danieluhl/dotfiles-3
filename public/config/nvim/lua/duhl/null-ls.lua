@@ -23,7 +23,7 @@ null_ls.setup({
 		-- formatting.fixjson,
 
 		-- YAML
-		diagnostics.yamllint,
+		-- diagnostics.yamllint,
 
 		-- CSS
 		-- formatting.eslint,
@@ -42,5 +42,8 @@ null_ls.setup({
 		-- Markdown
 		-- diagnostics.markdownlint,
 		code_actions.proselint,
+
+		-- RUST
+		formatting.rustfmt,
 	},
 })
