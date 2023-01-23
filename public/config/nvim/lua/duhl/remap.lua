@@ -185,6 +185,9 @@ local vmaps = {
 	["."] = ":norm .<cr>",
 	-- jump to bottom after yank
 	["<leader>y"] = "y']",
+
+	-- Toggle soft wrap
+	-- ["<leader>ww"] = ":set wrap linebreak",
 }
 
 local imaps = {

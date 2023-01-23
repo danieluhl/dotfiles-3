@@ -66,7 +66,7 @@ export PATH=$PATH:$RUSTPATH/bin
 
 # To install rust analyzer and get it in PATH:
 # > rustup component add rust-analyzer
-# > ln -s ~/.rustup/toolchains/stable-aarch64-apple-darwin/bin/rust-analyzer rust-analyzer
+# > ln -s ~/.rustup/toolchains/stable-aarch64-apple-darwin/bin/rust-analyzer ~/.cargo/rust-analyzer
 
 export PATH=$PATH:$RUSTPATH/bin
 
