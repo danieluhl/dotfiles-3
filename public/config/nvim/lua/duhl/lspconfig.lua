@@ -56,46 +56,34 @@ local lsp_defaults = lspconfig.util.default_config
 lsp_defaults.capabilities =
 vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
 
-lspconfig.sumneko_lua.setup({
-	settings = {
-		Lua = {
-			diagnostics = {
-				globals = { "use", "vim", "actions" },
-			},
-		},
-	},
-	on_attach = on_attach,
-})
+-- lspconfig.sumneko_lua.setup({
+-- 	settings = {
+-- 		Lua = {
+-- 			diagnostics = {
+-- 				globals = { "use", "vim", "actions" },
+-- 			},
+-- 		},
+-- 	},
+-- 	on_attach = on_attach,
+-- })
 
-lspconfig.eslint.setup({ on_attach = on_attach })
+-- lspconfig.eslint.setup({ on_attach = on_attach })
+-- lspconfig.tailwindcss.setup({ on_attach = on_attach })
 
-lspconfig.tailwindcss.setup({ on_attach = on_attach })
-
-require("typescript").setup({
-	-- disable_commands = false, -- prevent the plugin from creating Vim commands
-	-- debug = false, -- enable debug logging for commands
-	go_to_source_definition = {
-		fallback = true, -- fall back to standard LSP definition on failure
-	},
-	server = { -- pass options to lspconfig's setup method
-		on_attach = function(client, bufnr)
-			client.server_capabilities.documentFormattingProvider = false
-			client.server_capabilities.documentRangeFormattingProvider = false
-			on_attach(client, bufnr)
-		end,
-	},
-})
-
-require("rust-tools").setup({
-	server = {
-		on_attach = function(_, bufnr)
-			-- Hover actions
-			vim.keymap.set("n", "<leader>h", rt.hover_actions.hover_actions, { buffer = bufnr })
-			-- Code action groups
-			vim.keymap.set("n", "<leader>ca", rt.code_action_group.code_action_group, { buffer = bufnr })
-		end,
-	},
-})
+-- require("typescript").setup({
+-- 	-- disable_commands = false, -- prevent the plugin from creating Vim commands
+-- 	-- debug = false, -- enable debug logging for commands
+-- 	go_to_source_definition = {
+-- 		fallback = true, -- fall back to standard LSP definition on failure
+-- 	},
+-- 	server = { -- pass options to lspconfig's setup method
+-- 		on_attach = function(client, bufnr)
+-- 			client.server_capabilities.documentFormattingProvider = false
+-- 			client.server_capabilities.documentRangeFormattingProvider = false
+-- 			on_attach(client, bufnr)
+-- 		end,
+-- 	},
+-- })
 
 -- diagnostics global defaults
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
