@@ -7,6 +7,30 @@ local telescope = require("duhl.telescope")
 -- Saving and quitting
 local nmaps = {
 
+	-- Marks
+	-- ["mf"] = "mF",
+	-- ["'f"] = "'F",
+	-- -- ["`f"] = "`F",
+	-- ["md"] = "mD",
+	-- ["'d"] = "'D",
+	-- -- ["`d"] = "`D",
+	-- ["ms"] = "mS",
+	-- ["'s"] = "'S",
+	-- -- ["`s"] = "`S",
+	-- ["ma"] = "mA",
+	-- ["'a"] = "'A",
+	-- ["`a"] = "`A",
+
+	-- harpoon marks
+	["ma"] = ":lua require('harpoon.mark').add_file()<cr>",
+	["mq"] = ":lua require('harpoon.ui').toggle_quick_menu()<cr>",
+	["'1"] = ":lua require('harpoon.ui').nav_file(1)<cr>",
+	["'2"] = ":lua require('harpoon.ui').nav_file(2)<cr>",
+	["'3"] = ":lua require('harpoon.ui').nav_file(3)<cr>",
+	["'3"] = ":lua require('harpoon.ui').nav_file(3)<cr>",
+	["<S-l>"] = ":lua require('harpoon.ui').nav_next()<cr>",
+	["<S-h>"] = ":lua require('harpoon.ui').nav_prev()<cr>",
+
 	["]="] = "<Plug>(IndentWiseNextEqualIndent)",
 	-- replace word with 0 register
 	["<leader>p"] = "ciw<C-r>0<esc>",
@@ -53,8 +77,8 @@ local nmaps = {
 	-- Delete all buffers but the current one
 	["<leader>bd"] = "<CMD>%bd<bar>e#<CR>",
 	-- cycle through buffers
-	["<S-l>"] = "<CMD>bnext<CR>",
-	["<S-h>"] = "<CMD>bprevious<CR>",
+	-- ["<S-l>"] = "<CMD>bnext<CR>",
+	-- ["<S-h>"] = "<CMD>bprevious<CR>",
 	-- jump to splits
 	["<C-l>"] = "<C-w>l",
 	["<C-h>"] = "<C-w>h",
@@ -65,26 +89,8 @@ local nmaps = {
 	-- ["<leader>ws"] = "<C-w>s<C-w>j",
 	-- ["<leader>wo"] = "<C-w><C-o>",
 
-	-- Marks
-	["mf"] = "mF",
-	["'f"] = "'F",
-	-- ["`f"] = "`F",
-	["md"] = "mD",
-	["'d"] = "'D",
-	-- ["`d"] = "`D",
-	["ms"] = "mS",
-	["'s"] = "'S",
-	-- ["`s"] = "`S",
-	["ma"] = "mA",
-	["'a"] = "'A",
-	-- ["`a"] = "`A",
-	-- ["'a"] = ":lua require('harpoon.mark').add_file()",
-
 	-- print from 0 register
 	["<leader>0"] = '"0p',
-
-	-- Movements
-	["<S-k>"] = "5k",
 
 	-- Scroll screen up and down
 	["<C-e>"] = "5<C-e>",
