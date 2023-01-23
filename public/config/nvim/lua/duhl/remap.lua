@@ -7,6 +7,7 @@ local telescope = require("duhl.telescope")
 -- Saving and quitting
 local nmaps = {
 
+	["<leader>k"] = ":lua vim.diagnostic.open_float()<cr>",
 	-- Marks
 	-- ["mf"] = "mF",
 	-- ["'f"] = "'F",
