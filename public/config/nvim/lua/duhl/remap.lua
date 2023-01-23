@@ -27,7 +27,8 @@ local nmaps = {
 	["'1"] = ":lua require('harpoon.ui').nav_file(1)<cr>",
 	["'2"] = ":lua require('harpoon.ui').nav_file(2)<cr>",
 	["'3"] = ":lua require('harpoon.ui').nav_file(3)<cr>",
-	["'3"] = ":lua require('harpoon.ui').nav_file(3)<cr>",
+	["'4"] = ":lua require('harpoon.ui').nav_file(4)<cr>",
+	["'5"] = ":lua require('harpoon.ui').nav_file(5)<cr>",
 	["<S-l>"] = ":lua require('harpoon.ui').nav_next()<cr>",
 	["<S-h>"] = ":lua require('harpoon.ui').nav_prev()<cr>",
 
@@ -40,34 +41,34 @@ local nmaps = {
 	["<leader>c"] = '"_c',
 
 	-- Typescript Plugin
-	["<leader>to"] = ":TypescriptOrganizeImports<CR>",
-	["<leader>ta"] = ":TypescriptAddMissingImports<CR>",
-	["<leader>tf"] = ":TypescriptFixAll<CR>",
-	["<leader>tr"] = ":TypescriptRenameFile<CR>",
+	["<leader>to"] = ":TypescriptOrganizeImports<cr>",
+	["<leader>ta"] = ":TypescriptAddMissingImports<cr>",
+	["<leader>tf"] = ":TypescriptFixAll<cr>",
+	["<leader>tr"] = ":TypescriptRenameFile<cr>",
 
 	-- Quickfix lists
-	-- note<CMD> <C-q> from telescope search puts in quickfix list
-	["<leader>co"] = "<CMD>copen<CR>",
-	["<leader>cl"] = "<CMD>ccl<CR>",
-	["<leader>cn"] = "<CMD>cn<CR>",
-	["<leader>cp"] = "<CMD>cp<CR>",
+	-- note: <C-q> from telescope search puts in quickfix list
+	["<leader>co"] = ":copen<cr>",
+	["<leader>cl"] = ":ccl<cr>",
+	["<leader>cn"] = ":cn<cr>",
+	["<leader>cp"] = ":cp<cr>",
 
 	-- Error Navigation
-	-- ["<leader>en"] = "<CMD>lnext<CR>",
-	-- ["<leader>ep"] = "<CMD>lprev<CR>",
-	-- ["<leader>eo"] = "<CMD>lopen<CR>",
-	-- ["<leader>ec"] = "<CMD>lclose<CR>",
+	-- ["<leader>en"] = ":lnext<cr>",
+	-- ["<leader>ep"] = ":lprev<cr>",
+	-- ["<leader>eo"] = ":lopen<cr>",
+	-- ["<leader>ec"] = ":lclose<cr>",
 
 	-- Save and Quit
-	["<leader>w"] = "<CMD>w<CR>",
-	["<leader>q"] = "<CMD>q<CR>",
-	["<leader>!"] = "<CMD>q!<CR>",
+	["<leader>w"] = ":w<cr>",
+	["<leader>q"] = ":q<cr>",
+	["<leader>!"] = ":q!<cr>",
 
 	-- nvim-tree plugin remaps
 	-- jump to current file in nav
-	["<leader>e"] = "<CMD>NvimTreeFindFile<CR>",
+	["<leader>e"] = ":NvimTreeFindFile<cr>",
 	-- Show/hide nav
-	["<S-e>"] = "<CMD>NvimTreeToggle<CR><C-w>l",
+	["<S-e>"] = ":NvimTreeToggle<cr><C-w>l",
 
 	-- Search under cursor
 	["<leader>s"] = ":%s/",
@@ -75,10 +76,10 @@ local nmaps = {
 
 	-- BUFFERS
 	-- Delete all buffers but the current one
-	["<leader>bd"] = "<CMD>%bd<bar>e#<CR>",
+	["<leader>bd"] = ":%bd<bar>e#<cr>",
 	-- cycle through buffers
-	-- ["<S-l>"] = "<CMD>bnext<CR>",
-	-- ["<S-h>"] = "<CMD>bprevious<CR>",
+	-- ["<S-l>"] = ":bnext<cr>",
+	-- ["<S-h>"] = ":bprevious<cr>",
 	-- jump to splits
 	["<C-l>"] = "<C-w>l",
 	["<C-h>"] = "<C-w>h",
@@ -104,11 +105,15 @@ local nmaps = {
 	-- Select entire document
 	["<leader>gg"] = "gg<S-v>G",
 	-- Wrap only lines longer than 80ch
-	["<leader>gq"] = "<CMD>g/./ normal gqq<CR>",
+	["<leader>gq"] = ":g/./ normal gqq<cr>",
+	-- Toggle soft wrap
+	["<leader>gw"] = ":set wrap linebreak<cr>",
+	["<leader>gww"] = ":set nowrap<cr>",
+	-- copy current word into clipboard
 	["<leader>y"] = 'viw"+y',
 
 	-- Foldings (use za to fold/unfold)
-	-- ["zz"] = "<CMD>set foldmethod=syntax<CR>",
+	-- ["zz"] = ":set foldmethod=syntax<cr>",
 
 	-- center when mocing around
 	["<C-d>"] = "<C-d>zz",
@@ -117,23 +122,23 @@ local nmaps = {
 	["N"] = "Nzzzv",
 
 	-- github
-	["<leader>gh"] = "<CMD>OpenGithubFile<CR>",
+	["<leader>gh"] = ":OpenGithubFile<cr>",
 	-- open link in browser
 	["<leader>gl"] = "<Plug>(openbrowser-open)",
 
 	-- telescope
-	["<C-p>"] = "<CMD>UserTelescopeFindFiles<CR>",
-	["<leader>fd"] = "<CMD>Telescope find_files hidden=true<CR>",
-	["<C-f>"] = "<CMD>UserTelescopeLiveGrep<CR>",
-	["<leader>fa"] = "<CMD>UserTelescopeLiveGrepAll<CR>",
-	["<leader>fb"] = "<CMD>Telescope buffers<CR>",
-	-- ["<leader>fg"] = "<CMD>Telescope git_files<CR>",
-	["<leader>fs"] = "<CMD>Telescope grep_string<CR>",
-	["<leader>fh"] = "<CMD>Telescope search_history<CR>",
-	["<leader>fo"] = "<CMD>Telescope oldfiles<CR>",
+	["<C-p>"] = ":UserTelescopeFindFiles<cr>",
+	["<leader>fd"] = ":Telescope find_files hidden=true<cr>",
+	["<C-f>"] = ":UserTelescopeLiveGrep<cr>",
+	["<leader>fa"] = ":UserTelescopeLiveGrepAll<cr>",
+	["<leader>fb"] = ":Telescope buffers<cr>",
+	-- ["<leader>fg"] = ":Telescope git_files<cr>",
+	["<leader>fs"] = ":Telescope grep_string<cr>",
+	["<leader>fh"] = ":Telescope search_history<cr>",
+	["<leader>fo"] = ":Telescope oldfiles<cr>",
 
 	-- Tabularize - for formatting markdown tables
-	-- ["<Leader>a="] = "<CMD>Tabularize /<bar><CR>",
+	-- ["<Leader>a="] = ":Tabularize /<bar><cr>",
 
 	-- Seamlessly treat visual lines as actual lines when moving around.
 	["j"] = "gj",
@@ -142,23 +147,23 @@ local nmaps = {
 	["<Up>"] = "gk",
 
 	-- move lines up or down
-	["<A-Up>"] = ":m '<-2<CR>gv=gv",
-	["<A-Down>"] = ":m '>+1<CR>gv=gv",
+	["<A-Up>"] = ":m '<-2<cr>gv=gv",
+	["<A-Down>"] = ":m '>+1<cr>gv=gv",
 
 	-- resize windows
-	["<C-Up>"] = ":resize -2<CR>",
-	["<C-Down>"] = ":resize +2<CR>",
-	["<A-k>"] = ":m .-2<CR>==",
-	["<A-j>"] = ":m .+1<CR>==",
-	["<C-Right>"] = ":vertical resize +2<CR>",
-	["<C-Left>"] = ":vertical resize -2<CR>",
+	["<C-Up>"] = ":resize -2<cr>",
+	["<C-Down>"] = ":resize +2<cr>",
+	["<A-k>"] = ":m .-2<cr>==",
+	["<A-j>"] = ":m .+1<cr>==",
+	["<C-Right>"] = ":vertical resize +2<cr>",
+	["<C-Left>"] = ":vertical resize -2<cr>",
 
 	-- LSP Mappings
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	-- local bufopts = { noremap = true, silent = true, buffer = bufnr }
-	["<leader>ff"] = ":lua vim.lsp.buf.format({}, 1000) vim.api.nvim_command('write')<CR>",
-	["<leader>ff"] = ":lua vim.lsp.buf.format({}, 1000) vim.api.nvim_command('write')<CR>",
-	["<leader>fp"] = ":Prettier<CR>:lua vim.api.nvim_command('write')<CR>",
+	["<leader>ff"] = ":lua vim.lsp.buf.format({}, 1000) vim.api.nvim_command('write')<cr>",
+	["<leader>ff"] = ":lua vim.lsp.buf.format({}, 1000) vim.api.nvim_command('write')<cr>",
+	["<leader>fp"] = ":Prettier<cr>:lua vim.api.nvim_command('write')<cr>",
 	["gD"] = ":lua vim.lsp.buf.declaration()<cr>",
 	["gd"] = ":lua vim.lsp.buf.definition()<cr>",
 	["<leader>gi"] = ":lua vim.lsp.buf.implementation()<cr>",
@@ -177,23 +182,21 @@ local nmaps = {
 
 local vmaps = {
 	-- Move 1 more lines up or down in normal and visual selection modes.
-	["<A-k>"] = ":m '<-2<CR>gv=gv",
-	["<A-j>"] = ":m '>+1<CR>gv=gv",
-	["<A-Up>"] = ":m '<-2<CR>gv=gv",
-	["<A-Down>"] = ":m '>+1<CR>gv=gv",
+	["<A-k>"] = ":m '<-2<cr>gv=gv",
+	["<A-j>"] = ":m '>+1<cr>gv=gv",
+	["<A-Up>"] = ":m '<-2<cr>gv=gv",
+	["<A-Down>"] = ":m '>+1<cr>gv=gv",
 
 	-- Delete to black hole register
 	["<leader>d"] = '"_d',
 
 	["<S-j>"] = "5j",
 	["<S-k>"] = "5k",
-	-- ["<Leader>a="] = "<CMD>Tabularize /<bar><CR>",
+	-- ["<Leader>a="] = ":Tabularize /<bar><cr>",
 	["."] = ":norm .<cr>",
 	-- jump to bottom after yank
 	["<leader>y"] = "y']",
 
-	-- Toggle soft wrap
-	-- ["<leader>ww"] = ":set wrap linebreak",
 }
 
 local imaps = {
@@ -209,10 +212,10 @@ local imaps = {
 
 	-- ["<Down>"] = "<C-o>gj",
 	-- ["<Up>"] = "<C-o>gk",
-	["<A-k>"] = "<esc>:m .-2<CR>==gi",
-	["<A-j>"] = "<esc>:m .+1<CR>==gi",
-	-- ["<A-k>"] = "<esc>:m .-2<CR>==gi",
-	-- ["<A-j>"] = "<esc>:m .+1<CR>==gi",
+	["<A-k>"] = "<esc>:m .-2<cr>==gi",
+	["<A-j>"] = "<esc>:m .+1<cr>==gi",
+	-- ["<A-k>"] = "<esc>:m .-2<cr>==gi",
+	-- ["<A-j>"] = "<esc>:m .+1<cr>==gi",
 
 	["<C-c>"] = "<esc>",
 }
