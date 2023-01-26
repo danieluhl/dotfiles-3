@@ -1,3 +1,4 @@
+local null = require("null-ls")
 local prettier = require("prettier")
 
 prettier.setup({

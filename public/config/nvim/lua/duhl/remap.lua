@@ -2,7 +2,6 @@ local inoremap = require("duhl.keymap").inoremap
 local nnoremap = require("duhl.keymap").nnoremap
 local xnoremap = require("duhl.keymap").xnoremap
 local vnoremap = require("duhl.keymap").vnoremap
-local telescope = require("duhl.telescope")
 
 -- Saving and quitting
 local nmaps = {
@@ -30,8 +29,11 @@ local nmaps = {
 	["'3"] = ":lua require('harpoon.ui').nav_file(3)<cr>",
 	["'4"] = ":lua require('harpoon.ui').nav_file(4)<cr>",
 	["'5"] = ":lua require('harpoon.ui').nav_file(5)<cr>",
-	["<S-l>"] = ":lua require('harpoon.ui').nav_next()<cr>",
-	["<S-h>"] = ":lua require('harpoon.ui').nav_prev()<cr>",
+	["<leader>l"] = ":lua require('harpoon.ui').nav_next()<cr>",
+	["<leader>h"] = ":lua require('harpoon.ui').nav_prev()<cr>",
+	-- cycle through buffers
+	["<S-l>"] = ":bnext<cr>",
+	["<S-h>"] = ":bprevious<cr>",
 
 	["]="] = "<Plug>(IndentWiseNextEqualIndent)",
 	-- replace word with 0 register
@@ -78,9 +80,6 @@ local nmaps = {
 	-- BUFFERS
 	-- Delete all buffers but the current one
 	["<leader>bd"] = ":%bd<bar>e#<cr>",
-	-- cycle through buffers
-	-- ["<S-l>"] = ":bnext<cr>",
-	-- ["<S-h>"] = ":bprevious<cr>",
 	-- jump to splits
 	["<C-l>"] = "<C-w>l",
 	["<C-h>"] = "<C-w>h",
@@ -162,8 +161,7 @@ local nmaps = {
 	-- LSP Mappings
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	-- local bufopts = { noremap = true, silent = true, buffer = bufnr }
-	["<leader>ff"] = ":lua vim.lsp.buf.format({}, 1000) vim.api.nvim_command('write')<cr>",
-	["<leader>ff"] = ":lua vim.lsp.buf.format({}, 1000) vim.api.nvim_command('write')<cr>",
+	["<leader>ff"] = ":LspZeroFormat<cr>:lua vim.api.nvim_command('write')<cr>",
 	["<leader>fp"] = ":Prettier<cr>:lua vim.api.nvim_command('write')<cr>",
 	["gD"] = ":lua vim.lsp.buf.declaration()<cr>",
 	["gd"] = ":lua vim.lsp.buf.definition()<cr>",
@@ -197,7 +195,6 @@ local vmaps = {
 	["."] = ":norm .<cr>",
 	-- jump to bottom after yank
 	["<leader>y"] = "y']",
-
 }
 
 local imaps = {
