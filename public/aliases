@@ -318,6 +318,9 @@ alias vimrc="cd $DOTFILES_PATH/public/config/nvim && nvim ."
 alias pip="pip3"
 alias py="python3"
 
+# trash cli
+alias tm="trash"
+
 # warp terminal background
 # copy to ~/.warp/themes/night_owl
 # set background image in the .yaml file

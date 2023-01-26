@@ -15,15 +15,16 @@ null_ls.setup({
 		-- JS
 		-- diagnostics.eslint,
 		-- formatting.eslint,
-		code_actions.eslint,
+		-- code_actions.eslint,
 		formatting.prettierd,
-		require("typescript.extensions.null-ls.code-actions"),
+		-- require("typescript.extensions.null-ls.code-actions"),
 		diagnostics.tsc,
 		-- JSON
-		-- formatting.fixjson,
+		formatting.fixjson,
+		diagnostics.jsonlint,
 
 		-- YAML
-		-- diagnostics.yamllint,
+		diagnostics.yamllint,
 
 		-- CSS
 		-- formatting.eslint,
@@ -40,8 +41,9 @@ null_ls.setup({
 		diagnostics.ktlint,
 
 		-- Markdown
-		-- diagnostics.markdownlint,
+		diagnostics.markdownlint,
 		code_actions.proselint,
+		diagnostics.codespell,
 
 		-- RUST
 		formatting.rustfmt,

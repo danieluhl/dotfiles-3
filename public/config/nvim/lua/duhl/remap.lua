@@ -2,7 +2,6 @@ local inoremap = require("duhl.keymap").inoremap
 local nnoremap = require("duhl.keymap").nnoremap
 local xnoremap = require("duhl.keymap").xnoremap
 local vnoremap = require("duhl.keymap").vnoremap
-local telescope = require("duhl.telescope")
 
 -- Saving and quitting
 local nmaps = {
@@ -30,8 +29,11 @@ local nmaps = {
 	["'3"] = ":lua require('harpoon.ui').nav_file(3)<cr>",
 	["'4"] = ":lua require('harpoon.ui').nav_file(4)<cr>",
 	["'5"] = ":lua require('harpoon.ui').nav_file(5)<cr>",
-	["<S-l>"] = ":lua require('harpoon.ui').nav_next()<cr>",
-	["<S-h>"] = ":lua require('harpoon.ui').nav_prev()<cr>",
+	["<leader>l"] = ":lua require('harpoon.ui').nav_next()<cr>",
+	["<leader>h"] = ":lua require('harpoon.ui').nav_prev()<cr>",
+	-- cycle through buffers
+	["<S-l>"] = ":bnext<cr>",
+	["<S-h>"] = ":bprevious<cr>",
 
 	["]="] = "<Plug>(IndentWiseNextEqualIndent)",
 	-- replace word with 0 register
@@ -78,9 +80,6 @@ local nmaps = {
 	-- BUFFERS
 	-- Delete all buffers but the current one
 	["<leader>bd"] = ":%bd<bar>e#<cr>",
-	-- cycle through buffers
-	-- ["<S-l>"] = ":bnext<cr>",
-	-- ["<S-h>"] = ":bprevious<cr>",
 	-- jump to splits
 	["<C-l>"] = "<C-w>l",
 	["<C-h>"] = "<C-w>h",

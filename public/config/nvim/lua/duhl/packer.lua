@@ -14,7 +14,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
 		install_path,
 	})
 	print("Installing packer close and reopen Neovim...")
-	vim.cmd.packadd('packer.nvim')
+	vim.cmd.packadd("packer.nvim")
 end
 
 return require("packer").startup(function(use)
@@ -59,6 +59,13 @@ return require("packer").startup(function(use)
 			-- Snippets
 			{ "L3MON4D3/LuaSnip" },
 			{ "rafamadriz/friendly-snippets" },
+
+			-- Formatters and Diagnostics
+			{ "jose-elias-alvarez/null-ls.nvim" },
+			-- Language server plugins (so you don't have to install these on every machine)
+			{ "jose-elias-alvarez/typescript.nvim" },
+			{ "MunifTanjim/eslint.nvim" },
+			{ "MunifTanjim/prettier.nvim" },
 		},
 	})
 
@@ -67,8 +74,6 @@ return require("packer").startup(function(use)
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
 	})
-
-	use("nvim-treesitter/playground")
 
 	use({
 		"nvim-tree/nvim-tree.lua",
@@ -83,9 +88,12 @@ return require("packer").startup(function(use)
 	use("vim-scripts/ReplaceWithRegister")
 	use("tpope/vim-surround")
 	use("tpope/vim-commentary")
-	use("tpope/vim-vinegar")
 	use("tpope/vim-repeat")
-	use("wellle/context.vim")
+
+	-- this is the context window at the top of the screen - gets a bit buggy
+	--  with some things
+	-- use("wellle/context.vim")
+
 	use({
 		"windwp/nvim-autopairs",
 		config = function()
@@ -93,8 +101,6 @@ return require("packer").startup(function(use)
 		end,
 	})
 	use("windwp/nvim-ts-autotag")
-
-	-- Maybe Future Things I Want
 	use("mbbill/undotree")
 	use("jeetsukumaran/vim-indentwise")
 	use("ThePrimeagen/harpoon")
