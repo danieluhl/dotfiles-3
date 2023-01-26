@@ -161,8 +161,7 @@ local nmaps = {
 	-- LSP Mappings
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	-- local bufopts = { noremap = true, silent = true, buffer = bufnr }
-	["<leader>ff"] = ":lua vim.lsp.buf.format({}, 1000) vim.api.nvim_command('write')<cr>",
-	["<leader>ff"] = ":lua vim.lsp.buf.format({}, 1000) vim.api.nvim_command('write')<cr>",
+	["<leader>ff"] = ":LspZeroFormat<cr>:lua vim.api.nvim_command('write')<cr>",
 	["<leader>fp"] = ":Prettier<cr>:lua vim.api.nvim_command('write')<cr>",
 	["gD"] = ":lua vim.lsp.buf.declaration()<cr>",
 	["gd"] = ":lua vim.lsp.buf.definition()<cr>",
@@ -196,7 +195,6 @@ local vmaps = {
 	["."] = ":norm .<cr>",
 	-- jump to bottom after yank
 	["<leader>y"] = "y']",
-
 }
 
 local imaps = {
