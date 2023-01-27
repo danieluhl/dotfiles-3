@@ -292,22 +292,15 @@ mkcd () { mkdir "$1" && cd $_ }
 # debug node
 alias ndebug="node --inspect --debug-brk"
 
-
 # YARN
 alias yilock="yarn --force --frozen-lockfile"
 
 # kill adobe crap
 alias noadobe="sudo -H killall ACCFinderSync \"Core Sync\" AdobeCRDaemon \"Adobe Creative\" AdobeIPCBroker node \"Adobe Desktop Service\" \"Adobe Crash Reporter\" && sudo -H rm -rf \"~/Library/LaunchAgents/com.adobe.AAM.Updater-1.0.plist\" \"~/Library/LaunchAgents/com.adobe.AdobeCreativeCloud.plist\" \"~/Library/LaunchDaemons/com.adobe.*.plist\""
 
-
-# custom npm packages
-# alias exs="npx exercism-submit"
-
-
 # Docker aliases
 alias dkkill='docker kill $(docker ps -q)'
 alias dkstop='docker stop $(docker ps -q)'
-
 
 # vim aliases
 alias v="nvim ."
