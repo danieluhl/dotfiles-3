@@ -23,7 +23,7 @@ null_ls.setup({
 		-- diagnostics.eslint,
 		-- formatting.eslint,
 		-- code_actions.eslint,
-		formatting.prettierd,
+		formatting.prettier,
 		-- require("typescript.extensions.null-ls.code-actions"),
 		-- diagnostics.tsc,
 		-- JSON
