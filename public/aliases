@@ -78,7 +78,7 @@ alias glh='git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
 # committing
 alias ga='git add -A'
 alias gca='git add -A && git commit -m'
-alias gcin='git commit -amn'
+alias gcin='git commit -am'
 alias gci='git add -A && git commit -n'
 alias gcamend='git add -A && git commit --amend'
 alias gcc='git checkout -- .'
