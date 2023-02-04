@@ -129,7 +129,7 @@ local nmaps = {
 
 	-- github
 	["<leader>gh"] = ":OpenGithubFile<cr>",
-	["<leader>ghc"] = ":Git commit -m ",
+	["<leader>ghc"] = ":Git commit -am",
 	-- open link in browser
 	["<leader>gl"] = "<Plug>(openbrowser-open)",
 
