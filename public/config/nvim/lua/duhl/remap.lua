@@ -43,6 +43,7 @@ local nmaps = {
 	-- ["<leader>p"] = "ciw<C-r>0<esc>",
 	-- replace word with option to go next
 	["<leader>cw"] = "*Nciw<C-r>0<esc>",
+	["ciw"] = "*Nciw",
 	-- delete word to no register
 	["<leader>d"] = '"_d',
 	["<leader>D"] = '"_D',
