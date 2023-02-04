@@ -6,6 +6,9 @@ local vnoremap = require("duhl.keymap").vnoremap
 -- Saving and quitting
 local nmaps = {
 
+	-- jump into curly braces that are on the current line
+	["<leader>{"] = "f{a<cr><esc>O",
+
 	["<leader>k"] = ":lua vim.diagnostic.open_float()<cr>",
 	-- Marks
 	-- ["mf"] = "mF",
@@ -37,7 +40,9 @@ local nmaps = {
 
 	["]="] = "<Plug>(IndentWiseNextEqualIndent)",
 	-- replace word with 0 register
-	["<leader>p"] = "ciw<C-r>0<esc>",
+	-- ["<leader>p"] = "ciw<C-r>0<esc>",
+	-- replace word with option to go next
+	["<leader>cw"] = "*Nciw<C-r>0<esc>",
 	-- delete word to no register
 	["<leader>d"] = '"_d',
 	["<leader>D"] = '"_D',
@@ -107,10 +112,10 @@ local nmaps = {
 	-- Wrap only lines longer than 80ch
 	["<leader>gq"] = ":g/./ normal gqq<cr>",
 	-- Toggle soft wrap
-	["<leader>gw"] = ":set wrap linebreak<cr>",
+	-- ["<leader>gw"] = ":set wrap linebreak<cr>",
 	["<leader>gww"] = ":set nowrap<cr>",
 	-- copy current word into clipboard
-	["<leader>y"] = 'viw"+y',
+	-- ["<leader>y"] = 'viw"+y',
 
 	-- Foldings (use za to fold/unfold)
 	-- ["zz"] = ":set foldmethod=syntax<cr>",
@@ -195,7 +200,8 @@ local vmaps = {
 	-- ["<Leader>a="] = ":Tabularize /<bar><cr>",
 	["."] = ":norm .<cr>",
 	-- jump to bottom after yank
-	["<leader>y"] = "y']",
+	["y"] = "y']",
+	["gy"] = "y']",
 }
 
 local imaps = {
