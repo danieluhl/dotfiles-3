@@ -128,7 +128,8 @@ local nmaps = {
 	["N"] = "Nzzzv",
 
 	-- github
-	["<leader>gh"] = ":OpenGithubFile<cr>",
+	["gh"] = ":Git<cr>",
+	["<leader>ghf"] = ":OpenGithubFile<cr>",
 	["<leader>ghc"] = ":Git commit -a<cr>",
 	["<leader>ghp"] = ":!git pull && git push<cr>",
 
