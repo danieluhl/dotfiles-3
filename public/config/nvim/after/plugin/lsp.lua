@@ -1,10 +1,9 @@
 local lsp = require("lsp-zero")
 
--- lsp.preset("recommended")
-
+lsp.preset("recommended")
 lsp.ensure_installed({
   "tsserver",
-  -- "eslint",
+  "eslint",
   "sumneko_lua",
   "rust_analyzer",
 })
@@ -64,11 +63,16 @@ lsp.configure("sumneko_lua", {
 
 -- remove tsc formatting - use prettier instead
 lsp.configure("tsserver", {
-  on_attach = function(client, bufnr)
-    client.server_capabilities.documentFormattingProvider = false
-    client.server_capabilities.documentRangeFormattingProvider = false
-    on_attach(client, bufnr)
-  end,
+  settings = {
+    completions = {
+      completeFunctionCalls = true,
+    },
+  },
+  -- on_attach = function(client, bufnr)
+  --   client.server_capabilities.documentFormattingProvider = false
+  --   client.server_capabilities.documentRangeFormattingProvider = false
+  --   on_attach(client, bufnr)
+  -- end,
 })
 
 local cmp = require("cmp")
@@ -77,6 +81,8 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
   ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
   ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
   ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+  -- ["<Tab>"] = cmp.mapping.confirm({ select = true }),
+  -- ["<S-Tab>"] = cmp.mapping.confirm({ select = true }),
   ["<C-Space>"] = cmp.mapping.complete(),
 })
 

@@ -65,7 +65,6 @@ return require("packer").startup(function(use)
 			-- Language server plugins (so you don't have to install these on every machine)
 			{ "jose-elias-alvarez/typescript.nvim" },
 			{ "MunifTanjim/prettier.nvim" },
-			{ "jay-babu/mason-null-ls.nvim" },
 		},
 	})
 
