@@ -76,10 +76,10 @@ alias glm='git log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\
 alias gl="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 alias glh='git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
 # committing
-alias ga='git add -A'
-alias gca='git add -A && git commit -m'
+# alias ga='git add -A'
+# alias gca='git add -A && git commit -m'
 alias gcin='git commit -am'
-alias gci='git add -A && git commit -n'
+# alias gci='git add -A && git commit -n'
 alias gcamend='git add -A && git commit --amend'
 alias gcc='git checkout -- .'
 alias guc='git reset --soft HEAD~1'
