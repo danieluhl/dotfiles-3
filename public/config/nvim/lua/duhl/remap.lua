@@ -138,7 +138,8 @@ local nmaps = {
 
 	-- telescope
 	["<C-p>"] = ":UserTelescopeFindFiles<cr>",
-	["<leader>fd"] = ":Telescope find_files hidden=true<cr>",
+	["<leader>fd"] = ":UserTelescopeFindFilesAll<cr>",
+	-- ["<leader>fd"] = ":Telescope find_files hidden=true<cr>",
 	["<C-f>"] = ":UserTelescopeLiveGrep<cr>",
 	["<leader>fa"] = ":UserTelescopeLiveGrepAll<cr>",
 	["<leader>fb"] = ":Telescope buffers<cr>",
@@ -146,6 +147,7 @@ local nmaps = {
 	["<leader>fs"] = ":Telescope grep_string<cr>",
 	["<leader>fh"] = ":Telescope search_history<cr>",
 	["<leader>fo"] = ":Telescope oldfiles<cr>",
+	["<leader>p"] = ":Telescope oldfiles<cr><C-p><cr>",
 
 	-- Tabularize - for formatting markdown tables
 	-- ["<Leader>a="] = ":Tabularize /<bar><cr>",

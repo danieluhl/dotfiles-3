@@ -30,6 +30,15 @@ local function find_files()
   })
 end
 
+local function find_files_all()
+  local telescope_builtin = require("telescope.builtin")
+
+  telescope_builtin.find_files({
+    find_command = find_command_all,
+    file_ignore_patterns = file_ignore_patterns,
+  })
+end
+
 local function live_grep()
   local telescope_builtin = require("telescope.builtin")
 
@@ -52,6 +61,10 @@ end
 vim.api.nvim_create_user_command("UserTelescopeFindFiles", function()
   find_files()
 end, { desc = "Open fuzzy finder with telescope" })
+
+vim.api.nvim_create_user_command("UserTelescopeFindFilesAll", function()
+  find_files_all()
+end, { desc = "Find all files including gitignored" })
 
 vim.api.nvim_create_user_command("UserTelescopeLiveGrepAll", function()
   live_grep_all()

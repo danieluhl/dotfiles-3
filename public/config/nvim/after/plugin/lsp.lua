@@ -61,13 +61,13 @@ lsp.configure("sumneko_lua", {
   },
 })
 
--- remove tsc formatting - use prettier instead
 lsp.configure("tsserver", {
   settings = {
     completions = {
       completeFunctionCalls = true,
     },
   },
+  -- remove tsc formatting - use prettier instead
   -- on_attach = function(client, bufnr)
   --   client.server_capabilities.documentFormattingProvider = false
   --   client.server_capabilities.documentRangeFormattingProvider = false
