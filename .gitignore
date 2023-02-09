@@ -7,8 +7,4 @@ local
 /public/config/exercism
 /public/config/nvim/plugin
 .DS_Store
-**/.DS_Store
-**.DS_Store
-/**/.DS_Store
 *.DS_Store
-/public/warp/.DS_Store
