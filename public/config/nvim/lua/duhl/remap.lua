@@ -103,6 +103,7 @@ local nmaps = {
 	["<C-e>"] = "5<C-e>",
 	-- Not sure why but <S-Tab> is sending <C-y>
 	["<C-y>"] = "<C-^>",
+	-- ["<C-Tab>"] = "<C-^>",
 	-- ["<S-Tab>"] = "<C-^>",
 
 	-- Paste in quotes

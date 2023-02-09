@@ -20,7 +20,7 @@ cmp.setup({
 	mapping = {
 		["<C-p>"] = cmp.mapping.select_prev_item(),
 		["<C-n>"] = cmp.mapping.select_next_item(),
-		-- ["<C-e>"] = cmp.mapping.close(),
+		-- ["<esc>"] = cmp.mapping.close(),
 		-- ["<C-e>"] = cmp.mapping.complete(),
 		-- ["<C-e>"] = cmp.mapping.complete(),
 		-- ["<C-e>"] = luasnip.expand(),
