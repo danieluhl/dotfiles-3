@@ -56,6 +56,7 @@ vim.opt.shortmess:append({ c = true })
 
 -- vim.api.nvim_command("hi Nr guifg=#af00af")
 
-vim.cmd([[set iskeyword+=-]])
+-- this makes it so that dashes are considered part of the word
+-- vim.cmd([[set iskeyword+=-]])
 
 vim.loaded_matchit = 1
