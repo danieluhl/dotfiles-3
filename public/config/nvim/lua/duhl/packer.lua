@@ -58,7 +58,6 @@ return require("packer").startup(function(use)
 
 			-- Snippets
 			{ "L3MON4D3/LuaSnip" },
-			{ "rafamadriz/friendly-snippets" },
 
 			-- Formatters and Diagnostics
 			{ "jose-elias-alvarez/null-ls.nvim" },
@@ -126,6 +125,9 @@ return require("packer").startup(function(use)
 
 	-- prisma
 	use("prisma/vim-prisma")
+
+	-- astro
+	use("wuelnerdotexe/vim-astro")
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

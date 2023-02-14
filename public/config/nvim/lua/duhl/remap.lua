@@ -6,6 +6,7 @@ local vnoremap = require("duhl.keymap").vnoremap
 -- Saving and quitting
 local nmaps = {
 
+	["<leader>}"] = "wbi{<esc>ea}<esc>",
 	-- jump into curly braces that are on the current line
 	["<leader>{"] = "f{a<cr><esc>O",
 
@@ -215,6 +216,8 @@ local vmaps = {
 local imaps = {
 	-- luasnip completion
 	["<C-e>"] = "<Plug>luasnip-expand-snippet",
+	-- console log snippet
+	["<leader>cl"] = "console.log()<esc>i",
 
 	-- Insert Mode Edits
 	["<C-d>"] = "<del>",

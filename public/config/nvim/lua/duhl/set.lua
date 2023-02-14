@@ -54,6 +54,10 @@ end
 
 vim.opt.shortmess:append({ c = true })
 
+-- enable astro syntax highlighting
+vim.g.astro_typescript = "enable"
+vim.g.astro_stylus = "enable"
+
 -- vim.api.nvim_command("hi Nr guifg=#af00af")
 
 -- this makes it so that dashes are considered part of the word

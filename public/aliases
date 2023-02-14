@@ -83,6 +83,7 @@ alias gcin='git add -A && git commit -m'
 alias gcamend='git add -A && git commit --amend'
 alias gcc='git checkout -- .'
 alias guc='git reset --soft HEAD~1'
+# use git restore ./file to reset on or more files back
 alias gup='setUpstreamBranch'
 alias gremove='git reset HEAD && git status'
 # get latest master on local master without checking out master
