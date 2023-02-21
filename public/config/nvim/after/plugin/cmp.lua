@@ -3,6 +3,9 @@
 -- Set up nvim-cmp.
 local cmp = require("cmp")
 local luasnip = require("luasnip")
+
+require("luasnip.loaders.from_vscode").lazy_load({ paths = { "~/.config/nvim/my-snippets" } })
+
 cmp.setup({
 	completion = {
 		completeopt = "menu,menuone,noselect",
@@ -75,6 +78,7 @@ cmp.setup({
 		native_menu = false,
 	},
 	enabled = function()
+		-- disable when in a comment or in command mode
 		if require("cmp.config.context").in_treesitter_capture("comment") == true
 				or require("cmp.config.context").in_syntax_group("Comment")
 				or vim.bo.buftype == "prompt"

@@ -81,8 +81,7 @@ local nmaps = {
 	["<S-e>"] = ":NvimTreeToggle<cr><C-w>l",
 
 	-- Search under cursor
-	["<leader>s"] = ":%s/",
-	["<leader>S"] = ":%s/<C-r><C-w>//g<C-f>hi<C-c>",
+	["<leader>s"] = ":s/<C-r><C-w>//g<C-f>hhi<C-c>",
 
 	-- BUFFERS
 	-- Delete all buffers but the current one
@@ -200,6 +199,9 @@ local vmaps = {
 	["<A-j>"] = ":m '>+1<cr>gv=gv",
 	["<A-Up>"] = ":m '<-2<cr>gv=gv",
 	["<A-Down>"] = ":m '>+1<cr>gv=gv",
+
+	-- replace in selection with yanked word
+	["<leader>s"] = ':s/<C-r>"//g<C-f>hhi<C-c>',
 
 	-- Delete to black hole register
 	["<leader>d"] = '"_d',
