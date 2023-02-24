@@ -124,8 +124,11 @@ complete -o nospace -C /usr/local/bin/vault vault
 # eval "$(starship init zsh)"
 
 # Run startup script
-local lastLogin=$(ls -lart ~/git/dotfiles/public/login.sh | cut -f10 -d" ")
+local lastLogin=$(date -r ~/git/dotfiles/public/login.sh | cut -f3 -d" ")
+# local lastLogin=$(ls -lart ~/git/dotfiles/public/login.sh | cut -f9 -d" ")
 local today=$(date | cut -f3 -d" ")
+echo $lastLogin
+echo $today
 if [ $lastLogin != $today ]
 then
   bash ~/git/dotfiles/public/login.sh
