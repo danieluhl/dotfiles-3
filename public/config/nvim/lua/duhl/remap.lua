@@ -148,7 +148,7 @@ local nmaps = {
 	["<leader>fs"] = ":Telescope grep_string<cr>",
 	["<leader>fh"] = ":Telescope search_history<cr>",
 	["<leader>fo"] = ":Telescope oldfiles<cr>",
-	["<leader>p"] = ":Telescope oldfiles<cr><C-p><cr>",
+	-- ["<leader>p"] = ":Telescope oldfiles<cr><C-p><cr>",
 
 	-- Tabularize - for formatting markdown tables
 	-- ["<Leader>a="] = ":Tabularize /<bar><cr>",
@@ -219,7 +219,7 @@ local imaps = {
 	-- luasnip completion
 	["<C-e>"] = "<Plug>luasnip-expand-snippet",
 	-- console log snippet
-	["<leader>cl"] = "console.log()<esc>i",
+	-- ["clog"] = "console.log()<esc>i",
 
 	-- Insert Mode Edits
 	["<C-d>"] = "<del>",
