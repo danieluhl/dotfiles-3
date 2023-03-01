@@ -20,7 +20,7 @@ sh ./vim-setup.sh
 dir=~/git/dotfiles/public        # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
 #files="bashrc vimrc vim zshrc oh-my-zsh private scrotwm.conf Xresources"    # list of files/folders to symlink in homedir
-files="zshrc aliases gitconfig eslintrc gitignore gitmessage npmrc profile prettier warp config/nvim config/raycast"
+files="tool-versions zshrc aliases gitconfig eslintrc gitignore gitmessage npmrc profile prettier warp config/nvim config/raycast"
 
 ##########
 

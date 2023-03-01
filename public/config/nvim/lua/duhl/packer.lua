@@ -119,6 +119,7 @@ return require("packer").startup(function(use)
 
 	-- extra support for react jsx
 	use("neoclide/vim-jsx-improve")
+	use("duane9/nvim-rg")
 
 	-- rust
 	use("simrat39/rust-tools.nvim")

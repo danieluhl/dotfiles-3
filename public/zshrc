@@ -117,6 +117,9 @@ bashcompinit
 autoload -Uz compinit
 compinit
 
+# Activate rtx for the session (rust based pro)
+eval "$(/opt/homebrew/bin/rtx activate zsh)"
+
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/vault vault
 
@@ -143,3 +146,5 @@ if [ -f '/Users/duhl/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/duhl/googl
 if [ -f '/Users/duhl/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/duhl/google-cloud-sdk/completion.zsh.inc'; fi
 
 source /Users/danieluhl/.docker/init-zsh.sh || true # Added by Docker Desktop
+
+
