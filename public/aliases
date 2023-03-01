@@ -318,3 +318,12 @@ alias tm="trash"
 # warp terminal background
 # copy to ~/.warp/themes/night_owl
 # set background image in the .yaml file
+
+
+# rtx
+# install whats in the config
+# `rtx install node`
+# set the global config
+# `rtx global nodejs@latest`
+# set the local config
+# `rtx local nodejs@latest`
