@@ -49,3 +49,5 @@
 	program = gpg
 [tag]
 	forceSignAnnotated = false
+[case]
+  ignorecase = false
