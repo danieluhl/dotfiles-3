@@ -3,7 +3,7 @@ accent: "#7e57c2"
 background_image:
   # background image author: Shikhiu Ing, Warp.dev
   path: night_owl/deep.jpg
-  opacity: 70
+  opacity: 40
 background: "#000000"
 details: lighter
 foreground: "#d6deeb"
