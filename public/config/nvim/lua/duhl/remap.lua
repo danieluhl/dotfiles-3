@@ -5,25 +5,14 @@ local vnoremap = require("duhl.keymap").vnoremap
 
 -- Saving and quitting
 local nmaps = {
+	-- disable q: because I accidentally hit it all the time
+	["q:"] = ":",
 
 	["<leader>}"] = "wbi{<esc>ea}<esc>",
 	-- jump into curly braces that are on the current line
 	["<leader>{"] = "f{a<cr><esc>O",
 
 	["<leader>k"] = ":lua vim.diagnostic.open_float()<cr>",
-	-- Marks
-	-- ["mf"] = "mF",
-	-- ["'f"] = "'F",
-	-- -- ["`f"] = "`F",
-	-- ["md"] = "mD",
-	-- ["'d"] = "'D",
-	-- -- ["`d"] = "`D",
-	-- ["ms"] = "mS",
-	-- ["'s"] = "'S",
-	-- -- ["`s"] = "`S",
-	-- ["ma"] = "mA",
-	-- ["'a"] = "'A",
-	-- ["`a"] = "`A",
 
 	-- harpoon marks
 	["ma"] = ":lua require('harpoon.mark').add_file()<cr>",

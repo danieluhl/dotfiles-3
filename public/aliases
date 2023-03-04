@@ -46,10 +46,10 @@ function code {
     fi
 }
 
-alias dot='cd ~/git/dotfiles && nvim .'
+alias dot='nvim ~/git/dotfiles'
 alias packs='cd ~/.local/share/nvim/site/pack/packer/'
 alias scratch='cd ~/git && nvim scratchpad.txt'
-alias aliases='nvim ~/.aliases'
+alias alss='nvim ~/.aliases'
 alias reload='source ~/.aliases'
 
 alias wat='alias'
@@ -306,7 +306,8 @@ alias dkstop='docker stop $(docker ps -q)'
 # vim aliases
 alias v="nvim ."
 alias vim="nvim"
-alias vimrc="cd $DOTFILES_PATH/public/config/nvim && nvim ."
+alias vimrc="nvim $DOTFILES_PATH/public/config/nvim"
+alias remaps="nvim $DOTFILES_PATH/public/config/nvim/lua/duhl/remap.lua"
 
 # python
 alias pip="pip3"

@@ -127,16 +127,15 @@ complete -o nospace -C /usr/local/bin/vault vault
 # eval "$(starship init zsh)"
 
 # Run startup script
-local lastLogin=$(date -r ~/git/dotfiles/public/login.sh | cut -f3 -d" ")
-# local lastLogin=$(ls -lart ~/git/dotfiles/public/login.sh | cut -f9 -d" ")
-local today=$(date | cut -f3 -d" ")
-echo $lastLogin
-echo $today
-if [ $lastLogin != $today ]
-then
-  bash ~/git/dotfiles/public/login.sh
-  touch ~/git/dotfiles/public/login.sh
-fi
+# local lastLogin=$(date -r ~/git/dotfiles/public/login.sh | cut -f3 -d" ")
+# # local lastLogin=$(ls -lart ~/git/dotfiles/public/login.sh | cut -f9 -d" ")
+# local today=$(date | cut -f3 -d" ")
+# echo $lastLogin
+# echo $today
+# if [ $lastLogin != $today ]
+# then
+node ~/git/dotfiles/public/login.js
+# fi
 
 
 # The next line updates PATH for the Google Cloud SDK.
@@ -147,4 +146,4 @@ if [ -f '/Users/duhl/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/duhl
 
 source /Users/danieluhl/.docker/init-zsh.sh || true # Added by Docker Desktop
 
-clear
+# clear
