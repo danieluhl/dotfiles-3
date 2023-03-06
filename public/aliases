@@ -48,7 +48,7 @@ function code {
 
 alias dot='nvim ~/git/dotfiles'
 alias packs='cd ~/.local/share/nvim/site/pack/packer/'
-alias scratch='cd ~/git && nvim scratchpad.txt'
+alias scratch='cd ~/git && nvim scratchpad.md'
 alias alss='nvim ~/.aliases'
 alias reload='source ~/.aliases'
 
