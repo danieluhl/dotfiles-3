@@ -6,6 +6,8 @@ wayfair
 local
 /public/config/exercism
 /public/config/nvim/plugin
+/public/login.json
+/public/warp/themes/night_owl/deep.jpg
 .DS_Store
 *.DS_Store
 npmrc
