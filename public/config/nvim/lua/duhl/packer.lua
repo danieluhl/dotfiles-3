@@ -115,7 +115,7 @@ return require("packer").startup(function(use)
 	})
 
 	-- usage tracking
-	use("wakatime/vim-wakatime")
+	-- use("wakatime/vim-wakatime")
 
 	-- extra support for react jsx
 	use("neoclide/vim-jsx-improve")
