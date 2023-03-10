@@ -9,7 +9,7 @@ local vimgrep_arguments = {
   "-uu",
 }
 local find_command = { "rg", "--files", "--iglob", "!.git", "--hidden" }
-local find_command_all = { "rg", "--files", "hidden" }
+local find_command_all = { "rg", "--files", "--hidden" }
 local file_ignore_patterns = {
   "yarn.lock",
   "node_modules",
@@ -35,7 +35,7 @@ local function find_files_all()
 
   telescope_builtin.find_files({
     find_command = find_command_all,
-    file_ignore_patterns = file_ignore_patterns,
+    -- file_ignore_patterns = file_ignore_patterns,
   })
 end
 

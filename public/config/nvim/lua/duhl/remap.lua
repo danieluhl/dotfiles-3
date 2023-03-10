@@ -111,7 +111,7 @@ local nmaps = {
 	-- Foldings (use za to fold/unfold)
 	-- ["zz"] = ":set foldmethod=syntax<cr>",
 
-	-- center when mocing around
+	-- center when mucking around
 	["<C-d>"] = "<C-d>zz",
 	["<C-u>"] = "<C-u>zz",
 	["n"] = "nzzzv",
@@ -233,6 +233,8 @@ local xmaps = {
 	-- Copy visual selection to clipboard
 	["<leader>y"] = '"+y',
 	-- ["<leader>p"] = '"_dP',
+
+	["."] = ":norm .<cr>",
 }
 
 for k, v in pairs(imaps) do
