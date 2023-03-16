@@ -134,8 +134,9 @@ complete -o nospace -C /usr/local/bin/vault vault
 # echo $today
 # if [ $lastLogin != $today ]
 # then
-node ~/git/dotfiles/public/login.js
+# node ~/git/dotfiles/public/login.js
 # fi
+npx get-warp-bg
 
 
 # The next line updates PATH for the Google Cloud SDK.

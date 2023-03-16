@@ -111,11 +111,13 @@ local nmaps = {
 	-- Foldings (use za to fold/unfold)
 	-- ["zz"] = ":set foldmethod=syntax<cr>",
 
-	-- center when mucking around
+	-- center when mucking around, add zv for folds if ever necessary
 	["<C-d>"] = "<C-d>zz",
 	["<C-u>"] = "<C-u>zz",
-	["n"] = "nzzzv",
-	["N"] = "Nzzzv",
+	["n"] = "nzz",
+	["N"] = "Nzz",
+	["g;"] = "g;zz",
+	["gi"] = "gizz",
 
 	-- github
 	["gh"] = ":Git<cr>",
