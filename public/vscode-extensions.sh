@@ -1,6 +1,5 @@
 code --install-extension christian-kohler.path-intellisense
 code --install-extension CoenraadS.bracket-pair-colorizer
-code --install-extension dawhite.mustache
 code --install-extension dbaeumer.vscode-eslint
 code --install-extension dpkshrma.insert-iso-timestamp
 code --install-extension esbenp.prettier-vscode
