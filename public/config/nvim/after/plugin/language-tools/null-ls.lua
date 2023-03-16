@@ -42,6 +42,14 @@ null_ls.setup({
     formatting.ktlint,
     -- diagnostics.ktlint,
 
+    -- Golang
+    diagnostics.golangci_lint,
+    diagnostics.staticcheck,
+    formatting.goimports_reviser,
+    formatting.goimports,
+    formatting.golines,
+    formatting.gofumpt,
+
     -- Markdown
     -- diagnostics.markdownlint,
     -- code_actions.proselint,
