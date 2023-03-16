@@ -134,7 +134,7 @@ complete -o nospace -C /usr/local/bin/vault vault
 # echo $today
 # if [ $lastLogin != $today ]
 # then
-node ~/git/dotfiles/public/login.js
+# node ~/git/dotfiles/public/login.js
 # fi
 
 
@@ -146,4 +146,6 @@ if [ -f '/Users/duhl/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/duhl
 
 source /Users/danieluhl/.docker/init-zsh.sh || true # Added by Docker Desktop
 
-# clear
+
+clear
+bash ~/git/dotfiles/public/login.sh
