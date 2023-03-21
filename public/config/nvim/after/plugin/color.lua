@@ -40,7 +40,7 @@ require("nightfox").setup({
   },
 })
 
-vim.cmd("colorscheme duskfox")
+vim.cmd("colorscheme nightfox")
 -- bg3 in duskfox
 vim.api.nvim_set_hl(0, "CursorColumn", { bg = "#191726" })
 vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#232136" })

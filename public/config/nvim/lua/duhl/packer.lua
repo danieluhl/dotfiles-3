@@ -20,8 +20,8 @@ end
 return require("packer").startup(function(use)
 	-- Packer can manage itself
 	use("wbthomason/packer.nvim")
-	use("haishanh/night-owl.vim")
-	use("morhetz/gruvbox")
+	-- use("haishanh/night-owl.vim")
+	-- use("morhetz/gruvbox")
 	use("EdenEast/nightfox.nvim")
 
 	-- Telescope
@@ -129,6 +129,9 @@ return require("packer").startup(function(use)
 
 	-- astro
 	use("wuelnerdotexe/vim-astro")
+
+	-- golang
+	use("fatih/vim-go")
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
