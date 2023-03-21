@@ -8,6 +8,8 @@ lsp.ensure_installed({
   "rust_analyzer",
 })
 
+-- note: none of this seems to work, if you want key
+-- bindings, do it in the remap file
 local on_attach = function(client, bufnr)
   local opts = { buffer = bufnr, remap = false }
 

@@ -45,7 +45,6 @@ null_ls.setup({
     -- Golang
     diagnostics.golangci_lint,
     diagnostics.staticcheck,
-    formatting.goimports_reviser,
     formatting.goimports,
     formatting.golines,
     formatting.gofumpt,

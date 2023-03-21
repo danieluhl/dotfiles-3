@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+exporj ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -85,6 +85,7 @@ PATH="/usr/local/bin:$PATH"
 
 # Homebrew packages
 PATH="/opt/homebrew/opt/ruby/bin:/opt/homebrew/bin:$PATH"
+PATH="/opt/homebrew/sbin:$PATH"
 
 # Export dev vm
 export DEV_VM=10.235.46.235

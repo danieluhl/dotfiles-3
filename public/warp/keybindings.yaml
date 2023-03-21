@@ -1,5 +1,10 @@
 ---
-"editor_view:right": ctrl-enter
+"editor_view:add_next_occurrence": none
 "terminal:select_all_blocks": shift-cmd-A
-"input:clear_screen": shift-cmd-L
 "terminal:select_next_block": shift-cmd-down
+"input:clear_screen": shift-cmd-L
+"workspace:toggle_ai_assistant": none
+"editor_view:right": ctrl-enter
+"workspace:set_a11y_verbose_verbosity_level": none
+"ai_assistant_panel:reset_context": none
+"workspace:set_a11y_concise_verbosity_level": none

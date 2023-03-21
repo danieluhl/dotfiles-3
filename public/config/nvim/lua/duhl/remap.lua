@@ -12,8 +12,6 @@ local nmaps = {
 	-- jump into curly braces that are on the current line
 	["<leader>{"] = "f{a<cr><esc>O",
 
-	["<leader>k"] = ":lua vim.diagnostic.open_float()<cr>",
-
 	-- harpoon marks
 	["ma"] = ":lua require('harpoon.mark').add_file()<cr>",
 	["mq"] = ":lua require('harpoon.ui').toggle_quick_menu()<cr>",
@@ -22,8 +20,8 @@ local nmaps = {
 	["'3"] = ":lua require('harpoon.ui').nav_file(3)<cr>",
 	["'4"] = ":lua require('harpoon.ui').nav_file(4)<cr>",
 	["'5"] = ":lua require('harpoon.ui').nav_file(5)<cr>",
-	["<leader>l"] = ":lua require('harpoon.ui').nav_next()<cr>",
-	["<leader>h"] = ":lua require('harpoon.ui').nav_prev()<cr>",
+	-- ["<leader>l"] = ":lua require('harpoon.ui').nav_next()<cr>",
+	-- ["<leader>h"] = ":lua require('harpoon.ui').nav_prev()<cr>",
 	-- cycle through buffers
 	["<S-l>"] = ":bnext<cr>",
 	["<S-h>"] = ":bprevious<cr>",
@@ -172,7 +170,8 @@ local nmaps = {
 	["gd"] = ":lua vim.lsp.buf.definition()<cr>",
 	["<leader>gi"] = ":lua vim.lsp.buf.implementation()<cr>",
 	["<leader>gr"] = ":lua vim.lsp.buf.references()<cr>",
-	-- ["<leader>k"] = ":lua vim.lsp.buf.hover()<cr>",
+	["<C-Space>"] = ":lua vim.lsp.buf.hover()<cr>",
+	["<leader>k"] = ":lua vim.diagnostic.open_float()<cr>",
 	["<leader>sh"] = ":lua vim.lsp.buf.signature_help()<cr>",
 	-- ["<leader>wa"] = ":lua vim.lsp.buf.add_workspace_folder()<cr>",
 	-- ["<leader>wr"] = ":lua vim.lsp.buf.remove_workspace_folder()<cr>",
@@ -227,6 +226,8 @@ local imaps = {
 	-- ["<A-j>"] = "<esc>:m .+1<cr>==gi",
 
 	["<C-c>"] = "<esc>",
+
+	["<C-h>"] = "<esc>:lua vim.lsp.buf.hover()<cr>i",
 }
 
 local xmaps = {
