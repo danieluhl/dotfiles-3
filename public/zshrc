@@ -1,6 +1,6 @@
-export DOTFILES_DIR="/Users/danieluhl/git/dotfiles/public"        # dotfiles directory
+export DOTFILES_PATH="/Users/danieluhl/git/dotfiles/public"
 
-source $DOTFILES_DIR/env.sh
+source $DOTFILES_PATH/env.sh
 
 # Load z
 [ -f $(brew --prefix)/etc/profile.d/z.sh ] && source $(brew --prefix)/etc/profile.d/z.sh
@@ -30,6 +30,6 @@ if [ -f '/Users/duhl/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/duhl
 
 # source /Users/danieluhl/.docker/init-zsh.sh || true # Added by Docker Desktop
 
-source $DOTFILES_DIR/login.sh
+source $DOTFILES_PATH/login.sh
 
 clear

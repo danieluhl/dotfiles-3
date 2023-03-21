@@ -1,9 +1,33 @@
 #!/bin/zsh
 
-# Get latest dotfiles
-cd ~/git/dotfiles
+LOGIN_DATE_FILE="$DOTFILES_PATH/lastLogin.sh"
+source $LOGIN_DATE_FILE
 
-git pull
-git status
+if [[ -v LOGIN_DATE ]];
+then
+  echo "Last login: $LOGIN_DATE"
+else
+  LOGIN_DATE=$(date +"%Y-%m-%d");
+fi
 
-npx get-warp-bg
+
+CURRENTDATE=`date +"%Y-%m-%d"`
+DIFF=$(( ($(gdate -d $CURRENTDATE +%s) - $(gdate -d $LOGIN_DATE +%s)) / 86400 )) 
+
+if [[ $DIFF > 1 ]];
+then
+  echo "You haven't pulled latest dotfiles for $DIFF days, pulling now"
+  prevDir=$(pwd)
+  cd ~/git/dotfiles
+
+  git pull
+  git status
+
+  npx get-warp-bg
+  cd $prevDir
+
+  echo "Writing login date: $CURRENTDATE"
+  echo "export LOGIN_DATE=\"$CURRENTDATE\"" > $LOGIN_DATE_FILE
+else
+  echo "All set"
+fi
