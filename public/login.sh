@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 # Get latest dotfiles
 cd ~/git/dotfiles
 

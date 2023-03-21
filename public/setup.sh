@@ -43,3 +43,7 @@ for file in $files; do
   echo "Creating symlink to $file in home directory."
   ln -sfn "$dir"/$file ~/.$file
 done
+
+# make a symlink to this directory for self-reference
+ln -sfn "$dir" ~/.dotdir
+
