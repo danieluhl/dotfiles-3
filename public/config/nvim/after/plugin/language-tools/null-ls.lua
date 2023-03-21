@@ -51,7 +51,7 @@ null_ls.setup({
     formatting.gofumpt,
 
     -- Markdown
-    -- diagnostics.markdownlint,
+    diagnostics.markdownlint,
     -- code_actions.proselint,
     -- diagnostics.codespell,
 
