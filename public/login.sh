@@ -14,7 +14,7 @@ fi
 CURRENTDATE=`date +"%Y-%m-%d"`
 DIFF=$(( ($(gdate -d $CURRENTDATE +%s) - $(gdate -d $LOGIN_DATE +%s)) / 86400 )) 
 
-if [[ $DIFF > 1 ]];
+if [[ $DIFF > 0 ]];
 then
   echo "You haven't pulled latest dotfiles for $DIFF days, pulling now"
   prevDir=$(pwd)
