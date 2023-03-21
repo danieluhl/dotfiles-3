@@ -8,6 +8,9 @@ local nmaps = {
 	-- disable q: because I accidentally hit it all the time
 	["q:"] = ":",
 
+	-- print date
+	["<leader>pd"] = ":r!gdate --iso-8601=seconds<cr>",
+
 	["<leader>}"] = "wbi{<esc>ea}<esc>",
 	-- jump into curly braces that are on the current line
 	["<leader>{"] = "f{a<cr><esc>O",

@@ -10,7 +10,7 @@
 # ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
 # Setup
-alias runsetup="bash $DOTFILES_PATH/public/setup.sh"
+alias runsetup="bash $DOTFILES_PATH/setup.sh"
 alias godot="cd $DOTFILES_PATH"
 
 # Exercism 
@@ -305,8 +305,8 @@ alias dkstop='docker stop $(docker ps -q)'
 # vim aliases
 alias v="nvim ."
 alias vim="nvim"
-alias vimrc="nvim $DOTFILES_PATH/public/config/nvim"
-alias remaps="nvim $DOTFILES_PATH/public/config/nvim/lua/duhl/remap.lua"
+alias vimrc="nvim $DOTFILES_PATH/config/nvim"
+alias remaps="nvim $DOTFILES_PATH/config/nvim/lua/duhl/remap.lua"
 
 # python
 alias pip="pip3"
