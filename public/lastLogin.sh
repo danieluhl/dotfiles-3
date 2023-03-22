@@ -1,1 +1,0 @@
-export LOGIN_DATE="2023-03-21"

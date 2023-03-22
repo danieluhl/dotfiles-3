@@ -209,6 +209,7 @@ local vmaps = {
 }
 
 local imaps = {
+	["<M-b>ackspace"] = "<C-w>",
 	-- luasnip completion
 	["<C-e>"] = "<Plug>luasnip-expand-snippet",
 	-- console log snippet
