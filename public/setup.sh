@@ -3,10 +3,30 @@
 # install homebrew
 # /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"dd
 
-# brew installs
-# brew install neovim
-# brew install ripgrep
-# brew install markdownlint
+# brew list output:
+# ==> Formulae
+# asdf			fribidi			libspiro		lzo			starship
+# autoconf		gettext			libtermkey		m4			supabase
+# automake		gflags			libtiff			mpdecimal		surreal
+# boost			gh			libtool			msgpack			tree-sitter
+# brotli			giflib			libuninameslist		ncurses			unibilium
+# c-ares			glib			libuv			neovim			unixodbc
+# ca-certificates		glog			libvterm		nghttp2			wangle
+# cairo			gmp			libx11			openssl@1.1		watchman
+# coreutils		go			libxau			openssl@3		woff2
+# double-conversion	graphite2		libxcb			pango			xorgproto
+# edencommon		harfbuzz		libxdmcp		pcre			xz
+# exercism		icu4c			libxext			pcre2			yarn
+# fb303			jemalloc		libxrender		pixman			z
+# fbthrift		jpeg-turbo		libyaml			python@3.11		zsh
+# fizz			libev			lua-language-server	readline		zstd
+# fmt			libevent		luajit			ripgrep
+# folly			libnghttp2		luajit-openresty	rtx
+# fontconfig		libpng			luv			snappy
+# freetype		libsodium		lz4			sqlite
+
+# ==> Casks
+# KEYCASTR	WARP
 
 sh ./vim-setup.sh
 
