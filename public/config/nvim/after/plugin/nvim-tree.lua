@@ -26,6 +26,8 @@ require("nvim-tree").setup({
         { key = "J", action = "expand" },
         { key = "K", action = "expand" },
         { key = "H", action = "expand" },
+        { key = "<leader>e", action = "close" },
+        { key = "<cr>", action = "toggle_replace" },
       },
     },
   },
@@ -94,5 +96,18 @@ require("nvim-tree").setup({
   update_focused_file = { enable = true },
 })
 
--- local events = require("nvim-tree.api").events.Event
--- events.Resize = 50
+-- Automatically open a file after creating it
+local api = require("nvim-tree.api")
+api.events.subscribe(api.events.Event.FileCreated, function(file)
+  vim.cmd("edit " .. file.fname)
+end)
+
+local function toggle_replace()
+  local view = require("nvim-tree.view")
+  local api = require("nvim-tree.api")
+  if view.is_visible() then
+    api.tree.close()
+  else
+    require("nvim-tree").open_replacing_current_buffer()
+  end
+end

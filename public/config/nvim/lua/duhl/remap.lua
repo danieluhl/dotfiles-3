@@ -15,19 +15,37 @@ local nmaps = {
 	-- jump into curly braces that are on the current line
 	["<leader>{"] = "f{a<cr><esc>O",
 
-	-- harpoon marks
-	["ma"] = ":lua require('harpoon.mark').add_file()<cr>",
-	["mq"] = ":lua require('harpoon.ui').toggle_quick_menu()<cr>",
-	["'1"] = ":lua require('harpoon.ui').nav_file(1)<cr>",
-	["'2"] = ":lua require('harpoon.ui').nav_file(2)<cr>",
-	["'3"] = ":lua require('harpoon.ui').nav_file(3)<cr>",
-	["'4"] = ":lua require('harpoon.ui').nav_file(4)<cr>",
-	["'5"] = ":lua require('harpoon.ui').nav_file(5)<cr>",
-	-- ["<leader>l"] = ":lua require('harpoon.ui').nav_next()<cr>",
-	-- ["<leader>h"] = ":lua require('harpoon.ui').nav_prev()<cr>",
-	-- cycle through buffers
-	["<S-l>"] = ":bnext<cr>",
-	["<S-h>"] = ":bprevious<cr>",
+	-- BUFFERS
+	-- jump directly to buffer
+	["'1"] = ':lua require("bufferline").go_to_buffer(1, true)<cr>',
+	["'2"] = ':lua require("bufferline").go_to_buffer(2, true)<cr>',
+	["'3"] = ':lua require("bufferline").go_to_buffer(3, true)<cr>',
+	["'4"] = ':lua require("bufferline").go_to_buffer(4, true)<cr>',
+	["'5"] = ':lua require("bufferline").go_to_buffer(5, true)<cr>',
+	-- go to next/prev buffer
+	["<S-l>"] = ":BufferLineCycleNext<cr>",
+	["<S-h>"] = ":BufferLineCyclePrev<cr>",
+	-- move buffer left/right in order
+	["<M-l>"] = ":BufferLineMoveNext<cr>",
+	["<M-h>"] = ":BufferLineMovePrev<cr>",
+	-- Delete all buffers but the current one
+	["<leader>bd"] = ":Bdelete<cr>",
+	["<leader>bq"] = ":bufdo :Bwipeout<cr>",
+
+	-- WINDOWS
+	-- create splits
+	-- ["<C-w><C-v>"] = "<C-w>v<C-w>l",
+	-- ["<leader>ws"] = "<C-w>s<C-w>j",
+	-- ["<leader>wo"] = "<C-w><C-o>", jump to splits
+	["<C-l>"] = "<C-w>l",
+	["<C-h>"] = "<C-w>h",
+	["<C-k>"] = "<C-w>k",
+	["<C-j>"] = "<C-w>j",
+	-- resize
+	["<C-Up>"] = ":resize -2<cr>",
+	["<C-Down>"] = ":resize +2<cr>",
+	["<C-Left>"] = ":vertical resize +2<cr>",
+	["<C-Right>"] = ":vertical resize -2<cr>",
 
 	["]="] = "<Plug>(IndentWiseNextEqualIndent)",
 	-- replace word with 0 register
@@ -68,23 +86,10 @@ local nmaps = {
 	-- jump to current file in nav
 	["<leader>e"] = ":NvimTreeFindFile<cr>",
 	-- Show/hide nav
-	["<S-e>"] = ":NvimTreeToggle<cr><C-w>l",
+	["<S-e>"] = ":NvimTreeToggle<cr>",
 
 	-- Search under cursor
 	["<leader>s"] = ":s/<C-r><C-w>//g<C-f>hhi<C-c>",
-
-	-- BUFFERS
-	-- Delete all buffers but the current one
-	["<leader>bd"] = ":%bd<bar>e#<cr>",
-	-- jump to splits
-	["<C-l>"] = "<C-w>l",
-	["<C-h>"] = "<C-w>h",
-	["<C-k>"] = "<C-w>k",
-	["<C-j>"] = "<C-w>j",
-	-- window mgmt
-	-- ["<leader>wv"] = "<C-w>v<C-w>l",
-	-- ["<leader>ws"] = "<C-w>s<C-w>j",
-	-- ["<leader>wo"] = "<C-w><C-o>",
 
 	-- print from 0 register
 	["<leader>0"] = '"0p',
@@ -114,11 +119,13 @@ local nmaps = {
 
 	-- center when mucking around, add zv for folds if ever necessary
 	["<C-d>"] = "<C-d>zz",
+
 	["<C-u>"] = "<C-u>zz",
 	["n"] = "nzz",
 	["N"] = "Nzz",
 	["g;"] = "g;zz",
-	["gi"] = "gizz",
+	["g,"] = "g,zz",
+	["gi"] = "gi<esc>zzi",
 
 	-- github
 	["gh"] = ":Git<cr>",
@@ -128,7 +135,6 @@ local nmaps = {
 
 	-- open link in browser
 	["<leader>gl"] = "<Plug>(openbrowser-open)",
-
 	-- telescope
 	["<C-p>"] = ":UserTelescopeFindFiles<cr>",
 	["<leader>fd"] = ":UserTelescopeFindFilesAll<cr>",
@@ -152,22 +158,16 @@ local nmaps = {
 	["<Up>"] = "gk",
 
 	-- move lines up or down
-	["<A-Up>"] = ":m '<-2<cr>gv=gv",
-	["<A-Down>"] = ":m '>+1<cr>gv=gv",
-
-	-- resize windows
-	["<C-Up>"] = ":resize -2<cr>",
-	["<C-Down>"] = ":resize +2<cr>",
 	["<A-k>"] = ":m .-2<cr>==",
 	["<A-j>"] = ":m .+1<cr>==",
-	["<C-Right>"] = ":vertical resize +2<cr>",
-	["<C-Left>"] = ":vertical resize -2<cr>",
+	["<A-Up>"] = ":m '<-2<cr>gv=gv",
+	["<A-Down>"] = ":m '>+1<cr>gv=gv",
 
 	-- LSP Mappings
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	-- local bufopts = { noremap = true, silent = true, buffer = bufnr }
 	-- ["<leader>ff"] = ":LspZeroFormat<cr>:lua vim.api.nvim_command('write')<cr>",
-	["<leader>ff"] = ":lua vim.lsp.buf.format({}, 1000) vim.api.nvim_command('write')<CR>:noh<CR>",
+	["<leader>ff"] = ":lua vim.lsp.buf.format() vim.api.nvim_command('write')<CR>:noh<CR>",
 	["<leader>fp"] = ":Prettier<cr>:lua vim.api.nvim_command('write')<cr>",
 	["gD"] = ":lua vim.lsp.buf.declaration()<cr>",
 	["gd"] = ":lua vim.lsp.buf.definition()<cr>",

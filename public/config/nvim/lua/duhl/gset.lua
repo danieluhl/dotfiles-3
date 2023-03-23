@@ -7,6 +7,23 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	group = yankGrp,
 })
 
+-- local bufMruGroup = vim.api.nvim_create_augroup("BufMru", { clear = true })
+-- vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+-- 	-- command = "silent! lua print('hello')",
+-- 	callback = function(ev)
+-- 		print(string.format("event fired: s", vim.inspect(ev)))
+-- 		print(ev)
+-- 		-- vim.cmd("Bclose")
+-- 		-- print("here")
+-- 	end,
+-- })
+-- vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+--   pattern = {"*.c", "*.h"},
+--   callback = function(ev)
+--     print(string.format('event fired: s', vim.inspect(ev)))
+--   end
+-- })
+
 vim.cmd([[
 	let g:VM_maps = {}
 	let g:VM_maps['Find Under']         = '<M-d>'           " replace C-n

@@ -67,6 +67,10 @@ return require("packer").startup(function(use)
 		},
 	})
 
+	-- buffer line tab thingy
+	use("akinsho/bufferline.nvim")
+	use("moll/vim-bbye")
+
 	-- Neovim Tree shitter
 	use({
 		"nvim-treesitter/nvim-treesitter",

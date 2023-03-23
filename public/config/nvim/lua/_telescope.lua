@@ -3,23 +3,6 @@ require("telescope").setup({
 		file_sorter = require("telescope.sorters").get_fzy_sorter,
 		promprt_prefix = " >",
 		color_devicons = true,
-		-- vimgrep_arguments = {
-		-- 	"rg",
-		-- 	"--color=never",
-		-- 	"--no-heading",
-		-- 	"--with-filename",
-		-- 	"--line-number",
-		-- 	"--column",
-		-- 	"--smart-case",
-		-- 	"-uu",
-		-- },
-		-- file_ignore_patterns = {
-		-- 	"yarn.lock",
-		-- 	"node_modules",
-		-- 	"raycast",
-		-- 	"dist",
-		-- 	".git",
-		-- },
 
 		mapings = {
 			i = {
@@ -31,6 +14,9 @@ require("telescope").setup({
 			},
 		},
 	},
+	buffers = {
+		sort_mru = true,
+	},
 	extensions = {
 		fzy_native = {
 			override_generic_sorter = false,
@@ -38,3 +24,4 @@ require("telescope").setup({
 		},
 	},
 })
+require("telescope.builtin").buffers({ sort_mru = true })
