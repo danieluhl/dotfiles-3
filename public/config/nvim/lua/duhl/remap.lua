@@ -37,15 +37,19 @@ local nmaps = {
 	-- ["<C-w><C-v>"] = "<C-w>v<C-w>l",
 	-- ["<leader>ws"] = "<C-w>s<C-w>j",
 	-- ["<leader>wo"] = "<C-w><C-o>", jump to splits
-	["<C-l>"] = "<C-w>l",
-	["<C-h>"] = "<C-w>h",
-	["<C-k>"] = "<C-w>k",
-	["<C-j>"] = "<C-w>j",
-	-- resize
+	["<Left>"] = "<C-w>h",
+	["<Down>"] = "<C-w>j",
+	["<Up>"] = "<C-w>k",
+	["<Right>"] = "<C-w>l",
+	-- resize windows
 	["<C-Up>"] = ":resize -2<cr>",
 	["<C-Down>"] = ":resize +2<cr>",
 	["<C-Left>"] = ":vertical resize +2<cr>",
 	["<C-Right>"] = ":vertical resize -2<cr>",
+
+	-- move lines up and down
+	["<A-k>"] = ":m .-2<cr>==",
+	["<A-j>"] = ":m .+1<cr>==",
 
 	["]="] = "<Plug>(IndentWiseNextEqualIndent)",
 	-- replace word with 0 register
@@ -154,12 +158,8 @@ local nmaps = {
 	-- Seamlessly treat visual lines as actual lines when moving around.
 	["j"] = "gj",
 	["k"] = "gk",
-	["<Down>"] = "gj",
-	["<Up>"] = "gk",
 
 	-- move lines up or down
-	["<A-k>"] = ":m .-2<cr>==",
-	["<A-j>"] = ":m .+1<cr>==",
 	["<A-Up>"] = ":m '<-2<cr>gv=gv",
 	["<A-Down>"] = ":m '>+1<cr>gv=gv",
 
