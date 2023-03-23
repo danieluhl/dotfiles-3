@@ -2,30 +2,43 @@
   "title": "Keychron K6 pro: ESC -> ~/` and RIGHT_COMMAND -> HYPER",
   "rules": [
     {
-      "description": "CAPS_LOCK -> LEFT_CONTROL",
+      "description": "Arc: Fn + [/] ==> ^ + ⌘ + [/]",
       "manipulators": [
         {
           "type": "basic",
           "from": {
-            "key_code": "caps_lock",
+            "key_code": "open_bracket",
             "modifiers": {
-              "optional": [
-                "any"
+              "mandatory": [
+                "fn"
               ]
             }
           },
           "to": [
             {
-              "key_code": "left_control",
+              "key_code": "open_bracket",
               "modifiers": [
+                "left_command",
                 "left_control"
               ]
             }
-          ],
-          "to_if_held_down": [
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "close_bracket",
+            "modifiers": {
+              "mandatory": [
+                "fn"
+              ]
+            }
+          },
+          "to": [
             {
-              "key_code": "left_control",
+              "key_code": "close_bracket",
               "modifiers": [
+                "left_command",
                 "left_control"
               ]
             }
@@ -34,7 +47,7 @@
       ]
     },
     {
-      "description": "CONTROL + ESC -> `",
+      "description": "^ + esc ==> `",
       "manipulators": [
         {
           "type": "basic",
@@ -56,7 +69,7 @@
       ]
     },
     {
-      "description": "COMMAND + ESC -> COMMAND + `",
+      "description": "⌘ + esc ==> ⌘ + `",
       "manipulators": [
         {
           "type": "basic",
@@ -80,7 +93,7 @@
       ]
     },
     {
-      "description": "SHIFT + ESC -> ~",
+      "description": "⇧ + esc ==> ~",
       "manipulators": [
         {
           "type": "basic",
@@ -105,7 +118,7 @@
       ]
     },
     {
-      "description": "LEFT_CONTROL + h/j/k/l -> Arrows",
+      "description": "^ + h/j/k/l ==> Arrows",
       "manipulators": [
         {
           "type": "basic",
@@ -116,11 +129,7 @@
                 "left_control"
               ],
               "optional": [
-                "caps_lock",
-                "shift",
-                "command",
-                "control",
-                "fn"
+                "any"
               ]
             }
           },
@@ -140,11 +149,7 @@
                 "left_control"
               ],
               "optional": [
-                "caps_lock",
-                "shift",
-                "command",
-                "control",
-                "fn"
+                "any"
               ]
             }
           },
@@ -164,11 +169,7 @@
                 "left_control"
               ],
               "optional": [
-                "caps_lock",
-                "shift",
-                "command",
-                "control",
-                "fn"
+                "any"
               ]
             }
           },
@@ -188,11 +189,7 @@
                 "left_control"
               ],
               "optional": [
-                "caps_lock",
-                "shift",
-                "command",
-                "control",
-                "fn"
+                "any"
               ]
             }
           },
@@ -206,7 +203,7 @@
       ]
     },
     {
-      "description": "RIGHT_COMMAND to HYPER (COMMAND + CONTROL + OPTION + SHIFT)",
+      "description": "⌘  to HYPER (⌘ + ^ + ⌥ + ⇧)",
       "manipulators": [
         {
           "from": {
@@ -242,7 +239,7 @@
       ]
     },
     {
-      "description": "Toggle CAPS_LOCK with LEFT_SHIFT + RIGHT_SHIFT",
+      "description": "Toggle caps lock with left shift + right shift",
       "manipulators": [
         {
           "from": {

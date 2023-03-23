@@ -1,6 +1,5 @@
 local inoremap = require("duhl.keymap").inoremap
 local nnoremap = require("duhl.keymap").nnoremap
--- note: C-Right/Left are basically off limits
 local xnoremap = require("duhl.keymap").xnoremap
 local vnoremap = require("duhl.keymap").vnoremap
 
@@ -78,10 +77,10 @@ local nmaps = {
 	-- Delete all buffers but the current one
 	["<leader>bd"] = ":%bd<bar>e#<cr>",
 	-- jump to splits - try not to use
-	["<M-L>"] = "<C-w>l",
-	["<M-J>"] = "<C-w>j",
-	["<M-K>"] = "<C-w>k",
-	["<M-H>"] = "<C-w>h",
+	["<Left>"] = "<C-w>h",
+	["<Down>"] = "<C-w>j",
+	["<Up>"] = "<C-w>k",
+	["<Right>"] = "<C-w>l",
 	-- window mgmt
 	-- ["<leader>wv"] = "<C-w>v<C-w>l",
 	-- ["<leader>ws"] = "<C-w>s<C-w>j",
@@ -149,8 +148,6 @@ local nmaps = {
 	-- Seamlessly treat visual lines as actual lines when moving around.
 	["j"] = "gj",
 	["k"] = "gk",
-	["<Down>"] = "gj",
-	["<Up>"] = "gk",
 
 	-- move lines up or down
 	["<A-Up>"] = ":m '<-2<cr>gv=gv",
@@ -161,8 +158,8 @@ local nmaps = {
 	["<A-j>"] = ":m .+1<cr>==",
 	["<C-Up>"] = ":resize -2<cr>",
 	["<C-Down>"] = ":resize +2<cr>",
-	-- ["<C-Right>"] = ":vertical resize +2<cr>",
-	-- ["<C-Left>"] = ":vertical resize -2<cr>",
+	["<M-Left>"] = ":vertical resize +2<cr>",
+	["<M-Right>"] = ":vertical resize -2<cr>",
 
 	-- LSP Mappings
 	-- See `:help vim.lsp.*` for documentation on any of the below functions

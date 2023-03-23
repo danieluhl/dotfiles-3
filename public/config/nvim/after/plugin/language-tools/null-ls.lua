@@ -26,7 +26,8 @@ null_ls.setup({
     -- diagnostics.jsonlint,
 
     -- YAML
-    -- diagnostics.yamllint,
+    diagnostics.yamllint,
+    formatting.yamlfmt,
 
     -- CSS
     -- formatting.eslint,
