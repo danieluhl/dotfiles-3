@@ -5,25 +5,26 @@
 
 # brew list output:
 # ==> Formulae
-# asdf			fribidi			libspiro		lzo			starship
-# autoconf		gettext			libtermkey		m4			supabase
-# automake		gflags			libtiff			mpdecimal		surreal
-# boost			gh			libtool			msgpack			tree-sitter
-# brotli			giflib			libuninameslist		ncurses			unibilium
-# c-ares			glib			libuv			neovim			unixodbc
-# ca-certificates		glog			libvterm		nghttp2			wangle
-# cairo			gmp			libx11			openssl@1.1		watchman
-# coreutils		go			libxau			openssl@3		woff2
-# double-conversion	graphite2		libxcb			pango			xorgproto
-# edencommon		harfbuzz		libxdmcp		pcre			xz
-# exercism		icu4c			libxext			pcre2			yarn
-# fb303			jemalloc		libxrender		pixman			z
-# fbthrift		jpeg-turbo		libyaml			python@3.11		zsh
-# fizz			libev			lua-language-server	readline		zstd
-# fmt			libevent		luajit			ripgrep
-# folly			libnghttp2		luajit-openresty	rtx
-# fontconfig		libpng			luv			snappy
-# freetype		libsodium		lz4			sqlite
+# asdf			fmt			libsodium		lz4			rtx
+# autoconf		folly			libtasn1		lzo			ruby
+# automake		fontconfig		libtermkey		m4			snappy
+# autopep8		freetype		libtool			mpdecimal		sqlite
+# bash			gdbm			libunistring		msgpack			starship
+# bdw-gc			gettext			libuv			ncurses			supabase
+# boost			gflags			libvterm		neovim			tree-sitter
+# brotli			gh			libx11			nettle			unbound
+# c-ares			glib			libxau			openssl@1.1		unibilium
+# ca-certificates		glog			libxcb			openssl@3		unixodbc
+# cairo			gmp			libxdmcp		p11-kit			wangle
+# coreutils		gnutls			libxext			pcre			xorgproto
+# double-conversion	guile			libxrender		pcre2			xz
+# edencommon		icu4c			libyaml			pixman			yarn
+# emacs			jansson			lua			pkg-config		z
+# exercism		libevent		lua-language-server	python@3.10		zsh
+# fb303			libffi			luajit			python@3.11		zstd
+# fbthrift		libidn2			luajit-openresty	python@3.9
+# fd			libnghttp2		luarocks		readline
+# fizz			libpng			luv			ripgrep
 
 # ==> Casks
 # KEYCASTR	WARP
@@ -39,10 +40,10 @@ sh ./vim-setup.sh
 
 dir=~/git/dotfiles/public        # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
-#files="bashrc vimrc vim zshrc oh-my-zsh private scrotwm.conf Xresources"    # list of files/folders to symlink in homedir
+
 files="tool-versions zshrc aliases gitconfig eslintrc gitignore "\
 "gitmessage npmrc profile prettier warp config/nvim config/raycast "\
-"config/karabiner"
+"config/karabiner config/starship.toml"
 
 ##########
 

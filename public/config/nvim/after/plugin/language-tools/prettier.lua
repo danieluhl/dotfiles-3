@@ -15,7 +15,7 @@ prettier.setup({
     "scss",
     "typescript",
     "typescriptreact",
-    "yaml",
+    -- "yaml",
   },
   cli_options = {
     arrow_parens = "always",

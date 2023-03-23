@@ -35,9 +35,5 @@ export PATH="/usr/local/bin:$PATH"
 export PATH="/opt/homebrew/opt/ruby/bin:/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/sbin:$PATH"
 
-# Export dev vm
-export DEV_VM=10.235.46.235
-export RNDR_CLI_VM=10.235.46.235
-
 # Set editor to vim
 export EDITOR="nvim"
