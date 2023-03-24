@@ -5,7 +5,25 @@ vim.g.loaded_netrwPlugin = 1
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
 
-require("nvim-tree").setup({
+local lib = require("nvim-tree.lib")
+local view = require("nvim-tree.view")
+-- local api = require("nvim-tree.api")
+local nvimTree = require("nvim-tree")
+
+local function edit_or_open()
+  local action = "edit"
+  local node = lib.get_node_at_cursor()
+  if node.link_to and not node.nodes then
+    nvimTree.open_replacing_current_buffer()
+  elseif node.nodes ~= nil then
+    lib.expand_or_collapse(node)
+  else
+    require("nvim-tree.actions.node.open-file").fn(action, node.absolute_path)
+    view.close() -- Close the tree if file was opened
+  end
+end
+
+nvimTree.setup({
   sort_by = "case_sensitive",
   diagnostics = {
     enable = true,
@@ -21,13 +39,11 @@ require("nvim-tree").setup({
   view = {
     adaptive_size = true,
     mappings = {
+      custom_only = false,
       list = {
         { key = "u", action = "dir_up" },
-        { key = "J", action = "expand" },
-        { key = "K", action = "expand" },
-        { key = "H", action = "expand" },
-        { key = "<leader>e", action = "close" },
-        { key = "<cr>", action = "toggle_replace" },
+        { key = "l", action = "edit" },
+        { key = "<CR>", action = "edit_close", action_cb = edit_or_open },
       },
     },
   },
@@ -92,6 +108,11 @@ require("nvim-tree").setup({
   filters = {
     dotfiles = false,
   },
+  actions = {
+    open_file = {
+      quit_on_open = false,
+    },
+  },
   -- track active file as I bounce around
   update_focused_file = { enable = true },
 })
@@ -101,13 +122,3 @@ local api = require("nvim-tree.api")
 api.events.subscribe(api.events.Event.FileCreated, function(file)
   vim.cmd("edit " .. file.fname)
 end)
-
-local function toggle_replace()
-  local view = require("nvim-tree.view")
-  local api = require("nvim-tree.api")
-  if view.is_visible() then
-    api.tree.close()
-  else
-    require("nvim-tree").open_replacing_current_buffer()
-  end
-end

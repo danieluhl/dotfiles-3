@@ -30,6 +30,7 @@ local nmaps = {
 	["<M-h>"] = ":BufferLineMovePrev<cr>",
 	-- Delete all buffers but the current one
 	["<leader>bd"] = ":Bdelete<cr>",
+	["'w"] = ":Bdelete<cr>",
 	["<leader>bq"] = ":bufdo :Bwipeout<cr>",
 
 	-- WINDOWS
@@ -37,10 +38,10 @@ local nmaps = {
 	-- ["<C-w><C-v>"] = "<C-w>v<C-w>l",
 	-- ["<leader>ws"] = "<C-w>s<C-w>j",
 	-- ["<leader>wo"] = "<C-w><C-o>", jump to splits
-	["<Left>"] = "<C-w>h",
+	["<Left>"] = ":NvimTreeFindFile<cr><C-w>h",
 	["<Down>"] = "<C-w>j",
 	["<Up>"] = "<C-w>k",
-	["<Right>"] = "<C-w>l",
+	["<Right>"] = ":NvimTreeToggle<cr>",
 	-- resize windows
 	["<C-Up>"] = ":resize -2<cr>",
 	["<C-Down>"] = ":resize +2<cr>",
@@ -88,9 +89,9 @@ local nmaps = {
 
 	-- nvim-tree plugin remaps
 	-- jump to current file in nav
-	["<leader>e"] = ":NvimTreeFindFile<cr>",
+	-- ["<leader>e"] = ":NvimTreeFindFile<cr>",
 	-- Show/hide nav
-	["<S-e>"] = ":NvimTreeToggle<cr>",
+	-- ["<S-e>"] = ":NvimTreeToggle<cr>",
 
 	-- Search under cursor
 	["<leader>s"] = ":s/<C-r><C-w>//g<C-f>hhi<C-c>",
@@ -222,16 +223,10 @@ local imaps = {
 	["<M-BS>"] = "<C-w>",
 	["<M-Del>"] = "<C-w>",
 
-	-- ["<Down>"] = "<C-o>gj",
-	-- ["<Up>"] = "<C-o>gk",
 	["<A-k>"] = "<esc>:m .-2<cr>==gi",
 	["<A-j>"] = "<esc>:m .+1<cr>==gi",
-	-- ["<A-k>"] = "<esc>:m .-2<cr>==gi",
-	-- ["<A-j>"] = "<esc>:m .+1<cr>==gi",
 
 	["<C-c>"] = "<esc>",
-
-	["<C-h>"] = "<esc>:lua vim.lsp.buf.hover()<cr>i",
 }
 
 local xmaps = {
