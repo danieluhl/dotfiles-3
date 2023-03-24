@@ -2,51 +2,6 @@
   "title": "Keychron K6 pro: ESC -> ~/` and RIGHT_COMMAND -> HYPER",
   "rules": [
     {
-      "description": "Arc: Fn + [/] ==> ^ + ⌘ + [/]",
-      "manipulators": [
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "open_bracket",
-            "modifiers": {
-              "mandatory": [
-                "fn"
-              ]
-            }
-          },
-          "to": [
-            {
-              "key_code": "open_bracket",
-              "modifiers": [
-                "left_command",
-                "left_control"
-              ]
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "close_bracket",
-            "modifiers": {
-              "mandatory": [
-                "fn"
-              ]
-            }
-          },
-          "to": [
-            {
-              "key_code": "close_bracket",
-              "modifiers": [
-                "left_command",
-                "left_control"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
       "description": "^ + esc ==> `",
       "manipulators": [
         {

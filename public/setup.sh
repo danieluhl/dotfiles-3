@@ -43,7 +43,7 @@ olddir=~/dotfiles_old             # old dotfiles backup directory
 
 files="tool-versions zshrc aliases gitconfig eslintrc gitignore "\
 "gitmessage npmrc profile prettier warp config/nvim config/raycast "\
-"config/karabiner config/starship.toml"
+"config/karabiner"
 
 ##########
 

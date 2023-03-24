@@ -32,6 +32,6 @@ if [ -f '/Users/duhl/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/duhl
 
 source $DOTFILES_PATH/login.sh
 
-# eval "$(starship init zsh)"
+eval "$(starship init zsh)"
 
 clear
