@@ -11,7 +11,6 @@
 
 # Setup
 alias runsetup="bash $DOTFILES_PATH/setup.sh"
-alias godot="cd $DOTFILES_PATH"
 
 # Exercism 
 alias exs='exercism submit "$(basename $PWD).js"'
@@ -46,6 +45,8 @@ function code {
 }
 
 alias dot='nvim $DOTFILES_PATH'
+alias godot="cd $DOTFILES_PATH"
+alias pulldot="cd $DOTFILES_PATH && git pull && git status && cd -"
 alias packs='cd ~/.local/share/nvim/site/pack/packer/'
 alias scratch='cd ~/git && nvim scratchpad.md'
 alias alss='nvim ~/.aliases'
