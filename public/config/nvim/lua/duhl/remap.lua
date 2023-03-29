@@ -28,9 +28,10 @@ local nmaps = {
 	-- move buffer left/right in order
 	["<M-l>"] = ":BufferLineMoveNext<cr>",
 	["<M-h>"] = ":BufferLineMovePrev<cr>",
-	-- Delete all buffers but the current one
 	["<leader>bd"] = ":Bdelete<cr>",
+	-- close buffer
 	["'w"] = ":Bdelete<cr>",
+	-- Delete all buffers but the current one
 	["<leader>bq"] = ":bufdo :Bwipeout<cr>",
 
 	-- WINDOWS

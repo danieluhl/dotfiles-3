@@ -2,12 +2,12 @@
   "title": "Keychron K6 pro: ESC -> ~/` and RIGHT_COMMAND -> HYPER",
   "rules": [
     {
-      "description": "^ + esc ==> `",
+      "description": "^ + ' ==> `",
       "manipulators": [
         {
           "type": "basic",
           "from": {
-            "key_code": "escape",
+            "key_code": "quote",
             "modifiers": {
               "mandatory": [
                 "control"
