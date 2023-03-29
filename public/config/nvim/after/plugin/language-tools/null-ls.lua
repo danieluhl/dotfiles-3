@@ -18,7 +18,7 @@ null_ls.setup({
     -- diagnostics.eslint,
     -- formatting.eslint,
     -- code_actions.eslint,
-    formatting.prettierd,
+    formatting.prettierd.with({ extra_filetypes = { "svelte" } }),
     require("typescript.extensions.null-ls.code-actions"),
     diagnostics.tsc,
     -- code_actions.tsc,
