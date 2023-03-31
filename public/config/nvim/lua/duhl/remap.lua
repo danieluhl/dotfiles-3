@@ -39,9 +39,9 @@ local nmaps = {
 	-- ["<C-w><C-v>"] = "<C-w>v<C-w>l",
 	-- ["<leader>ws"] = "<C-w>s<C-w>j",
 	-- ["<leader>wo"] = "<C-w><C-o>", jump to splits
-	["<Left>"] = ":NvimTreeFindFile<cr><C-w>h",
-	["<Down>"] = "<C-w>j",
-	["<Up>"] = "<C-w>k",
+	-- ["<Left>"] = ":NvimTreeFindFile<cr><C-w>l",
+	-- ["<Down>"] = "<C-w>j",
+	-- ["<Up>"] = "<C-w>k",
 	["<Right>"] = ":NvimTreeToggle<cr>",
 	-- resize windows
 	["<C-Up>"] = ":resize -2<cr>",
@@ -84,7 +84,7 @@ local nmaps = {
 	-- ["<leader>ec"] = ":lclose<cr>",
 
 	-- Save and Quit
-	["<leader>w"] = ":w<cr>",
+	["<leader>s"] = ":w<cr>",
 	["<leader>q"] = ":q<cr>",
 	["<leader>!"] = ":q!<cr>",
 
@@ -177,7 +177,7 @@ local nmaps = {
 	["<leader>gr"] = ":lua vim.lsp.buf.references()<cr>",
 	["<C-Space>"] = ":lua vim.lsp.buf.hover()<cr>",
 	["<leader>k"] = ":lua vim.diagnostic.open_float()<cr>",
-	["<leader>sh"] = ":lua vim.lsp.buf.signature_help()<cr>",
+	["<leader>gs"] = ":lua vim.lsp.buf.signature_help()<cr>",
 	-- ["<leader>wa"] = ":lua vim.lsp.buf.add_workspace_folder()<cr>",
 	-- ["<leader>wr"] = ":lua vim.lsp.buf.remove_workspace_folder()<cr>",
 	-- ["<leader>wl"] = ":lua function()
@@ -196,7 +196,7 @@ local vmaps = {
 	["<A-Down>"] = ":m '>+1<cr>gv=gv",
 
 	-- replace in selection with yanked word
-	["<leader>s"] = ':s/<C-r>"//g<C-f>hhi<C-c>',
+	-- ["<leader>s"] = ':s/<C-r>"//g<C-f>hhi<C-c>',
 
 	-- Delete to black hole register
 	["<leader>d"] = '"_d',
