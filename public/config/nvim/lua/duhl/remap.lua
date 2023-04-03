@@ -28,11 +28,11 @@ local nmaps = {
 	-- move buffer left/right in order
 	["<M-l>"] = ":BufferLineMoveNext<cr>",
 	["<M-h>"] = ":BufferLineMovePrev<cr>",
-	["<leader>bd"] = ":Bdelete<cr>",
 	-- close buffer
-	["'w"] = ":Bdelete<cr>",
+	["<leader>w"] = ":Bdelete<cr>",
+	-- ["<leader>bd"] = ":Bdelete<cr>",
 	-- Delete all buffers but the current one
-	["<leader>bq"] = ":bufdo :Bwipeout<cr>",
+	["<leader>bw"] = ":bufdo :Bwipeout<cr>",
 
 	-- WINDOWS
 	-- create splits
@@ -95,7 +95,7 @@ local nmaps = {
 	-- ["<S-e>"] = ":NvimTreeToggle<cr>",
 
 	-- Search under cursor
-	["<leader>s"] = ":s/<C-r><C-w>//g<C-f>hhi<C-c>",
+	-- ["<leader>s"] = ":s/<C-r><C-w>//g<C-f>hhi<C-c>",
 
 	-- print from 0 register
 	["<leader>0"] = '"0p',

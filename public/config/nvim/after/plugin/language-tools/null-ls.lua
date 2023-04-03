@@ -34,7 +34,7 @@ null_ls.setup({
     -- formatting.eslint,
     -- diagnostics.stylelint,
     -- Tailwind CSS
-    -- formatting.rustywind,
+    formatting.rustywind,
 
     -- Python
     formatting.black,
