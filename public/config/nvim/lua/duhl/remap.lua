@@ -29,7 +29,7 @@ local nmaps = {
 	["<M-l>"] = ":BufferLineMoveNext<cr>",
 	["<M-h>"] = ":BufferLineMovePrev<cr>",
 	-- close buffer
-	["<leader>w"] = ":Bdelete<cr>",
+	["'q"] = ":Bdelete<cr>",
 	-- ["<leader>bd"] = ":Bdelete<cr>",
 	-- Delete all buffers but the current one
 	["<leader>bw"] = ":bufdo :Bwipeout<cr>",
@@ -39,10 +39,11 @@ local nmaps = {
 	-- ["<C-w><C-v>"] = "<C-w>v<C-w>l",
 	-- ["<leader>ws"] = "<C-w>s<C-w>j",
 	-- ["<leader>wo"] = "<C-w><C-o>", jump to splits
-	-- ["<Left>"] = ":NvimTreeFindFile<cr><C-w>l",
+	["<Right>"] = ":NvimTreeFindFile<cr><C-w>l",
 	-- ["<Down>"] = "<C-w>j",
 	-- ["<Up>"] = "<C-w>k",
-	["<Right>"] = ":NvimTreeToggle<cr>",
+	-- ["<Left>"] = ":NvimTreeToggle<cr>",
+	["<Left>"] = ":NvimTreeClose<cr>",
 	-- resize windows
 	["<C-Up>"] = ":resize -2<cr>",
 	["<C-Down>"] = ":resize +2<cr>",
@@ -82,11 +83,6 @@ local nmaps = {
 	-- ["<leader>ep"] = ":lprev<cr>",
 	-- ["<leader>eo"] = ":lopen<cr>",
 	-- ["<leader>ec"] = ":lclose<cr>",
-
-	-- Save and Quit
-	["<leader>s"] = ":w<cr>",
-	["<leader>q"] = ":q<cr>",
-	["<leader>!"] = ":q!<cr>",
 
 	-- nvim-tree plugin remaps
 	-- jump to current file in nav
@@ -165,11 +161,16 @@ local nmaps = {
 	["<A-Up>"] = ":m '<-2<cr>gv=gv",
 	["<A-Down>"] = ":m '>+1<cr>gv=gv",
 
+	-- Save and Quit
+	["'w"] = ":w<cr>",
+	["<leader>q"] = ":q<cr>",
+	["<leader>!"] = ":q!<cr>",
+
 	-- LSP Mappings
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	-- local bufopts = { noremap = true, silent = true, buffer = bufnr }
 	-- ["<leader>ff"] = ":LspZeroFormat<cr>:lua vim.api.nvim_command('write')<cr>",
-	["<leader>ff"] = ":lua vim.lsp.buf.format() vim.api.nvim_command('write')<CR>:noh<CR>",
+	["<leader>w"] = ":lua vim.lsp.buf.format() vim.api.nvim_command('write')<CR>:noh<CR>",
 	["<leader>fp"] = ":Prettier<cr>:lua vim.api.nvim_command('write')<cr>",
 	["gD"] = ":lua vim.lsp.buf.declaration()<cr>",
 	["gd"] = ":lua vim.lsp.buf.definition()<cr>",
