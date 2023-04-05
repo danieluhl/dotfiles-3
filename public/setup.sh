@@ -1,34 +1,5 @@
 #!/bin/bash
 
-# install homebrew
-# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"dd
-
-# brew list output:
-# ==> Formulae
-# asdf			fmt			libsodium		lz4			rtx
-# autoconf		folly			libtasn1		lzo			ruby
-# automake		fontconfig		libtermkey		m4			snappy
-# autopep8		freetype		libtool			mpdecimal		sqlite
-# bash			gdbm			libunistring		msgpack			starship
-# bdw-gc			gettext			libuv			ncurses			supabase
-# boost			gflags			libvterm		neovim			tree-sitter
-# brotli			gh			libx11			nettle			unbound
-# c-ares			glib			libxau			openssl@1.1		unibilium
-# ca-certificates		glog			libxcb			openssl@3		unixodbc
-# cairo			gmp			libxdmcp		p11-kit			wangle
-# coreutils		gnutls			libxext			pcre			xorgproto
-# double-conversion	guile			libxrender		pcre2			xz
-# edencommon		icu4c			libyaml			pixman			yarn
-# emacs			jansson			lua			pkg-config		z
-# exercism		libevent		lua-language-server	python@3.10		zsh
-# fb303			libffi			luajit			python@3.11		zstd
-# fbthrift		libidn2			luajit-openresty	python@3.9
-# fd			libnghttp2		luarocks		readline
-# fizz			libpng			luv			ripgrep
-
-# ==> Casks
-# KEYCASTR	WARP
-
 sh ./vim-setup.sh
 
 ############################

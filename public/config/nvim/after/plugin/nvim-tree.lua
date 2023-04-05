@@ -24,6 +24,7 @@ local function edit_or_open()
 end
 
 nvimTree.setup({
+  open_on_setup = true,
   sort_by = "case_sensitive",
   diagnostics = {
     enable = true,
@@ -42,8 +43,8 @@ nvimTree.setup({
     mappings = {
       custom_only = false,
       list = {
-        { key = "u", action = "dir_up" },
-        { key = "l", action = "edit" },
+        { key = "u",    action = "dir_up" },
+        { key = "l",    action = "edit" },
         { key = "<CR>", action = "edit_close", action_cb = edit_or_open },
       },
     },

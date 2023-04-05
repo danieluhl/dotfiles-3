@@ -1,6 +1,2 @@
-# Add ssh keys
-
-
 . "$HOME/.cargo/env"
-
-source /Users/danieluhl/.docker/init-bash.sh || true # Added by Docker Desktop
+source "$HOME/.docker/init-bash.sh" || true # Added by Docker Desktop

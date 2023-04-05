@@ -7,14 +7,11 @@ local vnoremap = require("duhl.keymap").vnoremap
 local nmaps = {
 	-- disable q: because I accidentally hit it all the time
 	["q:"] = ":",
-
 	-- print date
 	["<leader>pd"] = ":r!gdate --iso-8601=seconds<cr>",
-
 	["<leader>}"] = "wbi{<esc>ea}<esc>",
 	-- jump into curly braces that are on the current line
 	["<leader>{"] = "f{a<cr><esc>O",
-
 	-- BUFFERS
 	-- jump directly to buffer
 	["'1"] = ':lua require("bufferline").go_to_buffer(1, true)<cr>',
@@ -33,13 +30,13 @@ local nmaps = {
 	-- ["<leader>bd"] = ":Bdelete<cr>",
 	-- Delete all buffers but the current one
 	["<leader>bw"] = ":bufdo :Bwipeout<cr>",
-
 	-- WINDOWS
 	-- create splits
 	-- ["<C-w><C-v>"] = "<C-w>v<C-w>l",
 	-- ["<leader>ws"] = "<C-w>s<C-w>j",
 	-- ["<leader>wo"] = "<C-w><C-o>", jump to splits
 	["<Right>"] = ":NvimTreeFindFile<cr><C-w>l",
+	["<leader>e"] = ":NvimTreeToggle<cr><C-w>l",
 	-- ["<Down>"] = "<C-w>j",
 	-- ["<Up>"] = "<C-w>k",
 	-- ["<Left>"] = ":NvimTreeToggle<cr>",
@@ -49,11 +46,9 @@ local nmaps = {
 	["<C-Down>"] = ":resize +2<cr>",
 	["<C-Left>"] = ":vertical resize +2<cr>",
 	["<C-Right>"] = ":vertical resize -2<cr>",
-
 	-- move lines up and down
 	["<A-k>"] = ":m .-2<cr>==",
 	["<A-j>"] = ":m .+1<cr>==",
-
 	["]="] = "<Plug>(IndentWiseNextEqualIndent)",
 	-- replace word with 0 register
 	-- ["<replace>p"] = "ciw<C-r>0<esc>",
@@ -64,20 +59,17 @@ local nmaps = {
 	["<leader>d"] = '"_d',
 	["<leader>D"] = '"_D',
 	["<leader>c"] = '"_c',
-
 	-- Typescript Plugin
 	["<leader>to"] = ":TypescriptOrganizeImports<cr>",
 	["<leader>ta"] = ":TypescriptAddMissingImports<cr>",
 	["<leader>tf"] = ":TypescriptFixAll<cr>",
 	["<leader>tr"] = ":TypescriptRenameFile<cr>",
-
 	-- Quickfix lists
 	-- note: <C-q> from telescope search puts in quickfix list
 	["<leader>co"] = ":copen<cr>",
 	["<leader>cl"] = ":ccl<cr>",
 	["<leader>cn"] = ":cn<cr>",
 	["<leader>cp"] = ":cp<cr>",
-
 	-- Error Navigation
 	-- ["<leader>en"] = ":lnext<cr>",
 	-- ["<leader>ep"] = ":lprev<cr>",
@@ -95,7 +87,6 @@ local nmaps = {
 
 	-- print from 0 register
 	["<leader>0"] = '"0p',
-
 	-- Scroll screen up and down
 	["<C-e>"] = "5<C-e>",
 	-- Not sure why but <S-Tab> is sending <C-y>
@@ -105,7 +96,6 @@ local nmaps = {
 
 	-- Paste in quotes
 	["<leader>'"] = "i''<esc>P",
-
 	-- Select entire document
 	["<leader>gg"] = "gg<S-v>G",
 	-- Wrap only lines longer than 80ch
@@ -121,20 +111,17 @@ local nmaps = {
 
 	-- center when mucking around, add zv for folds if ever necessary
 	["<C-d>"] = "<C-d>zz",
-
 	["<C-u>"] = "<C-u>zz",
 	["n"] = "nzz",
 	["N"] = "Nzz",
 	["g;"] = "g;zz",
 	["g,"] = "g,zz",
 	["gi"] = "gi<esc>zzi",
-
 	-- github
 	["gh"] = ":Git<cr>",
 	["<leader>ghf"] = ":OpenGithubFile<cr>",
 	["<leader>ghc"] = ":Git commit -a<cr>",
 	["<leader>ghp"] = ":!git pull && git push<cr>",
-
 	-- open link in browser
 	["<leader>gl"] = "<Plug>(openbrowser-open)",
 	-- telescope
@@ -156,16 +143,13 @@ local nmaps = {
 	-- Seamlessly treat visual lines as actual lines when moving around.
 	["j"] = "gj",
 	["k"] = "gk",
-
 	-- move lines up or down
 	["<A-Up>"] = ":m '<-2<cr>gv=gv",
 	["<A-Down>"] = ":m '>+1<cr>gv=gv",
-
 	-- Save and Quit
 	["'w"] = ":w<cr>",
 	["<leader>q"] = ":q<cr>",
 	["<leader>!"] = ":q!<cr>",
-
 	-- LSP Mappings
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	-- local bufopts = { noremap = true, silent = true, buffer = bufnr }
@@ -195,13 +179,11 @@ local vmaps = {
 	["<A-j>"] = ":m '>+1<cr>gv=gv",
 	["<A-Up>"] = ":m '<-2<cr>gv=gv",
 	["<A-Down>"] = ":m '>+1<cr>gv=gv",
-
 	-- replace in selection with yanked word
 	-- ["<leader>s"] = ':s/<C-r>"//g<C-f>hhi<C-c>',
 
 	-- Delete to black hole register
 	["<leader>d"] = '"_d',
-
 	["<S-j>"] = "5j",
 	["<S-k>"] = "5k",
 	-- ["<Leader>a="] = ":Tabularize /<bar><cr>",
@@ -224,10 +206,8 @@ local imaps = {
 	["<M-l>"] = "<esc>ea",
 	["<M-BS>"] = "<C-w>",
 	["<M-Del>"] = "<C-w>",
-
 	["<A-k>"] = "<esc>:m .-2<cr>==gi",
 	["<A-j>"] = "<esc>:m .+1<cr>==gi",
-
 	["<C-c>"] = "<esc>",
 }
 
