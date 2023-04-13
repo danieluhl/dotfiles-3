@@ -1,13 +1,16 @@
 #!/bin/zsh
 
 LOGIN_DATE_FILE="$DOTFILES_PATH/lastLogin.sh"
-source $LOGIN_DATE_FILE
+
+if [ -f "$LOGIN_DATE_FILE" ]; then
+  source $LOGIN_DATE_FILE
+fi 
 
 if [[ -v LOGIN_DATE ]];
 then
   echo "Last login: $LOGIN_DATE"
 else
-  LOGIN_DATE=$(date +"%Y-%m-%d");
+  LOGIN_DATE=$(gdate -d "yesterday" +"%Y-%m-%d");
 fi
 
 

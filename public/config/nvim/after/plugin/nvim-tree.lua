@@ -24,7 +24,7 @@ local function edit_or_open()
 end
 
 nvimTree.setup({
-  open_on_setup = true,
+  -- open_on_setup = true,
   sort_by = "case_sensitive",
   diagnostics = {
     enable = true,
@@ -38,7 +38,7 @@ nvimTree.setup({
     },
   },
   view = {
-    side = "right",
+    side = "left",
     adaptive_size = true,
     mappings = {
       custom_only = false,
@@ -124,3 +124,27 @@ local api = require("nvim-tree.api")
 api.events.subscribe(api.events.Event.FileCreated, function(file)
   vim.cmd("edit " .. file.fname)
 end)
+
+-- fix deprecated property via: https://github.com/nvim-tree/nvim-tree.lua/wiki/Open-At-Startup
+local function open_nvim_tree(data)
+  -- buffer is a directory
+  local directory = vim.fn.isdirectory(data.file) == 1
+
+  if not directory then
+    return
+  end
+
+  -- create a new, empty buffer
+  vim.cmd.enew()
+
+  -- wipe the directory buffer
+  vim.cmd.bw(data.buf)
+
+  -- change to the directory
+  vim.cmd.cd(data.file)
+
+  -- open the tree
+  require("nvim-tree.api").tree.open()
+end
+
+vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })

@@ -1,5 +1,6 @@
 [push]
   default = current
+  autoSetupRemote = true
 [pull]
  rebase = false
 [color]
@@ -31,7 +32,7 @@
   path = ~/.gitconfig.local
 [user]
 	name = Dan Uhl
-	email = duhl@wayfair.com
+	email = dan.uhl@posh.tech
 	signingKey = ""
 [merge]
   tool = opendiff

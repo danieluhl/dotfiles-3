@@ -18,7 +18,7 @@ null_ls.setup({
     -- diagnostics.eslint,
     -- formatting.eslint,
     -- code_actions.eslint,
-    formatting.prettierd.with({ extra_filetypes = { "svelte" } }),
+    formatting.prettier.with({ extra_filetypes = { "svelte" } }),
     require("typescript.extensions.null-ls.code-actions"),
     diagnostics.tsc,
     -- code_actions.tsc,
@@ -33,8 +33,10 @@ null_ls.setup({
     -- CSS
     -- formatting.eslint,
     -- diagnostics.stylelint,
+
     -- Tailwind CSS
-    formatting.rustywind,
+    -- NOTE: this conflicts with prettier for class ordering
+    -- formatting.rustywind,
 
     -- Python
     formatting.black,

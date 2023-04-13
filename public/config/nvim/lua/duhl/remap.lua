@@ -3,7 +3,6 @@ local nnoremap = require("duhl.keymap").nnoremap
 local xnoremap = require("duhl.keymap").xnoremap
 local vnoremap = require("duhl.keymap").vnoremap
 
--- Saving and quitting
 local nmaps = {
 	-- disable q: because I accidentally hit it all the time
 	["q:"] = ":",
@@ -35,8 +34,8 @@ local nmaps = {
 	-- ["<C-w><C-v>"] = "<C-w>v<C-w>l",
 	-- ["<leader>ws"] = "<C-w>s<C-w>j",
 	-- ["<leader>wo"] = "<C-w><C-o>", jump to splits
-	["<Right>"] = ":NvimTreeFindFile<cr><C-w>l",
-	["<leader>e"] = ":NvimTreeToggle<cr><C-w>l",
+	["<Right>"] = ":NvimTreeFindFile<cr><C-w>h",
+	["<leader>e"] = ":NvimTreeToggle<cr><C-w>h",
 	-- ["<Down>"] = "<C-w>j",
 	-- ["<Up>"] = "<C-w>k",
 	-- ["<Left>"] = ":NvimTreeToggle<cr>",
@@ -75,12 +74,6 @@ local nmaps = {
 	-- ["<leader>ep"] = ":lprev<cr>",
 	-- ["<leader>eo"] = ":lopen<cr>",
 	-- ["<leader>ec"] = ":lclose<cr>",
-
-	-- nvim-tree plugin remaps
-	-- jump to current file in nav
-	-- ["<leader>e"] = ":NvimTreeFindFile<cr>",
-	-- Show/hide nav
-	-- ["<S-e>"] = ":NvimTreeToggle<cr>",
 
 	-- Search under cursor
 	-- ["<leader>s"] = ":s/<C-r><C-w>//g<C-f>hhi<C-c>",

@@ -7,8 +7,9 @@ local opts = {
   wildmenu = true,
 
   -- Colors
-  cursorcolumn = true,
-  colorcolumn = "+1,+41",
+  -- cursorcolumn = true,
+  cursorline = true,
+  -- colorcolumn = "+1,+41",
   termguicolors = true,
 
   guicursor = "i:ver100", -- cursor to line in insert mode,
@@ -20,7 +21,6 @@ local opts = {
   shiftwidth = 2,
   undofile = true,
   autoindent = true,
-  cursorline = true,
   scrolloff = 8,
   expandtab = true,
   hlsearch = true,

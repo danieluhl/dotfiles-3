@@ -89,8 +89,11 @@ alias gremove='git reset HEAD && git status'
 # get latest master on local master without checking out master
 alias gfm='git fetch --prune origin $DEFAULT_BRANCH:$DEFAULT_BRANCH'
 alias gmm='git merge $DEFAULT_BRANCH --no-edit'
-alias gpm='gfm && gmm'
-alias gpmm='git prune && rm .git/gc.log && gpm'
+
+# USE `grm` instead!
+# alias gpm='gfm && gmm'
+# alias gpmm='git prune && rm .git/gc.log && gpm'
+
 # !!DANGER!! will lose changes
 alias grevertall='git reset --hard HEAD~1'
 alias gun='git reset --hard HEAD'
