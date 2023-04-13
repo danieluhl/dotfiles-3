@@ -13,3 +13,4 @@ local
 /public/config/nvim/plugin
 /public/login.json
 /public/warp/themes/random_bg
+/public/zshrc
