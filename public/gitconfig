@@ -2,7 +2,8 @@
   default = current
   autoSetupRemote = true
 [pull]
- rebase = false
+  rebase = false
+	ff = only
 [color]
 	ui = true
 [alias]

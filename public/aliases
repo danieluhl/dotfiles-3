@@ -75,6 +75,7 @@ alias gclear='git checkout -- . && git status'
 alias glm='git log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short --committer="duhl"'
 alias gl="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 alias glh='git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
+alias gla="git log --graph --decorate --oneline --all"
 # committing
 alias ga='git add -A'
 alias gcin='git add -A && git commit -m'
