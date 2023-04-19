@@ -10,19 +10,6 @@ local view = require("nvim-tree.view")
 local api = require("nvim-tree.api")
 local nvimTree = require("nvim-tree")
 
-local function edit_or_open(node)
-  local action = "edit"
-  local node = lib.get_node_at_cursor()
-  if node.link_to and not node.nodes then
-    nvimTree.open_replacing_current_buffer()
-  elseif node.nodes ~= nil then
-    lib.expand_or_collapse(node)
-  else
-    require("nvim-tree.actions.node.open-file").fn(action, node.absolute_path)
-    view.close() -- Close the tree if file was opened
-  end
-end
-
 local function on_attach(bufnr)
   local api = require("nvim-tree.api")
 
@@ -113,7 +100,7 @@ nvimTree.setup({
   on_attach = on_attach,
   sort_by = "case_sensitive",
   diagnostics = {
-    enable = true,
+    enable = false,
     show_on_dirs = true,
     debounce_delay = 50,
     icons = {
@@ -200,13 +187,13 @@ nvimTree.setup({
   filters = {
     dotfiles = false,
   },
-  actions = {
-    open_file = {
-      quit_on_open = true,
-    },
-  },
+  -- actions = {
+  --   open_file = {
+  --     quit_on_open = true,
+  --   },
+  -- },
   -- track active file as I bounce around
-  update_focused_file = { enable = true },
+  -- update_focused_file = { enable = true },
 
   -- custom options
   reload_on_bufenter = true,
@@ -216,30 +203,6 @@ nvimTree.setup({
 })
 
 -- Automatically open a file after creating it
-api.events.subscribe(api.events.Event.FileCreated, function(file)
-  vim.cmd("edit " .. file.fname)
-end)
-
--- fix deprecated property via: https://github.com/nvim-tree/nvim-tree.lua/wiki/Open-At-Startup
-local function open_nvim_tree(data)
-  -- buffer is a directory
-  local directory = vim.fn.isdirectory(data.file) == 1
-
-  if not directory then
-    return
-  end
-
-  -- -- create a new, empty buffer
-  -- vim.cmd.enew()
-
-  -- -- wipe the directory buffer
-  -- vim.cmd.bw(data.buf)
-
-  -- -- change to the directory
-  -- vim.cmd.cd(data.file)
-
-  -- open the tree
-  require("nvim-tree.api").tree.open()
-end
-
-vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
+-- api.events.subscribe(api.events.Event.FileCreated, function(file)
+--   vim.cmd("edit " .. file.fname)
+-- end)
