@@ -34,12 +34,12 @@ local nmaps = {
 	-- ["<C-w><C-v>"] = "<C-w>v<C-w>l",
 	-- ["<leader>ws"] = "<C-w>s<C-w>j",
 	-- ["<leader>wo"] = "<C-w><C-o>", jump to splits
-	["<Right>"] = ":NvimTreeFindFile<cr><C-w>h",
-	["<leader>e"] = ":NvimTreeToggle<cr><C-w>h",
+	-- ["<Left>"] = ":NvimTreeFindFileToggle<cr>",
+	["<leader>e"] = ":NvimTreeFindFileToggle<cr>",
+	-- ["<Left>"] = ":NvimTreeToggle<cr>",
+	-- ["<Right>"] = ":NvimTreeClose<cr>",
 	-- ["<Down>"] = "<C-w>j",
 	-- ["<Up>"] = "<C-w>k",
-	-- ["<Left>"] = ":NvimTreeToggle<cr>",
-	["<Left>"] = ":NvimTreeClose<cr>",
 	-- resize windows
 	["<C-Up>"] = ":resize -2<cr>",
 	["<C-Down>"] = ":resize +2<cr>",

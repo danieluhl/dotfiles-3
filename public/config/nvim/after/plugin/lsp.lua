@@ -8,6 +8,17 @@ lsp.ensure_installed({
   "rust_analyzer",
 })
 
+-- Fix Undefined global 'vim'
+lsp.configure("lua_ls", {
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = { "vim", "actions" },
+      },
+    },
+  },
+})
+
 -- note: none of this seems to work, if you want key
 -- bindings, do it in the remap file
 local on_attach = function(client, bufnr)
@@ -54,17 +65,6 @@ local on_attach = function(client, bufnr)
     vim.lsp.buf.signature_help()
   end, opts)
 end
-
--- Fix Undefined global 'vim'
-lsp.configure("lua_ls", {
-  settings = {
-    Lua = {
-      diagnostics = {
-        globals = { "vim", "actions" },
-      },
-    },
-  },
-})
 
 lsp.configure("tsserver", {
   settings = {

@@ -3,7 +3,6 @@
   autoSetupRemote = true
 [pull]
   rebase = false
-	ff = only
 [color]
 	ui = true
 [alias]
