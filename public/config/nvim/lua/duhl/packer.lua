@@ -136,6 +136,8 @@ return require("packer").startup(function(use)
 	-- golang
 	use("fatih/vim-go")
 
+	use("github/copilot.vim")
+
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
 	if PACKER_BOOTSTRAP then
