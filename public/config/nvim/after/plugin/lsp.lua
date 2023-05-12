@@ -1,8 +1,8 @@
 -- lsp-zero does the wiring of lspconfig and cmp for you
-local lsp = require("lsp-zero")
+local lspZero = require("lsp-zero")
 
-lsp.preset("recommended")
-lsp.ensure_installed({
+lspZero.preset("recommended")
+lspZero.ensure_installed({
 	"tsserver",
 	"eslint",
 	"lua_ls",
@@ -10,7 +10,7 @@ lsp.ensure_installed({
 })
 
 -- Fix Undefined global 'vim'
-lsp.configure("lua_ls", {
+lspZero.configure("lua_ls", {
 	settings = {
 		Lua = {
 			diagnostics = {
@@ -67,7 +67,7 @@ local on_attach = function(client, bufnr)
 	end, opts)
 end
 
-lsp.configure("tsserver", {
+lspZero.configure("tsserver", {
 	settings = {
 		completions = {
 			completeFunctionCalls = true,
@@ -83,7 +83,7 @@ lsp.configure("tsserver", {
 
 local cmp = require("cmp")
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
-local cmp_mappings = lsp.defaults.cmp_mappings({
+local cmp_mappings = lspZero.defaults.cmp_mappings({
 	["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
 	["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
 	["<C-y>"] = cmp.mapping.confirm({ select = true }),
@@ -98,11 +98,11 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
 -- cmp_mappings["<Tab>"] = nil
 -- cmp_mappings["<S-Tab>"] = nil
 
-lsp.setup_nvim_cmp({
+lspZero.setup_nvim_cmp({
 	mapping = cmp_mappings,
 })
 
-lsp.set_preferences({
+lspZero.set_preferences({
 	suggest_lsp_servers = false,
 	set_lsp_keymaps = false,
 	sign_icons = {
@@ -113,11 +113,11 @@ lsp.set_preferences({
 	},
 })
 
-lsp.on_attach = on_attach
+lspZero.on_attach = on_attach
 
-require("lspconfig").lua_ls.setup(lsp.nvim_lua_ls())
+require("lspconfig").lua_ls.setup(lspZero.nvim_lua_ls())
 
-lsp.setup()
+lspZero.setup()
 
 vim.diagnostic.config({
 	virtual_text = true,
