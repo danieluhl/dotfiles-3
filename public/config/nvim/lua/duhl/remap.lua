@@ -34,12 +34,12 @@ local nmaps = {
 	-- ["<C-w><C-v>"] = "<C-w>v<C-w>l",
 	-- ["<leader>ws"] = "<C-w>s<C-w>j",
 	-- ["<leader>wo"] = "<C-w><C-o>", jump to splits
-	-- ["<Left>"] = ":NvimTreeFindFileToggle<cr>",
 	["<leader>e"] = ":NvimTreeFindFileToggle<cr>",
 	-- ["<Left>"] = ":NvimTreeToggle<cr>",
-	-- ["<Right>"] = ":NvimTreeClose<cr>",
-	-- ["<Down>"] = "<C-w>j",
-	-- ["<Up>"] = "<C-w>k",
+	["<Right>"] = "<C-w>l",
+	["<Left>"] = "<C-w>h",
+	["<Down>"] = "<C-w>j",
+	["<Up>"] = "<C-w>k",
 	-- resize windows
 	["<C-Up>"] = ":resize -2<cr>",
 	["<C-Down>"] = ":resize +2<cr>",
@@ -140,7 +140,7 @@ local nmaps = {
 	["<A-Up>"] = ":m '<-2<cr>gv=gv",
 	["<A-Down>"] = ":m '>+1<cr>gv=gv",
 	-- Save and Quit
-	["'w"] = ":w<cr>",
+	["<leader>s"] = ":w<cr>",
 	["<leader>q"] = ":q<cr>",
 	["<leader>!"] = ":q!<cr>",
 	-- LSP Mappings

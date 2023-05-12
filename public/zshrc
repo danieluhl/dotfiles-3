@@ -26,6 +26,7 @@ autoload -U +X bashcompinit && bashcompinit
 
 source $DOTFILES_PATH/login.sh
 
+export STARSHIP_CONFIG="$HOME/git/dotfiles/public/config/starship.toml"
 eval "$(starship init zsh)"
 
 clear
