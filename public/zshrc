@@ -24,7 +24,8 @@ autoload -U +X bashcompinit && bashcompinit
 
 # source $HOME/.docker/init-zsh.sh || true # Added by Docker Desktop
 
-source $DOTFILES_PATH/login.sh
+# disabling for faster load times
+# source $DOTFILES_PATH/login.sh
 
 export STARSHIP_CONFIG="$HOME/git/dotfiles/public/config/starship.toml"
 eval "$(starship init zsh)"
