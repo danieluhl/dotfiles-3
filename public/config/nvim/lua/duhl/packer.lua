@@ -69,7 +69,7 @@ return require("packer").startup(function(use)
 	})
 
 	-- buffer line tab thingy
-	use("akinsho/bufferline.nvim")
+	-- use("akinsho/bufferline.nvim")
 	use("moll/vim-bbye")
 
 	-- Neovim Tree shitter
@@ -137,7 +137,7 @@ return require("packer").startup(function(use)
 	-- golang
 	use("fatih/vim-go")
 
-	use("zbirenbaum/copilot.lua")
+	use("github/copilot.vim")
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

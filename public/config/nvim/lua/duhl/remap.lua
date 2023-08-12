@@ -13,22 +13,31 @@ local nmaps = {
 	["<leader>{"] = "f{a<cr><esc>O",
 	-- BUFFERS
 	-- jump directly to buffer
-	["'1"] = ':lua require("bufferline").go_to_buffer(1, true)<cr>',
-	["'2"] = ':lua require("bufferline").go_to_buffer(2, true)<cr>',
-	["'3"] = ':lua require("bufferline").go_to_buffer(3, true)<cr>',
-	["'4"] = ':lua require("bufferline").go_to_buffer(4, true)<cr>',
-	["'5"] = ':lua require("bufferline").go_to_buffer(5, true)<cr>',
-	-- go to next/prev buffer
-	["<S-l>"] = ":BufferLineCycleNext<cr>",
-	["<S-h>"] = ":BufferLineCyclePrev<cr>",
-	-- move buffer left/right in order
-	["<M-l>"] = ":BufferLineMoveNext<cr>",
-	["<M-h>"] = ":BufferLineMovePrev<cr>",
+	-- ["'1"] = ':lua require("bufferline").go_to_buffer(1, true)<cr>',
+	-- ["'2"] = ':lua require("bufferline").go_to_buffer(2, true)<cr>',
+	-- ["'3"] = ':lua require("bufferline").go_to_buffer(3, true)<cr>',
+	-- ["'4"] = ':lua require("bufferline").go_to_buffer(4, true)<cr>',
+	-- ["'5"] = ':lua require("bufferline").go_to_buffer(5, true)<cr>',
+
+	-- HARPOON
+	["'a"] = ':lua require("harpoon.mark").add_file()',
+	["'s"] = ':lua require("harpoon.ui").nav_file(1)',
+	["'d"] = ':lua require("harpoon.ui").nav_file(2)',
+	["'f"] = ':lua require("harpoon.ui").nav_file(3)',
+	["'g"] = ':lua require("harpoon.ui").nav_file(4)',
+	["<S-l>"] = ':lua require("harpoon.ui").nav_next()',
+	["<S-h>"] = ':lua require("harpoon.ui").nav_prev()',
 	-- close buffer
 	["'q"] = ":Bdelete<cr>",
-	-- ["<leader>bd"] = ":Bdelete<cr>",
 	-- Delete all buffers but the current one
 	["<leader>bw"] = ":bufdo :Bwipeout<cr>",
+	-- go to next/prev buffer
+	-- ["<S-l>"] = ":BufferLineCycleNext<cr>",
+	-- ["<S-h>"] = ":BufferLineCyclePrev<cr>",
+	-- move buffer left/right in order
+	-- ["<M-l>"] = ":BufferLineMoveNext<cr>",
+	-- ["<M-h>"] = ":BufferLineMovePrev<cr>",
+
 	-- WINDOWS
 	-- create splits
 	-- ["<C-w><C-v>"] = "<C-w>v<C-w>l",
