@@ -10,7 +10,6 @@ null_ls.setup({
     -- lua
     formatting.stylua,
     diagnostics.luacheck,
-
     -- snippets
     completion.luasnip,
 

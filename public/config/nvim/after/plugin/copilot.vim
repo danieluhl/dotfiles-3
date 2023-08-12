@@ -1,0 +1,3 @@
+
+imap <silent><script><expr> <C-Y> copilot#Accept("\<CR>")
+let g:copilot_no_tab_map = v:true
