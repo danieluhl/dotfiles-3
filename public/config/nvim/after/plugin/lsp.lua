@@ -97,8 +97,8 @@ local cmp_mappings = lspZero.defaults.cmp_mappings({
 
 -- disable completion with tab
 -- this helps with copilot setup
--- cmp_mappings["<Tab>"] = nil
--- cmp_mappings["<S-Tab>"] = nil
+cmp_mappings["<Tab>"] = nil
+cmp_mappings["<S-Tab>"] = nil
 
 lspZero.setup_nvim_cmp({
 	mapping = cmp_mappings,

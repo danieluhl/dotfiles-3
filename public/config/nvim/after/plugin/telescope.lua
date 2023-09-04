@@ -8,18 +8,17 @@ local vimgrep_arguments = {
   "--smart-case",
   "-uu",
 }
-local find_command = { "rg", "--files", "--iglob", "!.git", "--hidden" }
-local find_command_all = { "rg", "--files", "--hidden" }
+local find_command = { "rg", "--files", "--hidden" }
 local file_ignore_patterns = {
   "yarn.lock",
-  "node_modules",
-  "raycast",
-  "dist",
-  ".next",
-  ".git",
-  "build",
+  "node_modules/",
+  "raycast/",
+  "dist/",
+  ".next/",
+  ".git/",
+  "build/",
   -- for rust builds
-  "target",
+  "target/",
 }
 local function find_files()
   local telescope_builtin = require("telescope.builtin")
@@ -34,7 +33,7 @@ local function find_files_all()
   local telescope_builtin = require("telescope.builtin")
 
   telescope_builtin.find_files({
-    find_command = find_command_all,
+    find_command = find_command,
     -- file_ignore_patterns = file_ignore_patterns,
   })
 end
@@ -54,7 +53,7 @@ local function live_grep_all()
 
   telescope_builtin.live_grep({
     vimgrep_arguments = vimgrep_arguments,
-    find_command = find_command_all,
+    find_command = find_command,
   })
 end
 

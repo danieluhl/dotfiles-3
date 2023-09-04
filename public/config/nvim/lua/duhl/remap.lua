@@ -20,13 +20,14 @@ local nmaps = {
 	-- ["'5"] = ':lua require("bufferline").go_to_buffer(5, true)<cr>',
 
 	-- HARPOON
-	["'a"] = ':lua require("harpoon.mark").add_file()',
-	["'s"] = ':lua require("harpoon.ui").nav_file(1)',
-	["'d"] = ':lua require("harpoon.ui").nav_file(2)',
-	["'f"] = ':lua require("harpoon.ui").nav_file(3)',
-	["'g"] = ':lua require("harpoon.ui").nav_file(4)',
-	["<S-l>"] = ':lua require("harpoon.ui").nav_next()',
-	["<S-h>"] = ':lua require("harpoon.ui").nav_prev()',
+	["'a"] = ':lua require("harpoon.mark").add_file()<cr>',
+	["'t"] = ':lua require("harpoon.ui").toggle_quick_menu()<cr>',
+	["'s"] = ':lua require("harpoon.ui").nav_file(1)<cr>',
+	["'d"] = ':lua require("harpoon.ui").nav_file(2)<cr>',
+	["'f"] = ':lua require("harpoon.ui").nav_file(3)<cr>',
+	["'g"] = ':lua require("harpoon.ui").nav_file(4)<cr>',
+	["<S-l>"] = ':lua require("harpoon.ui").nav_next()<cr>',
+	["<S-h>"] = ':lua require("harpoon.ui").nav_prev()<cr>',
 	-- close buffer
 	["'q"] = ":Bdelete<cr>",
 	-- Delete all buffers but the current one
@@ -197,10 +198,6 @@ local vmaps = {
 
 local imaps = {
 	["<M-b>ackspace"] = "<C-w>",
-	-- luasnip completion
-	["<C-e>"] = "<Plug>luasnip-expand-snippet",
-	-- console log snippet
-	-- ["clog"] = "console.log()<esc>i",
 
 	-- Insert Mode Edits
 	["<C-d>"] = "<del>",
@@ -211,6 +208,14 @@ local imaps = {
 	["<A-k>"] = "<esc>:m .-2<cr>==gi",
 	["<A-j>"] = "<esc>:m .+1<cr>==gi",
 	["<C-c>"] = "<esc>",
+}
+
+local imaps_silent = {
+	-- opilot completion
+	["<C-t>"] = "copilot#Accept()",
+
+	-- luasnip completion
+	["<C-e>"] = "<Plug>luasnip-expand-snippet",
 }
 
 local xmaps = {
@@ -225,6 +230,10 @@ local xmaps = {
 
 for k, v in pairs(imaps) do
 	inoremap(k, v)
+end
+
+for k, v in pairs(imaps_silent) do
+	inoremap(k, v, { expr = true, silent = true, replace_keycodes = false })
 end
 
 for k, v in pairs(xmaps) do
