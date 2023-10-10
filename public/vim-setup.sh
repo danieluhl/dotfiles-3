@@ -10,6 +10,7 @@
 # ==> Formulae
 # brew install asdf &&
 # brew install fmt &&
+# brew install flyctl &&
 # brew install libsodium &&
 # brew install lz4 &&
 # brew install rtx &&

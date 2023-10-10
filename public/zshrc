@@ -36,3 +36,10 @@ PATH="/usr/local/bin:$PATH"
 if test -f "$HOME/.zshrc_local"; then
   . "$HOME/.zshrc_local"
 fi
+
+# bun completions
+[ -s "/Users/danieluhl/.bun/_bun" ] && source "/Users/danieluhl/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
