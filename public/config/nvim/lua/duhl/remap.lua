@@ -2,8 +2,10 @@ local inoremap = require("duhl.keymap").inoremap
 local nnoremap = require("duhl.keymap").nnoremap
 local xnoremap = require("duhl.keymap").xnoremap
 local vnoremap = require("duhl.keymap").vnoremap
+local cnoremap = require("duhl.keymap").cnoremap
 
 local nmaps = {
+	["cll"] = "yiwoconsole.log({});<esc>hhhp",
 	-- disable q: because I accidentally hit it all the time
 	["q:"] = ":",
 	-- print date
@@ -228,8 +230,17 @@ local xmaps = {
 	["."] = ":norm .<cr>",
 }
 
+local cmaps = {
+	["<C-k>"] = "\\(.\\{-}\\)",
+	["<C-j>"] = "\\(_.\\{-}\\)",
+}
+
 for k, v in pairs(imaps) do
 	inoremap(k, v)
+end
+
+for k, v in pairs(cmaps) do
+	cnoremap(k, v)
 end
 
 for k, v in pairs(imaps_silent) do
