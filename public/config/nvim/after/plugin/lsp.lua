@@ -1,16 +1,12 @@
 -- lsp-zero does the wiring of lspconfig and cmp for you
-local lspZero = require("lsp-zero")
+local lsp_zero = require("lsp-zero")
+local lspconfig = require("lspconfig")
+local cmp = require("cmp")
 
-lspZero.preset("recommended")
-lspZero.ensure_installed({
-	"tsserver",
-	"eslint",
-	"lua_ls",
-	"rust_analyzer",
-})
+lsp_zero.preset("recommended")
 
 -- Fix Undefined global 'vim'
-lspZero.configure("lua_ls", {
+lsp_zero.configure("lua_ls", {
 	settings = {
 		Lua = {
 			diagnostics = {
@@ -20,70 +16,15 @@ lspZero.configure("lua_ls", {
 	},
 })
 
--- note: none of this seems to work, if you want key
--- bindings, do it in the remap file
-local on_attach = function(client, bufnr)
-	local opts = { buffer = bufnr, remap = false }
+lsp_zero.on_attach(function(client, bufnr)
+	-- see :help lsp-zero-keybindings
+	-- to learn the available actions
+	lsp_zero.default_keymaps({ buffer = bufnr })
+end)
 
-	vim.keymap.set("n", "gd", "<Plug>ReplaceWithRegisterOperator", opts)
-	vim.keymap.set("n", "gd", function()
-		vim.lsp.buf.definition()
-	end, opts)
-	vim.keymap.set("n", "<leader>gi", function()
-		vim.lsp.buf.implementation()
-	end, opts)
-	vim.keymap.set("n", "<leader>gt", function()
-		vim.lsp.buf.type_definition()
-	end, opts)
-	vim.keymap.set("n", "<leader>h", function()
-		vim.lsp.buf.hover()
-	end, opts)
-	vim.keymap.set("n", "<leader>vws", function()
-		vim.lsp.buf.workspace_symbol()
-	end, opts)
-	vim.keymap.set("n", "<leader>k", function()
-		vim.diagnostic.open_float()
-	end, opts)
-	vim.keymap.set("n", "K", function()
-		vim.diagnostic.open_float()
-	end, opts)
-	vim.keymap.set("n", "[d", function()
-		vim.diagnostic.goto_next()
-	end, opts)
-	vim.keymap.set("n", "]d", function()
-		vim.diagnostic.goto_prev()
-	end, opts)
-	vim.keymap.set("n", "<leader>ca", function()
-		vim.lsp.buf.code_action()
-	end, opts)
-	vim.keymap.set("n", "<leader>gr", function()
-		vim.lsp.buf.references()
-	end, opts)
-	vim.keymap.set("n", "<leader>rn", function()
-		vim.lsp.buf.rename()
-	end, opts)
-	vim.keymap.set("i", "<C-h>", function()
-		vim.lsp.buf.signature_help()
-	end, opts)
-end
-
-lspZero.configure("tsserver", {
-	settings = {
-		completions = {
-			completeFunctionCalls = true,
-		},
-	},
-	-- remove tsc formatting - use prettier instead
-	-- on_attach = function(client, bufnr)
-	--   client.server_capabilities.documentFormattingProvider = false
-	--   client.server_capabilities.documentRangeFormattingProvider = false
-	--   on_attach(client, bufnr)
-	-- end,
-})
-
-local cmp = require("cmp")
+-- SETUP CMP
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
-local cmp_mappings = lspZero.defaults.cmp_mappings({
+local cmp_mappings = lsp_zero.defaults.cmp_mappings({
 	["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
 	["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
 	["<C-y>"] = cmp.mapping.confirm({ select = true }),
@@ -100,11 +41,7 @@ local cmp_mappings = lspZero.defaults.cmp_mappings({
 cmp_mappings["<Tab>"] = nil
 cmp_mappings["<S-Tab>"] = nil
 
-lspZero.setup_nvim_cmp({
-	mapping = cmp_mappings,
-})
-
-lspZero.set_preferences({
+lsp_zero.set_preferences({
 	suggest_lsp_servers = false,
 	set_lsp_keymaps = false,
 	sign_icons = {
@@ -115,11 +52,25 @@ lspZero.set_preferences({
 	},
 })
 
-lspZero.on_attach = on_attach
+lsp_zero.setup()
 
-require("lspconfig").lua_ls.setup(lspZero.nvim_lua_ls())
+-- SETUP SERVERS
+lspconfig.tsserver.setup({
+	on_attach = function(client, bufnr)
+		client.resolved_capabilities.document_formatting = false
+		on_attach(client, bufnr)
+	end,
+})
+-- other servers that don't need config
+lsp_zero.setup_servers({ "lua_ls", "rust_analyzer", "astro" })
 
-lspZero.setup()
+require('mason').setup({})
+require('mason-lspconfig').setup({
+	ensure_installed = {},
+	handlers = {
+		lsp_zero.default_setup,
+	},
+})
 
 vim.diagnostic.config({
 	virtual_text = true,

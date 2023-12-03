@@ -21,15 +21,6 @@ local nmaps = {
 	-- ["'4"] = ':lua require("bufferline").go_to_buffer(4, true)<cr>',
 	-- ["'5"] = ':lua require("bufferline").go_to_buffer(5, true)<cr>',
 
-	-- HARPOON
-	["'a"] = ':lua require("harpoon.mark").add_file()<cr>',
-	["'t"] = ':lua require("harpoon.ui").toggle_quick_menu()<cr>',
-	["'s"] = ':lua require("harpoon.ui").nav_file(1)<cr>',
-	["'d"] = ':lua require("harpoon.ui").nav_file(2)<cr>',
-	["'f"] = ':lua require("harpoon.ui").nav_file(3)<cr>',
-	["'g"] = ':lua require("harpoon.ui").nav_file(4)<cr>',
-	["<S-l>"] = ':lua require("harpoon.ui").nav_next()<cr>',
-	["<S-h>"] = ':lua require("harpoon.ui").nav_prev()<cr>',
 	-- close buffer
 	["'q"] = ":Bdelete<cr>",
 	-- Delete all buffers but the current one
@@ -200,7 +191,6 @@ local vmaps = {
 
 local imaps = {
 	["<M-b>ackspace"] = "<C-w>",
-
 	-- Insert Mode Edits
 	["<C-d>"] = "<del>",
 	["<M-h>"] = "<esc>bi",
@@ -215,7 +205,6 @@ local imaps = {
 local imaps_silent = {
 	-- opilot completion
 	["<C-t>"] = "copilot#Accept()",
-
 	-- luasnip completion
 	["<C-e>"] = "<Plug>luasnip-expand-snippet",
 }
