@@ -17,6 +17,7 @@ alias exs='exercism submit "$(basename $PWD).js"'
 
 # Git
 grecent="git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname:short)'"
+alias lg="lazygit"
 
 # System
 alias ..='cd ..'
@@ -45,7 +46,7 @@ function code {
 }
 
 alias dot='nvim $DOTFILES_PATH'
-alias godot="cd $DOTFILES_PATH && nvim ."
+alias godot="cd $DOTFILES_PATH"
 alias gg="cd ~/git"
 alias pulldot="cd $DOTFILES_PATH && git pull && git status && cd -"
 alias packs='cd ~/.local/share/nvim/site/pack/packer/'

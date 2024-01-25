@@ -52,19 +52,17 @@ local nmaps = {
 	["<A-k>"] = ":m .-2<cr>==",
 	["<A-j>"] = ":m .+1<cr>==",
 	["]="] = "<Plug>(IndentWiseNextEqualIndent)",
-	-- replace word with 0 register
-	-- ["<replace>p"] = "ciw<C-r>0<esc>",
 	-- replace word with option to go next
 	["R"] = "*Nciw<C-r>0<esc>",
 	["ciw"] = "*Nciw",
-	-- delete word to no register
+	-- delete word to black hole register
 	["<leader>d"] = '"_d',
 	["<leader>D"] = '"_D',
 	["<leader>c"] = '"_c',
 	-- Typescript Plugin
 	["<leader>to"] = ":TypescriptOrganizeImports<cr>",
 	["<leader>ta"] = ":TypescriptAddMissingImports<cr>",
-	["<leader>tf"] = ":TypescriptFixAll<cr>",
+	["<leader>tf"] = ":TTypescriptFixAllypescriptFixAll<cr>",
 	["<leader>tr"] = ":TypescriptRenameFile<cr>",
 	-- Quickfix lists
 	-- note: <C-q> from telescope search puts in quickfix list
@@ -134,7 +132,7 @@ local nmaps = {
 	-- ["<leader>p"] = ":Telescope oldfiles<cr><C-p><cr>",
 
 	-- Tabularize - for formatting markdown tables
-	-- ["<Leader>a="] = ":Tabularize /<bar><cr>",
+	["<Leader>a="] = ":Tabularize /<bar><cr>",
 
 	-- Seamlessly treat visual lines as actual lines when moving around.
 	["j"] = "gj",
@@ -151,7 +149,7 @@ local nmaps = {
 	-- local bufopts = { noremap = true, silent = true, buffer = bufnr }
 	-- ["<leader>ff"] = ":LspZeroFormat<cr>:lua vim.api.nvim_command('write')<cr>",
 	["<leader>w"] = ":lua vim.lsp.buf.format() vim.api.nvim_command('write')<CR>:noh<CR>",
-	["<leader>fp"] = ":Prettier<cr>:lua vim.api.nvim_command('write')<cr>",
+	["<leader>fp"] = ":lua vim.api.nvim_command('write')<cr>",
 	["gD"] = ":lua vim.lsp.buf.declaration()<cr>",
 	["gd"] = ":lua vim.lsp.buf.definition()<cr>",
 	["<leader>gi"] = ":lua vim.lsp.buf.implementation()<cr>",

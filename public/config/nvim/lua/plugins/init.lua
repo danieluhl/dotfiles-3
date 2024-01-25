@@ -32,19 +32,18 @@ return {
 	"neoclide/vim-jsx-improve",
 	"simrat39/rust-tools.nvim",
 	"fatih/vim-go",
-	'williamboman/mason.nvim',
-	'williamboman/mason-lspconfig.nvim',
+	"williamboman/mason.nvim",
+	"williamboman/mason-lspconfig.nvim",
 
-	{ 'VonHeikemen/lsp-zero.nvim', branch = 'v3.x' },
-	'neovim/nvim-lspconfig',
-	'hrsh7th/cmp-nvim-lsp',
-	'hrsh7th/nvim-cmp',
-	'MunifTanjim/prettier.nvim',
+	{ "VonHeikemen/lsp-zero.nvim", branch = "v3.x" },
+	"neovim/nvim-lspconfig",
+	"hrsh7th/cmp-nvim-lsp",
+	"hrsh7th/nvim-cmp",
 	"hrsh7th/cmp-buffer",
 	"hrsh7th/cmp-path",
 	"hrsh7th/cmp-nvim-lua",
-	'L3MON4D3/LuaSnip',
-	'virchau13/tree-sitter-astro',
+	"L3MON4D3/LuaSnip",
+	"virchau13/tree-sitter-astro",
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
@@ -66,5 +65,9 @@ return {
 		config = function()
 			require("gitsigns").setup()
 		end,
+	},
+	{
+		"stevearc/conform.nvim",
+		event = { "BufReadPre", "BufNewFile" },
 	},
 }
