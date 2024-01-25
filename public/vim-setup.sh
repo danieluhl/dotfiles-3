@@ -9,6 +9,7 @@
 # brew list output:
 # ==> Formulae
 # brew install asdf &&
+# brew install lazygit &&
 # brew install fmt &&
 # brew install flyctl &&
 # brew install libsodium &&
