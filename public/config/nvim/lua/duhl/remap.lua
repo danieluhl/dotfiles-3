@@ -5,7 +5,7 @@ local vnoremap = require("duhl.keymap").vnoremap
 local cnoremap = require("duhl.keymap").cnoremap
 
 local nmaps = {
-	["cll"] = "yiwoconsole.log({});<esc>hhhp",
+	-- ["cll"] = "yiwoconsole.log({});<esc>hhhp",
 	-- disable q: because I accidentally hit it all the time
 	["q:"] = ":",
 	-- print date
@@ -144,8 +144,10 @@ local nmaps = {
 	["<A-Down>"] = ":m '>+1<cr>gv=gv",
 	-- Save and Quit
 	["<leader>s"] = ":w<cr>",
-	["<leader>q"] = ":q<cr>",
+	["<leader>q"] = ":NvimTreeClose<cr>:q<cr>",
 	["<leader>!"] = ":q!<cr>",
+	-- close all and quit
+	["<leader>zz"] = ":xa<cr>",
 	-- LSP Mappings
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	-- local bufopts = { noremap = true, silent = true, buffer = bufnr }

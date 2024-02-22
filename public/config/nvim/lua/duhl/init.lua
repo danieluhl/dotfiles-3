@@ -1,4 +1,5 @@
 require("duhl.lazy")
+require("duhl.snips.js")
 require("duhl.gset")
 require("duhl.set")
 require("duhl.remap")

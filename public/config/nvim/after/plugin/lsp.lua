@@ -4,12 +4,11 @@ local lspconfig = require("lspconfig")
 
 lsp_zero.preset("recommended")
 
--- Fix Undefined global 'vim'
 lsp_zero.configure("lua_ls", {
 	settings = {
 		Lua = {
 			diagnostics = {
-				globals = { "vim", "actions" },
+				globals = { "vim", "it", "describe", "before_each", "after_each" },
 			},
 		},
 	},
@@ -21,26 +20,9 @@ lsp_zero.on_attach(function(client, bufnr)
 	lsp_zero.default_keymaps({ buffer = bufnr })
 end)
 
-lsp_zero.set_preferences({
-	suggest_lsp_servers = false,
-	set_lsp_keymaps = false,
-	sign_icons = {
-		error = "E",
-		warn = "W",
-		hint = "H",
-		info = "I",
-	},
-})
 
 lsp_zero.setup()
 
--- SETUP SERVERS
-lspconfig.tsserver.setup({
-	on_attach = function(client, bufnr)
-		client.resolved_capabilities.document_formatting = false
-		on_attach(client, bufnr)
-	end,
-})
 -- other servers that don't need config
 lsp_zero.setup_servers({ "lua_ls", "rust_analyzer", "astro" })
 
@@ -49,6 +31,15 @@ require('mason-lspconfig').setup({
 	ensure_installed = {},
 	handlers = {
 		lsp_zero.default_setup,
+		tsserver = function()
+			-- SETUP SERVERS
+			lspconfig.tsserver.setup({
+				on_attach = function(client, bufnr)
+					client.resolved_capabilities.document_formatting = false
+					on_attach(client, bufnr)
+				end,
+			})
+		end,
 	},
 })
 

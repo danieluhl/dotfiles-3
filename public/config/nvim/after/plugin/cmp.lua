@@ -4,9 +4,8 @@
 local cmp = require("cmp")
 local types = require("cmp.types")
 local cmp_action = require('lsp-zero').cmp_action()
-local luasnip = require("luasnip")
+local ls = require("luasnip")
 
-require("luasnip.loaders.from_vscode").lazy_load({ paths = { "~/.config/nvim/my-snippets" } })
 
 -- SETUP CMP
 cmp.setup({
@@ -24,7 +23,7 @@ cmp.setup({
 	},
 	snippet = {
 		expand = function(args)
-			luasnip.lsp_expand(args.body) -- For `luasnip` users.
+			ls.lsp_expand(args.body) -- For `luasnip` users.
 		end,
 	},
 	window = {
@@ -35,8 +34,8 @@ cmp.setup({
 		fields = { "kind", "abbr", "menu" },
 	},
 	sources = cmp.config.sources({
-		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
+		{ name = "nvim_lsp" },
 		{ name = "buffer" },
 		{ name = "spell",   keyword_length = 5 },
 		{ name = "path" },
