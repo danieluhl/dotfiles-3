@@ -1,10 +1,14 @@
 ---
-"editor_view:add_next_occurrence": none
+"pane_group:resize_left": cmd-meta-left
 "terminal:select_all_blocks": shift-cmd-A
-"terminal:select_next_block": shift-cmd-down
-"input:clear_screen": shift-cmd-L
+"ai_assistant_panel:reset_context": none
 "workspace:toggle_ai_assistant": none
+"pane_group:resize_right": cmd-meta-right
+"workspace:set_a11y_concise_verbosity_level": none
+"pane_group:resize_down": cmd-meta-down
+"editor_view:add_next_occurrence": none
 "editor_view:right": ctrl-enter
 "workspace:set_a11y_verbose_verbosity_level": none
-"ai_assistant_panel:reset_context": none
-"workspace:set_a11y_concise_verbosity_level": none
+"terminal:select_next_block": shift-cmd-down
+"pane_group:resize_up": cmd-meta-up
+"input:clear_screen": shift-cmd-L

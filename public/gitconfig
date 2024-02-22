@@ -52,3 +52,5 @@
 	forceSignAnnotated = false
 [case]
   ignorecase = false
+[maintenance]
+	repo = /Users/danieluhl/git/dotfiles

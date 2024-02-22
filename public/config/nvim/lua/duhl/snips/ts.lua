@@ -1,4 +1,4 @@
-require("luasnip.session.snippet_collection").clear_snippets "ts"
+require("luasnip.session.snippet_collection").clear_snippets("ts")
 local ls = require("luasnip")
 local fmta = require("luasnip.extras.fmt").fmta
 local rep = require("luasnip.extras").rep
@@ -13,13 +13,18 @@ local sn = ls.snippet_node
 ls.add_snippets("typescript", {
 	s("ternary", {
 		-- equivalent to "${1:cond} ? ${2:then} : ${3:else}"
-		i(1, "cond"), t(" ? "), i(2, "then"), t(" : "), i(3, "else")
-	})
+		i(1, "cond"),
+		t(" ? "),
+		i(2, "then"),
+		t(" : "),
+		i(3, "else"),
+	}),
 })
 
 ls.add_snippets("typescript", {
-	s("cll", fmta(
-		[[console.log(<log>)]],
-		{ log = i(1) }
-	))
+	s("cll", fmta([[console.log(<log>)]], { log = i(1) })),
+})
+
+ls.add_snippets("typescriptreact", {
+	s("cll", fmta([[console.log(<log>)]], { log = i(1) })),
 })

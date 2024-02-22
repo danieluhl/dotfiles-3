@@ -20,17 +20,3 @@ vim.opt.shiftwidth = 4
 --                    - '2'    -- I am a programmer and not a writer
 --                    + 'j'    -- Join comments smartly
 o.formatoptions = o.formatoptions .. "tcrnj"
-
--- local prettier = require("prettier")
--- prettier.setup({
---   filetypes = {
---     "markdown",
---   },
---   cli_options = {
---     arrow_parens = "always",
---     bracket_spacing = false,
---     print_width = 80,
---     tab_width = 4,
---     use_tabs = true,
---   },
--- })
