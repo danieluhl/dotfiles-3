@@ -1,6 +1,5 @@
 local lsp_zero = require("lsp-zero")
 local lspconfig = require("lspconfig")
-local cmp = require("cmp")
 
 lsp_zero.extend_lspconfig()
 lsp_zero.preset("recommended")
@@ -10,7 +9,7 @@ end)
 lsp_zero.setup()
 
 -- other servers that don't need config
-lsp_zero.setup_servers({ "rust_analyzer", "astro" })
+lsp_zero.setup_servers({ "rust_analyzer", "astro", "htmx" })
 
 require("mason").setup()
 require("mason-lspconfig").setup({

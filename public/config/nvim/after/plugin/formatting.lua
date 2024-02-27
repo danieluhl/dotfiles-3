@@ -10,7 +10,7 @@ require("conform").setup({
 		typescriptreact = { { "prettierd", "prettier" } },
 		svelte = { { "prettierd", "prettier" } },
 		css = { { "prettierd", "prettier" } },
-		html = { { "prettierd", "prettier" } },
+		html = { { "htmlbeautifier", "prettierd", "prettier" } },
 		json = { { "prettierd", "prettier" } },
 		yaml = { { "prettierd", "prettier" } },
 		graphql = { { "prettierd", "prettier" } },

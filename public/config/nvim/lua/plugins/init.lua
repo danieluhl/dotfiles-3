@@ -43,14 +43,14 @@ return {
 	"hrsh7th/cmp-path",
 	"hrsh7th/cmp-nvim-lua",
 	{
-		'L3MON4D3/LuaSnip',
+		"L3MON4D3/LuaSnip",
 		dependencies = { "rafamadriz/friendly-snippets" },
 		config = function()
 			require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/lua/duhl/snips" })
-		end
+		end,
 	},
-	'saadparwaiz1/cmp_luasnip',
-	'virchau13/tree-sitter-astro',
+	"saadparwaiz1/cmp_luasnip",
+	"virchau13/tree-sitter-astro",
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
@@ -73,6 +73,7 @@ return {
 			require("gitsigns").setup()
 		end,
 	},
+	"ThePrimeagen/git-worktree.nvim",
 	{
 		"stevearc/conform.nvim",
 		event = { "BufReadPre", "BufNewFile" },
