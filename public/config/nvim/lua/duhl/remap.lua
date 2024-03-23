@@ -116,6 +116,12 @@ local nmaps = {
 	["<leader>ghf"] = ":OpenGithubFile<cr>",
 	["<leader>ghc"] = ":Git commit -a<cr>",
 	["<leader>ghp"] = ":!git pull && git push<cr>",
+	-- git-worktree
+	["<leader>gw"] = ":lua require('telescope').extensions.git_worktree.git_worktrees()<cr>",
+	["<leader>gwc"] = ":lua require('telescope').extensions.git_worktree.create_git_worktree()<cr>",
+	["<leader>gws"] = ":lua require('telescope').extensions.git_worktree.switch_git_worktree()<cr>",
+	["<leader>gwd"] = ":lua require('telescope').extensions.git_worktree.delete_git_worktree()<cr>",
+
 	-- open link in browser
 	["<leader>gl"] = "<Plug>(openbrowser-open)",
 	-- telescope
@@ -145,13 +151,14 @@ local nmaps = {
 	["<leader>q"] = ":NvimTreeClose<cr>:q<cr>",
 	["<leader>!"] = ":q!<cr>",
 	-- close all and quit
-	["<leader>zz"] = ":xa<cr>",
+	["<leader>zz"] = ":conf xa<cr>",
 	-- LSP Mappings
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	-- local bufopts = { noremap = true, silent = true, buffer = bufnr }
 	-- ["<leader>ff"] = ":LspZeroFormat<cr>:lua vim.api.nvim_command('write')<cr>",
-	["<leader>w"] = ":lua vim.lsp.buf.format() vim.api.nvim_command('write')<CR>:noh<CR>",
-	["<leader>fp"] = ":lua vim.api.nvim_command('write')<cr>",
+	["<leader>w"] = ":lua vim.api.nvim_command('write')<CR>:noh<CR>",
+	-- ["<leader>w"] = ":lua vim.lsp.buf.format() vim.api.nvim_command('write')<CR>:noh<CR>",
+	["<leader>fp"] = ":lua vim.lsp.buf.format()<cr>",
 	["gD"] = ":lua vim.lsp.buf.declaration()<cr>",
 	["gd"] = ":lua vim.lsp.buf.definition()<cr>",
 	["<leader>gi"] = ":lua vim.lsp.buf.implementation()<cr>",
@@ -167,6 +174,7 @@ local nmaps = {
 	["<leader>gt"] = ":lua vim.lsp.buf.type_definition()<cr>",
 	["<leader>rn"] = ":lua vim.lsp.buf.rename()<cr>",
 	["<leader>ca"] = ":lua vim.lsp.buf.code_action()<cr>",
+	["<leader>cc"] = ":lua vim.lsp.buf.code_action({filter=function(a) return a.isPreferred end, apply=true})<cr>",
 }
 
 local vmaps = {
