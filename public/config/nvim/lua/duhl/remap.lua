@@ -5,7 +5,10 @@ local vnoremap = require("duhl.keymap").vnoremap
 local cnoremap = require("duhl.keymap").cnoremap
 
 local nmaps = {
-	-- ["cll"] = "yiwoconsole.log({});<esc>hhhp",
+	-- console.log the current word
+	["clw"] = "yiwoconsole.log(<esc>pa);<esc>",
+	-- console.log on the next line
+	["clo"] = "oconsole.log();<esc>hi",
 	-- disable q: because I accidentally hit it all the time
 	["q:"] = ":",
 	-- print date
@@ -117,9 +120,9 @@ local nmaps = {
 	["<leader>ghc"] = ":Git commit -a<cr>",
 	["<leader>ghp"] = ":!git pull && git push<cr>",
 	-- git-worktree
-	["<leader>gw"] = ":lua require('telescope').extensions.git_worktree.git_worktrees()<cr>",
+	["<leader>gws"] = ":lua require('telescope').extensions.git_worktree.git_worktrees()<cr>",
 	["<leader>gwc"] = ":lua require('telescope').extensions.git_worktree.create_git_worktree()<cr>",
-	["<leader>gws"] = ":lua require('telescope').extensions.git_worktree.switch_git_worktree()<cr>",
+	-- ["<leader>gws"] = ":lua require('telescope').extensions.git_worktree.switch_git_worktree()<cr>",
 	["<leader>gwd"] = ":lua require('telescope').extensions.git_worktree.delete_git_worktree()<cr>",
 
 	-- open link in browser

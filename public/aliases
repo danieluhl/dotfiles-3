@@ -50,7 +50,7 @@ alias godot="cd $DOTFILES_PATH"
 alias gg="cd ~/git"
 alias pulldot="cd $DOTFILES_PATH && git pull && git status && cd -"
 alias packs='cd ~/.local/share/nvim/site/pack/packer/'
-alias scratch='cd ~/git/scratch && nvim scratchpad.md'
+alias scr='cd ~/git/scratch && nvim scratchpad.md'
 alias alss='nvim ~/.aliases'
 alias reload='source ~/.aliases'
 
@@ -105,6 +105,7 @@ alias resetBranch='git fetch && git reset --hard origin/$DEFAULT_BRANCH'
 
 # pushing and pulling
 alias gpush='git push -u origin HEAD'
+alias gpf='git push --force-with-lease'
 alias gpa='git push --no-verify'
 alias gp='pullremote'
 alias gpr='git pull --rebase'
