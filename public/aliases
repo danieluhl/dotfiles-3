@@ -51,6 +51,7 @@ alias gg="cd ~/git"
 alias pulldot="cd $DOTFILES_PATH && git pull && git status && cd -"
 alias packs='cd ~/.local/share/nvim/site/pack/packer/'
 alias scr='cd ~/git/scratch && nvim scratchpad.md'
+alias scr='cd ~/Documents/second-brain/111\ Posh/ && v'
 alias alss='nvim ~/.aliases'
 alias reload='source ~/.aliases'
 
@@ -335,3 +336,6 @@ alias tm="trash"
 # `rtx global nodejs@latest`
 # set the local config
 # `rtx local nodejs@latest`
+alias rtx="mise"
+
+
