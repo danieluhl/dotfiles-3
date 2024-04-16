@@ -5,7 +5,10 @@ local vnoremap = require("duhl.keymap").vnoremap
 local cnoremap = require("duhl.keymap").cnoremap
 
 local nmaps = {
-	-- ["cll"] = "yiwoconsole.log({});<esc>hhhp",
+	-- console.log the current word
+	["clw"] = "yiwoconsole.log(<esc>pa);<esc>",
+	-- console.log on the next line
+	["clo"] = "oconsole.log();<esc>hi",
 	-- disable q: because I accidentally hit it all the time
 	["q:"] = ":",
 	-- print date
