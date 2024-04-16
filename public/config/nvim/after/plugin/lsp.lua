@@ -39,6 +39,8 @@ require("mason-lspconfig").setup({
 	},
 })
 
+lspconfig.gleam.setup({})
+
 vim.diagnostic.config({
 	virtual_text = true,
 })

@@ -17,12 +17,6 @@ return {
 	"EdenEast/nightfox.nvim",
 	-- Core Functionality
 	"sheerun/vim-polyglot",
-	"nvim-telescope/telescope-fzy-native.nvim",
-	{
-		"nvim-telescope/telescope.nvim",
-		branch = "0.1.x",
-		dependencies = { "nvim-lua/plenary.nvim" },
-	},
 	-- LSP Rare
 	"prisma/vim-prisma",
 	"wuelnerdotexe/vim-astro",

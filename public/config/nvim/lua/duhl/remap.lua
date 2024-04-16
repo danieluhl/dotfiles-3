@@ -116,26 +116,9 @@ local nmaps = {
 	["<leader>ghf"] = ":OpenGithubFile<cr>",
 	["<leader>ghc"] = ":Git commit -a<cr>",
 	["<leader>ghp"] = ":!git pull && git push<cr>",
-	-- git-worktree
-	["<leader>gw"] = ":lua require('telescope').extensions.git_worktree.git_worktrees()<cr>",
-	["<leader>gwc"] = ":lua require('telescope').extensions.git_worktree.create_git_worktree()<cr>",
-	["<leader>gws"] = ":lua require('telescope').extensions.git_worktree.switch_git_worktree()<cr>",
-	["<leader>gwd"] = ":lua require('telescope').extensions.git_worktree.delete_git_worktree()<cr>",
 
 	-- open link in browser
 	["<leader>gl"] = "<Plug>(openbrowser-open)",
-	-- telescope
-	["<C-p>"] = ":UserTelescopeFindFiles<cr>",
-	["<leader>fd"] = ":UserTelescopeFindFilesAll<cr>",
-	-- ["<leader>fd"] = ":Telescope find_files hidden=true<cr>",
-	["<C-f>"] = ":UserTelescopeLiveGrep<cr>",
-	["<leader>fa"] = ":UserTelescopeLiveGrepAll<cr>",
-	["<leader>fb"] = ":Telescope buffers<cr>",
-	-- ["<leader>fg"] = ":Telescope git_files<cr>",
-	["<leader>fs"] = ":Telescope grep_string<cr>",
-	["<leader>fh"] = ":Telescope search_history<cr>",
-	["<leader>fo"] = ":Telescope oldfiles<cr>",
-	-- ["<leader>p"] = ":Telescope oldfiles<cr><C-p><cr>",
 
 	-- Tabularize - for formatting markdown tables
 	["<Leader>a="] = ":Tabularize /<bar><cr>",
@@ -147,16 +130,15 @@ local nmaps = {
 	["<A-Up>"] = ":m '<-2<cr>gv=gv",
 	["<A-Down>"] = ":m '>+1<cr>gv=gv",
 	-- Save and Quit
-	["<leader>s"] = ":w<cr>",
+	["<leader>w"] = ":lua vim.api.nvim_command('write')<CR>:noh<CR>",
 	["<leader>q"] = ":NvimTreeClose<cr>:q<cr>",
 	["<leader>!"] = ":q!<cr>",
-	-- close all and quit
+	-- save all and quit
 	["<leader>zz"] = ":conf xa<cr>",
 	-- LSP Mappings
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	-- local bufopts = { noremap = true, silent = true, buffer = bufnr }
 	-- ["<leader>ff"] = ":LspZeroFormat<cr>:lua vim.api.nvim_command('write')<cr>",
-	["<leader>w"] = ":lua vim.api.nvim_command('write')<CR>:noh<CR>",
 	-- ["<leader>w"] = ":lua vim.lsp.buf.format() vim.api.nvim_command('write')<CR>:noh<CR>",
 	["<leader>fp"] = ":lua vim.lsp.buf.format()<cr>",
 	["gD"] = ":lua vim.lsp.buf.declaration()<cr>",

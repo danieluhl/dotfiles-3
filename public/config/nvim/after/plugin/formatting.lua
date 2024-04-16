@@ -14,6 +14,7 @@ require("conform").setup({
 		json = { { "prettierd", "prettier" } },
 		yaml = { { "prettierd", "prettier" } },
 		graphql = { { "prettierd", "prettier" } },
+		gleam = { { "gleam" } },
 	},
 })
 

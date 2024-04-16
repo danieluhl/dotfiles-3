@@ -13,7 +13,8 @@
 alias runsetup="bash $DOTFILES_PATH/setup.sh"
 
 # Exercism 
-alias exs='exercism submit "$(basename $PWD).js"'
+alias exjs='exercism submit "$(basename $PWD).js"'
+alias exs='exercism submit'
 
 # Git
 grecent="git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname:short)'"

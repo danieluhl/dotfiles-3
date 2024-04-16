@@ -1,4 +1,4 @@
-require("duhl.lazy")
+require("duhl.lazy_init")
 require("duhl.snips.js")
 require("duhl.gset")
 require("duhl.set")
