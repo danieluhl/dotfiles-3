@@ -5,6 +5,8 @@ local vnoremap = require("duhl.keymap").vnoremap
 local cnoremap = require("duhl.keymap").cnoremap
 
 local nmaps = {
+	-- undo tree history toggle
+	["<leader>u"] = ":UndotreeToggle<cr>",
 	-- console.log the current word
 	["clw"] = "yiwoconsole.log(<esc>pa);<esc>",
 	-- console.log on the next line
