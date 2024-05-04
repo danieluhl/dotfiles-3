@@ -65,6 +65,8 @@ return {
 
 		lspconfig.gleam.setup({})
 
+		lspconfig.svelte.setup({})
+
 		vim.diagnostic.config({
 			virtual_text = true,
 		})
