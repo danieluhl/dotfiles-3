@@ -1,11 +1,9 @@
 return {
 	"hrsh7th/nvim-cmp",
 	dependencies = {
+		{ "VonHeikemen/lsp-zero.nvim", branch = "v3.x" },
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
-
-		{ "VonHeikemen/lsp-zero.nvim", branch = "v3.x" },
-		"neovim/nvim-lspconfig",
 		"hrsh7th/cmp-nvim-lsp",
 		"hrsh7th/cmp-buffer",
 		"hrsh7th/cmp-path",
@@ -19,12 +17,11 @@ return {
 			end,
 		},
 		"saadparwaiz1/cmp_luasnip",
+		"neovim/nvim-lspconfig",
 	},
 	config = function()
-		--  LSP SETUP
 		local lsp_zero = require("lsp-zero")
 		lsp_zero.extend_lspconfig()
-		local lspconfig = require("lspconfig")
 
 		lsp_zero.preset("recommended")
 		lsp_zero.on_attach(function(client, bufnr)
@@ -36,6 +33,7 @@ return {
 		lsp_zero.setup_servers({ "rust_analyzer", "astro", "htmx" })
 
 		require("mason").setup()
+		local lspconfig = require("lspconfig")
 		require("mason-lspconfig").setup({
 			handlers = {
 				lsp_zero.default_setup,
@@ -64,7 +62,8 @@ return {
 		})
 
 		lspconfig.gleam.setup({})
-
+		lspconfig.eslint.setup({})
+		lspconfig.rescriptls.setup({})
 		lspconfig.svelte.setup({})
 
 		vim.diagnostic.config({

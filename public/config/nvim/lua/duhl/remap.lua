@@ -4,7 +4,23 @@ local xnoremap = require("duhl.keymap").xnoremap
 local vnoremap = require("duhl.keymap").vnoremap
 local cnoremap = require("duhl.keymap").cnoremap
 
+-- CUSTOM FUNCTIONS
+function Open_in_git()
+	local file_dir = vim.fn.expand("%:h")
+	local git_root = vim.fn.system("cd " .. file_dir .. "; git rev-parse --show-toplevel | tr -d '\n'")
+	local file_path = vim.fn.substitute(vim.fn.expand("%:p"), git_root .. "/", "", "")
+	local git_remote = vim.fn.system("cd " .. file_dir .. "; git remote get-url origin")
+	local repo_path = string.gsub(git_remote, ".*:", "")
+	repo_path = string.gsub(repo_path, "%..*", "")
+	local url = "https://gitlab.com/" .. repo_path .. "/-/blob/main/" .. file_path .. "/"
+	return vim.cmd("silent !open " .. url)
+end
+
 local nmaps = {
+	-- jump up and down
+	["<C-j>"] = "8jzz",
+	["<C-k>"] = "8kzz",
+
 	-- undo tree history toggle
 	["<leader>u"] = ":UndotreeToggle<cr>",
 	-- console.log the current word
@@ -134,18 +150,22 @@ local nmaps = {
 	-- move lines up or down
 	["<A-Up>"] = ":m '<-2<cr>gv=gv",
 	["<A-Down>"] = ":m '>+1<cr>gv=gv",
+
 	-- Save and Quit
-	["<leader>w"] = ":lua vim.api.nvim_command('write')<CR>:noh<CR>",
+	-- ["<leader>w"] = ":lua vim.api.nvim_command('write')<CR>:noh<CR>",
+	["<leader>w"] = ':lua require("conform").format({lsp_fallback = true, async = true, timeout_ms = 2000}) vim.api.nvim_command("write")<CR>:noh<CR>',
 	["<leader>q"] = ":NvimTreeClose<cr>:q<cr>",
 	["<leader>!"] = ":q!<cr>",
 	-- save all and quit
 	["<leader>zz"] = ":conf xa<cr>",
+
 	-- LSP Mappings
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	-- local bufopts = { noremap = true, silent = true, buffer = bufnr }
 	-- ["<leader>ff"] = ":LspZeroFormat<cr>:lua vim.api.nvim_command('write')<cr>",
 	-- ["<leader>w"] = ":lua vim.lsp.buf.format() vim.api.nvim_command('write')<CR>:noh<CR>",
-	["<leader>fp"] = ":lua vim.lsp.buf.format()<cr>",
+	-- ["<leader>fp"] = ":lua vim.lsp.buf.format()<cr>",
+	-- using <leader>f for special formatters in other languages
 	["gD"] = ":lua vim.lsp.buf.declaration()<cr>",
 	["gd"] = ":lua vim.lsp.buf.definition()<cr>",
 	["<leader>gi"] = ":lua vim.lsp.buf.implementation()<cr>",

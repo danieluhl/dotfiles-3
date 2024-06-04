@@ -1,5 +1,3 @@
-local fn = vim.fn
-
 -- Borrowed from https://github.com/LunarVim/Neovim-from-scratch/blob/master/lua/user/plugins.lua
 
 -- Install Lazy.nvim
