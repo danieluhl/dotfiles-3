@@ -58,12 +58,32 @@ return {
 						single_file_support = false,
 					})
 				end,
+
+				rescriptls = function()
+					lspconfig.rescriptls.setup({
+						cmd = { "rescript-language-server", "--stdio" },
+						commands = {
+							ResOpenCompiled = {
+								require("rescript-tools").open_compiled,
+								description = "Open Compiled JS",
+							},
+							ResCreateInterface = {
+								require("rescript-tools").create_interface,
+								description = "Create Interface file",
+							},
+							ResSwitchImplInt = {
+								require("rescript-tools").switch_impl_intf,
+								description = "Switch Implementation/Interface",
+							},
+						},
+					})
+				end,
 			},
 		})
 
 		lspconfig.gleam.setup({})
 		lspconfig.eslint.setup({})
-		lspconfig.rescriptls.setup({})
+		-- lspconfig.rescriptls.setup({})
 		lspconfig.svelte.setup({})
 
 		vim.diagnostic.config({

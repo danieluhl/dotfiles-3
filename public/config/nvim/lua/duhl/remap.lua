@@ -219,7 +219,7 @@ local imaps = {
 
 local imaps_silent = {
 	-- opilot completion
-	["<C-t>"] = "copilot#Accept()",
+	-- ["<C-t>"] = "copilot#Accept()",
 	-- luasnip completion
 	["<C-e>"] = "<Plug>luasnip-expand-snippet",
 }

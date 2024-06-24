@@ -46,7 +46,7 @@ function code {
     fi
 }
 
-alias dot='nvim $DOTFILES_PATH'
+alias dot='godot && nvim $DOTFILES_PATH'
 alias godot="cd $DOTFILES_PATH"
 alias gg="cd ~/git"
 alias pulldot="cd $DOTFILES_PATH && git pull && git status && cd -"

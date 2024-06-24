@@ -1,5 +1,4 @@
 return {
-
 	"vim-scripts/ReplaceWithRegister",
 	"tpope/vim-surround",
 	"tpope/vim-commentary",
@@ -18,12 +17,6 @@ return {
 	"sheerun/vim-polyglot",
 	"neoclide/vim-jsx-improve",
 	"fatih/vim-go",
-	{
-		"windwp/nvim-autopairs",
-		config = function()
-			require("nvim-autopairs").setup({})
-		end,
-	},
 	{
 		"gleam-lang/gleam.vim",
 	},
