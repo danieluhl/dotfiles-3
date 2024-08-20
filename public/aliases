@@ -339,4 +339,4 @@ alias tm="trash"
 # `rtx local nodejs@latest`
 alias rtx="mise"
 
-
+alias cc="codecrafters"
