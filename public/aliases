@@ -192,6 +192,8 @@ alias npmi=npminstall
 function npminstall() {
  eval "npm install $1 --registry https://registry.npmjs.org/"
 }
+alias n="pnpm run"
+alias bb="bun run"
 
 # call functions
 alias deps="traceDependenciesByLeaf"
@@ -340,3 +342,4 @@ alias tm="trash"
 alias rtx="mise"
 
 alias cc="codecrafters"
+
