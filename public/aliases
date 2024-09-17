@@ -338,5 +338,5 @@ alias tm="trash"
 # set the local config
 # `rtx local nodejs@latest`
 alias rtx="mise"
-
 alias cc="codecrafters"
+alias n="npm run"
