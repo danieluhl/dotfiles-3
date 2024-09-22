@@ -29,9 +29,6 @@ return {
 		end)
 		lsp_zero.setup()
 
-		-- other servers that don't need config
-		lsp_zero.setup_servers({ "rust_analyzer", "astro", "htmx" })
-
 		require("mason").setup()
 		local lspconfig = require("lspconfig")
 		require("mason-lspconfig").setup({
@@ -50,8 +47,8 @@ return {
 					})
 				end,
 
-				tsserver = function()
-					lspconfig.tsserver.setup({
+				ts_ls = function()
+					lspconfig.ts_ls.setup({
 						on_attach = function(client)
 							client.server_capabilities.documentFormattingProvider = false
 						end,
@@ -81,6 +78,9 @@ return {
 			},
 		})
 
+		-- lspconfig.rust_analyzer.setup({})
+		lspconfig.astro.setup({})
+		lspconfig.htmx.setup({})
 		lspconfig.gleam.setup({})
 		lspconfig.eslint.setup({})
 		-- lspconfig.rescriptls.setup({})
