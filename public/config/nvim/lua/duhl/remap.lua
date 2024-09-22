@@ -152,8 +152,8 @@ local nmaps = {
 	["<A-Down>"] = ":m '>+1<cr>gv=gv",
 
 	-- Save and Quit
-	["<leader>w"] = ":lua vim.api.nvim_command('write')<CR>:noh<CR>",
-	["<leader>f"] = ':lua require("conform").format({lsp_fallback = true, async = true, timeout_ms = 2000}) vim.api.nvim_command("write")<CR>:noh<CR>',
+	-- ["<leader>w"] = ":lua vim.api.nvim_command('write')<CR>:noh<CR>",
+	["<leader>w"] = ':lua require("conform").format({lsp_fallback = true, async = false, timeout_ms = 2000}) vim.api.nvim_command("write")<CR>:noh<CR>',
 	["<leader>q"] = ":NvimTreeClose<cr>:q<cr>",
 	["<leader>!"] = ":q!<cr>",
 	-- save all and quit
