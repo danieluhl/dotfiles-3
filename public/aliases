@@ -54,7 +54,7 @@ alias packs='cd ~/.local/share/nvim/site/pack/packer/'
 alias scr='cd ~/git/scratch && nvim scratchpad.md'
 alias scr='cd ~/Documents/second-brain/111\ Posh/ && v'
 alias alss='nvim ~/.aliases'
-alias reload='source ~/.aliases'
+alias reload='source ~/.aliases && tmux source ~/.tmux.conf'
 
 alias wat='alias'
 
@@ -342,3 +342,10 @@ alias tm="trash"
 alias rtx="mise"
 alias cc="codecrafters"
 alias n="npm run"
+
+
+# eza replacement for ls
+alias la='eza -al --git --icons --no-permissions --no-user -snew'
+alias lt='eza -la --git --icons -T'
+alias ll='eza -alF'
+alias ls='eza -al --git --icons --no-permissions --no-user'
