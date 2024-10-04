@@ -54,7 +54,7 @@ alias packs='cd ~/.local/share/nvim/site/pack/packer/'
 alias scr='cd ~/git/scratch && nvim scratchpad.md'
 alias scr='cd ~/Documents/second-brain/111\ Posh/ && v'
 alias alss='nvim ~/.aliases'
-alias reload='source ~/.aliases && tmux source ~/.tmux.conf'
+alias reload='source ~/.aliases && tmux source ~/.config/tmux/tmux.conf'
 
 alias wat='alias'
 

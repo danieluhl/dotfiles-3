@@ -61,3 +61,5 @@ eval "$(~/.local/bin/mise activate zsh)"
 eval "$(mise activate zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+alias tmux="tmux -f ~/.config/tmux/tmux.conf"
