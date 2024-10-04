@@ -81,6 +81,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
 			"package%-lock%.json",
 			"dist",
 			"build",
+			"%.git",
 		}
 		-- See `:help telescope.builtin`
 		local builtin = require("telescope.builtin")
@@ -88,7 +89,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
 		vim.keymap.set("n", "<leader>st", builtin.treesitter, { desc = "[S]earch [T]reesitter" })
 		vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
 		vim.keymap.set("n", "<leader>sp", function()
-			builtin.find_files({ hidden = true })
+			builtin.find_files({ defaults = { file_ignore_patterns = file_ignore_patterns } })
 		end, { desc = "[S]earch [F]iles" })
 		vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
 		vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })

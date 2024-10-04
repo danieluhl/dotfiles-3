@@ -8,17 +8,17 @@ return {
 				-- Conform will run multiple formatters sequentially
 				python = { "isort", "black" },
 				-- Use a sub-list to run only the first available formatter
-				javascript = { { "prettierd", "prettier" } },
-				javascriptreact = { { "prettierd", "prettier" } },
-				typescript = { { "prettierd", "prettier" } },
-				typescriptreact = { { "prettierd", "prettier" } },
-				svelte = { { "prettierd", "prettier" } },
-				css = { { "prettierd", "prettier" } },
-				html = { { "htmlbeautifier", "prettierd", "prettier" } },
-				json = { { "prettierd", "prettier" } },
-				yaml = { { "yamlfmt", "prettier" } },
-				graphql = { { "prettierd", "prettier" } },
-				gleam = { { "gleam" } },
+				javascript = { "prettierd", "prettier", stop_after_first = true },
+				javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+				typescript = { "eslint", "biome", "prettierd", "prettier", stop_after_first = true },
+				typescriptreact = { "eslint", "biome", "prettierd", "prettier", stop_after_first = true },
+				svelte = { "prettierd", "prettier", stop_after_first = true },
+				css = { "prettierd", "prettier", stop_after_first = true },
+				html = { "htmlbeautifier", "prettierd", "prettier", stop_after_first = true },
+				json = { "fixjson", "prettierd", "prettier", stop_after_first = true },
+				yaml = { "yamlfmt", "prettier", stop_after_first = true },
+				graphql = { "prettierd", "prettier", stop_after_first = true },
+				gleam = { "gleam", stop_after_first = true },
 			},
 		})
 

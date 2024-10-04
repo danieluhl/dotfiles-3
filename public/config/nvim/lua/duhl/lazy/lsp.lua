@@ -80,7 +80,7 @@ return {
 
 		-- lspconfig.rust_analyzer.setup({})
 		lspconfig.astro.setup({})
-		lspconfig.htmx.setup({})
+		-- lspconfig.htmx.setup({})
 		lspconfig.gleam.setup({})
 		lspconfig.eslint.setup({})
 		-- lspconfig.rescriptls.setup({})

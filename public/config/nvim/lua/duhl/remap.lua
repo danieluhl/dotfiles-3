@@ -17,6 +17,7 @@ function Open_in_git()
 end
 
 local nmaps = {
+
 	-- jump up and down
 	["<C-j>"] = "8jzz",
 	["<C-k>"] = "8kzz",
@@ -152,8 +153,8 @@ local nmaps = {
 	["<A-Down>"] = ":m '>+1<cr>gv=gv",
 
 	-- Save and Quit
-	-- ["<leader>w"] = ":lua vim.api.nvim_command('write')<CR>:noh<CR>",
-	["<leader>w"] = ':lua require("conform").format({lsp_fallback = true, async = false, timeout_ms = 2000}) vim.api.nvim_command("write")<CR>:noh<CR>',
+	["<leader>f"] = ':lua require("conform").format({lsp_fallback = false, async = false, timeout_ms = 2000})',
+	["<leader>w"] = ':lua require("conform").format({lsp_fallback = true, async = false, timeout_ms = 2000}) vim.api.nvim_command("write")<cr>:noh<cr>',
 	["<leader>q"] = ":NvimTreeClose<cr>:q<cr>",
 	["<leader>!"] = ":q!<cr>",
 	-- save all and quit

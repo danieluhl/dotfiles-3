@@ -10,7 +10,7 @@ local i = ls.insert_node
 local t = ls.text_node
 local sn = ls.snippet_node
 
-ls.add_snippets("typescript", {
+local tsSnips = {
 	s("ternary", {
 		-- equivalent to "${1:cond} ? ${2:then} : ${3:else}"
 		i(1, "cond"),
@@ -19,12 +19,17 @@ ls.add_snippets("typescript", {
 		t(" : "),
 		i(3, "else"),
 	}),
-})
-
-ls.add_snippets("typescript", {
 	s("cll", fmta([[console.log(<log>)]], { log = i(1) })),
-})
+	s("fn", {
+		t("const "),
+		i(1),
+		t({ " = () => {", "\t" }),
+		i(2),
+		t({ "", "};" }),
+	}),
+	s("{}", { t({ "{", "  " }), i(1), t({ "", "};" }) }),
+}
 
-ls.add_snippets("typescriptreact", {
-	s("cll", fmta([[console.log(<log>)]], { log = i(1) })),
-})
+ls.add_snippets("all", tsSnips)
+-- ls.add_snippets("typescript", tsSnips)
+-- ls.add_snippets("typescriptreact", tsSnips)
