@@ -1,0 +1,12 @@
+layout tall
+cd ~/git/scratch
+launch --title "scr"
+
+new_tab learning
+cd ~/git/learning
+layout tall
+launch --var window=main
+launch --location=vsplit
+launch --location=hsplit
+
+
