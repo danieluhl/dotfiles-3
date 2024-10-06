@@ -1,3 +1,6 @@
+# first load oh-my-zsh so we can overwrite here
+source ~/.ohmyzshrc
+
 export DOTFILES_PATH="$HOME/git/dotfiles/public"
 
 source $DOTFILES_PATH/env.sh
@@ -26,9 +29,6 @@ autoload -U +X bashcompinit && bashcompinit
 
 # disabling for faster load times
 # source $DOTFILES_PATH/login.sh
-
-export STARSHIP_CONFIG="$HOME/git/dotfiles/public/config/starship.toml"
-eval "$(starship init zsh)"
 
 clear
 PATH="/usr/local/bin:$PATH"
@@ -62,4 +62,3 @@ eval "$(mise activate zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-alias tmux="tmux -f ~/.config/tmux/tmux.conf"

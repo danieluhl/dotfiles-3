@@ -13,8 +13,8 @@ dir=~/git/dotfiles/public        # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
 
 files="tool-versions zshrc aliases gitconfig eslintrc gitignore "\
-"gitmessage npmrc profile warp config/nvim config/raycast "\
-"config/karabiner tmux.conf"
+"gitmessage profile warp config/nvim config/raycast "\
+"config/karabiner ohmyzshrc"
 
 ##########
 
@@ -40,4 +40,3 @@ done
 
 # make a symlink to this directory for self-reference
 ln -sfn "$dir" ~/.dotdir
-
