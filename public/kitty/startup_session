@@ -2,7 +2,7 @@ new_tab dot
 cd ~/git/dotfiles/public
 launch --title "dot"
 
-layout tall
+new_tab scr
 cd ~/git/scratch
 launch --title "scr"
 
