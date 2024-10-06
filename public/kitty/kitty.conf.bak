@@ -20,7 +20,6 @@
 #: <https://sw.kovidgoyal.net/kitty/kittens/choose-fonts/#font-spec-
 #: syntax>.
 
-# font_size 11.0
 
 #: Font size (in pts).
 
@@ -913,7 +912,7 @@
 #: Fade the text in inactive windows by the specified amount (a number
 #: between zero and one, with zero being fully faded).
 
-# hide_window_decorations no
+hide_window_decorations yes 
 
 #: Hide the window decorations (title-bar and window borders) with
 #: yes. On macOS, titlebar-only and titlebar-and-corners can be used
@@ -2276,7 +2275,6 @@
 
 # map kitty_mod+l next_layout
 
-
 #: You can also create shortcuts to switch to specific layouts::
 
 #:     map ctrl+alt+t goto_layout tall
@@ -2598,3 +2596,40 @@
 #: }}}
 
 #: }}}
+
+
+# BEGIN_KITTY_THEME
+# duckbones
+include current-theme.conf
+# END_KITTY_THEME
+
+# JUMPING
+map cmd+enter launch --cwd=current
+
+# WINDOWS 
+enabled_layouts tall,stack
+map cmd+] next_window
+map cmd+[ prev_window
+map cmd+shift+enter toggle_layout stack
+map kitty_mod+t goto_layout tall
+map kitty_mod+s goto_layout stack
+startup_session ~/.config/kitty/startup_session
+
+
+# TABS
+# map shift+cmd+i     set_tab_title
+map cmd+t launch --type=tab --cwd=~/git
+
+# goto_tab -1 is prev, -2 is two before
+# map ctrl+alt+1 goto_tab 1
+
+# LAYOUTS
+map kitty_mod+t goto_layout tall
+map kitty_mod+r load_config_file
+
+# THEME
+# background_image ~/.config/kitty/random_bg.jpg
+# background_image_opacity 0.5
+background_blur 60
+background_opacity 0.95
+font_size 18.0

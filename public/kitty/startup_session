@@ -1,9 +1,19 @@
 layout tall
 cd ~/git/scratch
-launch --title "scr"
+launch --title "scr" sh -c "scr"
+
+new_tab dot
+cd ~/git/dotfiles/public
+launch --title "dot" sh -c "dot"
 
 new_tab learning
 cd ~/git/learning
+layout tall
+launch --var window=main
+launch --location=vsplit
+
+new_tab project
+cd ~/git/remix-autocomplete
 layout tall
 launch --var window=main
 launch --location=vsplit
