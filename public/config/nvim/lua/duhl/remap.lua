@@ -35,32 +35,15 @@ local nmaps = {
 	["<leader>}"] = "wbi{<esc>ea}<esc>",
 	-- jump into curly braces that are on the current line
 	["<leader>{"] = "f{a<cr><esc>O",
-	-- BUFFERS
-	-- jump directly to buffer
-	-- ["'1"] = ':lua require("bufferline").go_to_buffer(1, true)<cr>',
-	-- ["'2"] = ':lua require("bufferline").go_to_buffer(2, true)<cr>',
-	-- ["'3"] = ':lua require("bufferline").go_to_buffer(3, true)<cr>',
-	-- ["'4"] = ':lua require("bufferline").go_to_buffer(4, true)<cr>',
-	-- ["'5"] = ':lua require("bufferline").go_to_buffer(5, true)<cr>',
 
 	-- close buffer
 	["'q"] = ":Bdelete<cr>",
 	-- Delete all buffers but the current one
 	["<leader>bw"] = ":bufdo :Bwipeout<cr>",
-	-- go to next/prev buffer
-	-- ["<S-l>"] = ":BufferLineCycleNext<cr>",
-	-- ["<S-h>"] = ":BufferLineCyclePrev<cr>",
-	-- move buffer left/right in order
-	-- ["<M-l>"] = ":BufferLineMoveNext<cr>",
-	-- ["<M-h>"] = ":BufferLineMovePrev<cr>",
 
-	-- WINDOWS
-	-- create splits
-	-- ["<C-w><C-v>"] = "<C-w>v<C-w>l",
-	-- ["<leader>ws"] = "<C-w>s<C-w>j",
-	-- ["<leader>wo"] = "<C-w><C-o>", jump to splits
-	["<leader>e"] = ":NvimTreeFindFileToggle<cr>",
-	-- ["<Left>"] = ":NvimTreeToggle<cr>",
+	-- FILE TREE (previously nvim-tree, now oil)
+	["<leader>e"] = ":Oil<cr>",
+
 	["<Right>"] = "<C-w>l",
 	["<Left>"] = "<C-w>h",
 	["<Down>"] = "<C-w>j",
@@ -155,7 +138,8 @@ local nmaps = {
 	-- Save and Quit
 	["<leader>f"] = ':lua require("conform").format({lsp_fallback = false, async = false, timeout_ms = 2000})',
 	["<leader>w"] = ':lua require("conform").format({lsp_fallback = true, async = false, timeout_ms = 2000}) vim.api.nvim_command("write")<cr>:noh<cr>',
-	["<leader>q"] = ":NvimTreeClose<cr>:q<cr>",
+	-- <C-c> to exit oil first if it's open
+	["<leader>q"] = "<C-c>:q<cr>",
 	["<leader>!"] = ":q!<cr>",
 	-- save all and quit
 	["<leader>zz"] = ":conf xa<cr>",
