@@ -54,7 +54,7 @@ alias packs='cd ~/.local/share/nvim/site/pack/packer/'
 alias scr='cd ~/git/scratch && nvim scratchpad.md'
 # alias scr='cd ~/Documents/second-brain/111\ Posh/ && v'
 alias alss='nvim ~/.aliases'
-alias reload='source ~/.aliases && tmux source-file ~/.config/tmux/tmux.conf'
+alias reload='source ~/.aliases'
 
 alias wat='alias'
 
@@ -187,11 +187,6 @@ alias att='open -a atom .'
 # open in vs code
 # alias vtt='code ./'
 
-# npm install from global registry
-alias npmi=npminstall
-function npminstall() {
- eval "npm install $1 --registry https://registry.npmjs.org/"
-}
 alias n="pnpm run"
 alias bb="bun run"
 
@@ -341,7 +336,7 @@ alias tm="trash"
 # `rtx local nodejs@latest`
 alias rtx="mise"
 alias cc="codecrafters"
-alias n="npm run"
+alias n="pnpm run"
 
 
 # eza replacement for ls
