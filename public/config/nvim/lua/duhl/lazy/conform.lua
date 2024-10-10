@@ -11,8 +11,8 @@ return {
 				-- Use a sub-list to run only the first available formatter
 				javascript = { "eslint_d", "prettierd", "prettier", stop_after_first = false },
 				javascriptreact = { "eslint_d", "prettierd", "prettier", stop_after_first = false },
-				typescript = { "eslint_d", "prettierd" },
-				typescriptreact = { "eslint_d", "prettierd" },
+				typescript = { "eslint_d" },
+				typescriptreact = { "eslint_d" },
 				svelte = { "prettierd", "prettier", stop_after_first = true },
 				css = { "prettierd", "prettier", stop_after_first = true },
 				html = { "htmlbeautifier", "prettierd", "prettier", stop_after_first = true },

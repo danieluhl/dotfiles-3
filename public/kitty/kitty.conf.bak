@@ -2599,7 +2599,7 @@ hide_window_decorations yes
 
 
 # BEGIN_KITTY_THEME
-# Ayu
+# Rosé Pine
 include current-theme.conf
 # END_KITTY_THEME
 

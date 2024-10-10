@@ -41,7 +41,7 @@ local opts = {
 	-- signcolumn = "number",
 	backspace = { "indent", "eol", "start" },
 	pyxversion = 3,
-	cmdheight = 2,
+	cmdheight = 0,
 	updatetime = 300,
 
 	-- JavaScript
