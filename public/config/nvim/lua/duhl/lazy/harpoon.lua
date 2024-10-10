@@ -9,7 +9,7 @@ return {
 		-- REQUIRED
 
 		vim.keymap.set("n", "'a", function()
-			harpoon:list():append()
+			harpoon:list():add()
 		end)
 		vim.keymap.set("n", "'t", function()
 			harpoon.ui:toggle_quick_menu(harpoon:list())
@@ -26,6 +26,12 @@ return {
 		end)
 		vim.keymap.set("n", "'g", function()
 			harpoon:list():select(4)
+		end)
+		vim.keymap.set("n", "'w", function()
+			harpoon:list():select(5)
+		end)
+		vim.keymap.set("n", "'e", function()
+			harpoon:list():select(6)
 		end)
 	end,
 }

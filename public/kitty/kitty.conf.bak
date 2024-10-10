@@ -2599,7 +2599,7 @@ hide_window_decorations yes
 
 
 # BEGIN_KITTY_THEME
-# Constant Perceptual Luminosity (dark)
+# Ayu
 include current-theme.conf
 # END_KITTY_THEME
 
@@ -2626,12 +2626,8 @@ map ctrl+2 goto_tab 2
 map ctrl+3 goto_tab 3
 map ctrl+4 goto_tab 4
 map ctrl+5 goto_tab 5
-map ctrl+6 goto_tab 6
-map ctrl+7 goto_tab 7
-map ctrl+` goto_tab -1
-
-# goto_tab -1 is prev, -2 is two before
-# map ctrl+alt+1 goto_tab 1
+map ctrl+tab goto_tab -1
+map ctrl+` goto_tab -2
 
 # LAYOUTS
 map kitty_mod+t goto_layout tall
@@ -2651,16 +2647,16 @@ font_size 24.0
 
 # WINDOW
 window_padding_width 5
-active_border_color #4455aa
-inactive_border_color #001155
+# active_border_color #4455aa
+# inactive_border_color #001155
 window_resize_step_cells 4
 window_resize_step_lines 4
 
 # TABS
 tab_bar_style powerline
 tab_powerline_style slanted
-active_tab_foreground #82859f
-active_tab_background #1b2c59
-inactive_tab_background #08193f
-inactive_tab_foreground #3e4466
+# active_tab_foreground #82859f
+# active_tab_background #1b2c59
+# inactive_tab_background #08193f
+# inactive_tab_foreground #3e4466
 # tab_separator "|"

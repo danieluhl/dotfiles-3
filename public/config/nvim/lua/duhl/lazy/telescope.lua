@@ -4,6 +4,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
 	branch = "0.1.x",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
+		"AckslD/nvim-neoclip.lua",
 		{ -- If encountering errors, see telescope-fzf-native README for installation instructions
 			"nvim-telescope/telescope-fzf-native.nvim",
 
@@ -65,6 +66,9 @@ return { -- Fuzzy Finder (files, lsp, etc)
 				["ui-select"] = {
 					require("telescope.themes").get_dropdown(),
 				},
+				["noice"] = {
+					require("noice"),
+				},
 			},
 			buffers = {
 				sort_mru = true,
@@ -83,9 +87,11 @@ return { -- Fuzzy Finder (files, lsp, etc)
 			"build",
 			"%.git",
 		}
+
 		-- See `:help telescope.builtin`
 		local builtin = require("telescope.builtin")
 		vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
+		vim.keymap.set("n", "<leader>sc", ":Telescope neoclip<cr>", { desc = "[Search] neo[C]lip" })
 		vim.keymap.set("n", "<leader>st", builtin.treesitter, { desc = "[S]earch [T]reesitter" })
 		vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
 		vim.keymap.set("n", "<leader>sp", function()

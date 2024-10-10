@@ -54,6 +54,8 @@ alias packs='cd ~/.local/share/nvim/site/pack/packer/'
 alias scr='cd ~/git/scratch && nvim scratchpad.md'
 # alias scr='cd ~/Documents/second-brain/111\ Posh/ && v'
 alias alss='nvim ~/.aliases'
+alias sess='nvim ~/.config/kitty/startup_session'
+alias dotn='nvim ~/.config/nvim/lua/duhl'
 alias reload='source ~/.aliases'
 
 alias wat='alias'
@@ -187,7 +189,8 @@ alias att='open -a atom .'
 # open in vs code
 # alias vtt='code ./'
 
-alias n="pnpm run"
+alias n="npm run"
+alias pn="pnpm"
 alias bb="bun run"
 
 # call functions

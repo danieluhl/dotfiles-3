@@ -18,6 +18,10 @@ end
 
 local nmaps = {
 
+	-- notes on yanking and the clipboard: we set
+	--  global setting `unnamedplus` which stores things
+	--  in the "+ clipboard register
+
 	-- jump up and down
 	["<C-j>"] = "8jzz",
 	["<C-k>"] = "8kzz",
@@ -32,6 +36,7 @@ local nmaps = {
 	["q:"] = ":",
 	-- print date
 	["<leader>pd"] = ":r!gdate --iso-8601=seconds<cr>",
+	["<leader>pp"] = ":Telescope neoclip<cr>",
 	["<leader>}"] = "wbi{<esc>ea}<esc>",
 	-- jump into curly braces that are on the current line
 	["<leader>{"] = "f{a<cr><esc>O",
@@ -136,8 +141,9 @@ local nmaps = {
 	["<A-Down>"] = ":m '>+1<cr>gv=gv",
 
 	-- Save and Quit
-	["<leader>f"] = ':lua require("conform").format({lsp_fallback = false, async = false, timeout_ms = 2000})',
-	["<leader>w"] = ':lua require("conform").format({lsp_fallback = true, async = false, timeout_ms = 2000}) vim.api.nvim_command("write")<cr>:noh<cr>',
+	-- ["<leader>f"] = ':lua require("conform").format({lsp_fallback = false, async = false, timeout_ms = 2000})',
+	-- ["<leader>w"] = 'vim.api.nvim_command("write")<cr>:noh<cr>',
+	["<leader>w"] = ":w<cr>:noh<cr>",
 	-- <C-c> to exit oil first if it's open
 	["<leader>q"] = "<C-c>:q<cr>",
 	["<leader>!"] = ":q!<cr>",

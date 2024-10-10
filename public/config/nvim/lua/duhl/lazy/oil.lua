@@ -6,7 +6,7 @@ return {
 		require("oil").setup({
 			delete_to_trash = true,
 			keymaps = {
-				-- ["<esc>"] = "actions.close",
+				["<leader>e"] = "actions.close",
 			},
 		})
 	end,
