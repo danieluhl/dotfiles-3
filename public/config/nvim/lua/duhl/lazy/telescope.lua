@@ -66,9 +66,6 @@ return { -- Fuzzy Finder (files, lsp, etc)
 				["ui-select"] = {
 					require("telescope.themes").get_dropdown(),
 				},
-				["noice"] = {
-					require("noice"),
-				},
 			},
 			buffers = {
 				sort_mru = true,
