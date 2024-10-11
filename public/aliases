@@ -189,9 +189,11 @@ alias att='open -a atom .'
 # open in vs code
 # alias vtt='code ./'
 
-alias n="npm run"
+alias n="npm"
+alias nr="npm run"
 alias pn="pnpm"
-alias bb="bun run"
+alias pnr="pnpm run"
+alias br="bun run"
 
 # call functions
 alias deps="traceDependenciesByLeaf"
