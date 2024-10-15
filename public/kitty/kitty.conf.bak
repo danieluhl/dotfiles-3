@@ -2599,7 +2599,7 @@ hide_window_decorations yes
 
 
 # BEGIN_KITTY_THEME
-# Rosé Pine
+# Rosé Pine Moon
 include current-theme.conf
 # END_KITTY_THEME
 
@@ -2647,8 +2647,8 @@ font_size 24.0
 
 # WINDOW
 window_padding_width 5
-# active_border_color #4455aa
-# inactive_border_color #001155
+active_border_color #4455aa
+inactive_border_color #001155
 window_resize_step_cells 4
 window_resize_step_lines 4
 

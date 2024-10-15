@@ -64,7 +64,7 @@ local nmaps = {
 	["]="] = "<Plug>(IndentWiseNextEqualIndent)",
 	-- replace word with option to go next
 	-- ["R"] = "*Nciw<C-r>0<esc>",
-	["R"] = ':let @0=@+<cr>*Ndiw"0P',
+	["R"] = ":let @0=@+<cr>*Nciw<C-r>0<esc>",
 	-- change word with option to go to next
 	["ciw"] = "*Nciw",
 	-- delete word to black hole register
