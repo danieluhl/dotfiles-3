@@ -120,7 +120,7 @@ return {
 				["<C-Space>"] = cmp.mapping.complete(),
 			}),
 			completion = {
-				completeopt = "menu,menuone,noinsert,noselect",
+				completeopt = "menu,menuone,noinsert",
 			},
 			snippet = {
 				expand = function(args)

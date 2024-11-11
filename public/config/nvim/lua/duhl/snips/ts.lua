@@ -30,6 +30,6 @@ local tsSnips = {
 	s("{}", { t({ "{", "  " }), i(1), t({ "", "};" }) }),
 }
 
-ls.add_snippets("all", tsSnips)
+luasnipls.add_snippets("all", tsSnips)
 -- ls.add_snippets("typescript", tsSnips)
 -- ls.add_snippets("typescriptreact", tsSnips)
