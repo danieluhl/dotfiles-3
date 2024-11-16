@@ -110,7 +110,7 @@ return {
 		local ls = require("luasnip")
 
 		cmp.setup({
-			preselect = types.cmp.PreselectMode.None,
+			-- preselect = types.cmp.PreselectMode.None,
 			mapping = cmp.mapping.preset.insert({
 				["<C-n>"] = cmp_action.luasnip_jump_forward(),
 				["<C-p>"] = cmp_action.luasnip_jump_backward(),
