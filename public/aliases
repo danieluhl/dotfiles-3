@@ -324,13 +324,9 @@ alias remaps="nvim $DOTFILES_PATH/config/nvim/lua/duhl/remap.lua"
 alias pip="pip3"
 alias py="python3"
 
-# trash cli
-alias tm="trash"
-
 # warp terminal background
 # copy to ~/.warp/themes/night_owl
 # set background image in the .yaml file
-
 
 # rtx
 # install whats in the config
@@ -341,8 +337,6 @@ alias tm="trash"
 # `rtx local nodejs@latest`
 alias rtx="mise"
 alias cc="codecrafters"
-alias n="pnpm run"
-
 
 # eza replacement for ls
 alias la='eza -al --git --icons --no-permissions --no-user -snew'
