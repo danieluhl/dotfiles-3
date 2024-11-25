@@ -14,6 +14,7 @@ return {
 				"go",
 				"ocaml",
 				"astro",
+				"gleam",
 			},
 			-- highlight = {
 			-- 	enable = {
