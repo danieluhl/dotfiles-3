@@ -48,6 +48,7 @@ function code {
 
 alias dot='godot && nvim $DOTFILES_PATH'
 alias godot="cd $DOTFILES_PATH"
+alias gho="cd ~/Library/Application\ Support/com.mitchellh.ghostty/"
 alias gg="cd ~/git"
 alias pulldot="cd $DOTFILES_PATH && git pull && git status && cd -"
 alias packs='cd ~/.local/share/nvim/site/pack/packer/'
@@ -343,3 +344,8 @@ alias la='eza -al --git --icons --no-permissions --no-user -snew'
 alias lt='eza -la --git --icons -T'
 alias ll='eza -alF'
 alias ls='eza -al --git --icons --no-permissions --no-user'
+# ls latest
+alias lsl='ls --sort=modified -r'
+
+
+

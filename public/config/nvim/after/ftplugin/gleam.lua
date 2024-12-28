@@ -1,0 +1,6 @@
+-- vim.api.nvim_create_autocmd("BufEnter", {
+-- 	pattern = "*.gleam",
+-- 	callback = function()
+-- 		vim.cmd("TSBufEnable highlight")
+-- 	end,
+-- })

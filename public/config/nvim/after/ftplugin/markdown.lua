@@ -1,4 +1,3 @@
-require("cmp").setup({ completion = { autocomplete = false } })
 local o = vim.o
 
 -- wrap lines for markdown by defualt, use gqq to hard wrap
@@ -20,4 +19,3 @@ vim.opt.shiftwidth = 4
 --                    - '2'    -- I am a programmer and not a writer
 --                    + 'j'    -- Join comments smartly
 o.formatoptions = o.formatoptions .. "tcrnj"
-
