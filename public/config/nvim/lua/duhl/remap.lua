@@ -130,7 +130,8 @@ local nmaps = {
 	["<leader>ghp"] = ":!git pull && git push<cr>",
 
 	-- open link in browser
-	["<leader>gl"] = "<Plug>(openbrowser-open)",
+	-- just hit gx for this
+	-- ["<leader>gl"] = "<Plug>(openbrowser-open)",
 
 	-- Tabularize - for formatting markdown tables
 	["<Leader>a="] = ":Tabularize /<bar><cr>",

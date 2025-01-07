@@ -1,6 +1,11 @@
+# Shaders
+custom-shader = /Users/danieluhl/git/ghostty-shaders/cubes.glsl
+
 # FONT
 font-family = Dank Mono
 font-size = 22
+## This doesn't seem to work yet
+# font-feature = -liga,-calt,-dlig
 
 # THEME
 theme = rose-pine-moon
@@ -17,12 +22,13 @@ background-opacity = .9
 background-blur-radius = 20
 macos-icon-ghost-color = #3e8fb0
 
+
 ## These seem to not work on mac and still allow tabs
 # window-decoration = false
 # macos-titlebar-style = hidden
 
 shell-integration-features = no-cursor,no-title
-cursor-style = block
+# cursor-style = block
 cursor-style-blink = false
 
 # RANDOM

@@ -53,6 +53,7 @@ return {
 			gleam = {},
 			eslint = {},
 			svelte = {},
+			tailwindcss = {},
 		}
 		for server, config in pairs(servers) do
 			-- passing config.capabilities to blink.cmp merges with the capabilities in your

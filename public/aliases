@@ -48,7 +48,6 @@ function code {
 
 alias dot='godot && nvim $DOTFILES_PATH'
 alias godot="cd $DOTFILES_PATH"
-alias gho="cd ~/Library/Application\ Support/com.mitchellh.ghostty/"
 alias gg="cd ~/git"
 alias pulldot="cd $DOTFILES_PATH && git pull && git status && cd -"
 alias packs='cd ~/.local/share/nvim/site/pack/packer/'
@@ -190,11 +189,14 @@ alias att='open -a atom .'
 # open in vs code
 # alias vtt='code ./'
 
-alias n="npm run"
-alias np="npm"
-alias p="pnpm run"
-alias pn="pnpm"
+alias nr="npm run"
+alias n="npm"
+alias pr="pnpm run"
+alias p="pnpm"
 alias br="bun run"
+alias b="bun"
+alias dr="deno run"
+alias d="deno"
 
 # call functions
 alias deps="traceDependenciesByLeaf"
@@ -346,6 +348,3 @@ alias ll='eza -alF'
 alias ls='eza -al --git --icons --no-permissions --no-user'
 # ls latest
 alias lsl='ls --sort=modified -r'
-
-
-
