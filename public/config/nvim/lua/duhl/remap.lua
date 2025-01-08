@@ -34,13 +34,38 @@ local nmaps = {
 	["clo"] = "oconsole.log();<esc>hi",
 	-- disable q: because I accidentally hit it all the time
 	["q:"] = ":",
-	-- print date
-	["<leader>pd"] = ":r!gdate --iso-8601=seconds<cr>",
-	["<leader>pp"] = ":Telescope neoclip<cr>",
+
+	-- surround current word with curly braces
 	["<leader>}"] = "wbi{<esc>ea}<esc>",
 	-- jump into curly braces that are on the current line
 	["<leader>{"] = "f{a<cr><esc>O",
 
+	-- YANK and PASTE
+	-- Yank ready for word swap
+	--   mark cursor location using `y` mark
+	--   then yank into `y` register
+	["yiw"] = 'yiwmy"yyiw',
+	-- Swap with yank
+	--   yank word into `x` registeer
+	--   replace word with `y` register
+	--   jump to `y` mark (set by previous yank)
+	--   replace word with `x` register
+	["siw"] = '"xyiwviw"yp`yviw"xp',
+	-- yank line for inline paste (multi-line)
+	["yil"] = "^v$hy",
+	-- Replace word with option to go next
+	["R"] = ":let @0=@+<cr>*Nciw<C-r>0<esc>",
+	-- paste yanked text even after delete
+	["<leader>py"] = '"0p',
+	-- print from clipboard
+	["<leader>pp"] = ":Telescope neoclip<cr>",
+	-- print date as a markdown heading
+	["<leader>pd"] = "i#<esc>:r!gdate<cr>kJ",
+	--print the current file
+	["<leader>pf"] = ":let @*=expand('%')<cr>p",
+
+	-- Change word with option to go to next
+	["ciw"] = "*Nciw",
 	-- close buffer
 	["'q"] = ":Bdelete<cr>",
 	-- Delete all buffers but the current one
@@ -62,11 +87,6 @@ local nmaps = {
 	["<A-k>"] = ":m .-2<cr>==",
 	["<A-j>"] = ":m .+1<cr>==",
 	["]="] = "<Plug>(IndentWiseNextEqualIndent)",
-	-- replace word with option to go next
-	-- ["R"] = "*Nciw<C-r>0<esc>",
-	["R"] = ":let @0=@+<cr>*Nciw<C-r>0<esc>",
-	-- change word with option to go to next
-	["ciw"] = "*Nciw",
 	-- delete word to black hole register
 	["<leader>d"] = '"_d',
 	["<leader>D"] = '"_D',
