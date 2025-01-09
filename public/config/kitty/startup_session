@@ -13,7 +13,7 @@ launch --var window=main
 launch --location=vsplit
 
 new_tab project
-cd ~/git/min_retro
+cd ~/git
 layout tall
 launch --var window=main
 launch --location=vsplit

@@ -25,7 +25,7 @@ source $DOTFILES_PATH/env.sh
 [[ -f ~/.git-completion.sh ]] && source ~/.git-completion.sh
 
 autoload -Uz compinit
-compinit
+compinit -i
 
 # Activate rtx for the session (rust based pro)
 eval "$(/opt/homebrew/bin/rtx activate zsh)"
