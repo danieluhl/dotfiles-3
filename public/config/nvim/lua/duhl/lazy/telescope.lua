@@ -100,7 +100,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
 		vim.keymap.set("n", "<leader>sf", function()
 			builtin.live_grep({ defaults = { file_ignore_patterns = file_ignore_patterns } })
 		end, { desc = "[S]earch by [F]ind words" })
-		vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
+		-- vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
 		vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
 		vim.keymap.set("n", "<leader><leader>", function()
 			builtin.oldfiles({ hidden = true })
@@ -113,6 +113,10 @@ return { -- Fuzzy Finder (files, lsp, etc)
 			"<Cmd>Telescope frecency workspace=CWD<CR>",
 			{ desc = '[S]earch Frecent files ("." for repeat)' }
 		)
+		vim.keymap.set("n", "<leader>sd", function()
+			local dir = vim.fn.input("Directory: ", vim.fn.expand("%:p:h"), "dir")
+			require("telescope.builtin").live_grep({ cwd = dir })
+		end, { desc = "Live grep in chosen directory" })
 
 		-- -- Slightly advanced example of overriding default behavior and theme
 		-- vim.keymap.set("n", "<leader>/", function()
