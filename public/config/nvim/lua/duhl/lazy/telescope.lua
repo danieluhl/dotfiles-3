@@ -60,6 +60,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
             ["<C-k>"] = "move_selection_previous",
           },
         },
+        path_display = { "smart" },
       },
       -- pickers = {}
       extensions = {
