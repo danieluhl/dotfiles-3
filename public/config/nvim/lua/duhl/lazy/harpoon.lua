@@ -1,12 +1,14 @@
 return {
   "ThePrimeagen/harpoon",
+  branch = "harpoon2",
+  dependencies = { "nvim-lua/plenary.nvim" },
   config = function()
-    require("telescope").load_extension("harpoon")
+    -- require("telescope").load_extension("harpoon")
     local harpoon = require("harpoon")
 
-    -- REQUIRED
+    -- -- REQUIRED
     harpoon:setup()
-    -- REQUIRED
+    -- -- REQUIRED
 
     vim.keymap.set("n", "'a", function()
       harpoon:list():add()
