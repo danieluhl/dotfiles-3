@@ -7,7 +7,17 @@ return {
   },
 
   config = function()
+    local function organize_imports()
+      local params = {
+        command = "_typescript.organizeImports",
+        arguments = { vim.api.nvim_buf_get_name(0) },
+        title = "",
+      }
+      vim.lsp.buf.execute_command(params)
+    end
+
     require("mason").setup()
+
     require("mason-lspconfig").setup({
       ensure_installed = { "lua_ls", "ts_ls", "rescriptls" },
     })
@@ -26,9 +36,19 @@ return {
         },
       },
       ts_ls = {
-        on_attach = function(client)
+        on_attach = function(client, bufnr)
           client.server_capabilities.documentFormattingProvider = false
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = bufnr,
+            command = "OrganizeImports",
+          })
         end,
+        commands = {
+          OrganizeImports = {
+            organize_imports,
+            description = "Organize Imports",
+          },
+        },
         single_file_support = false,
       },
       rescriptls = {
