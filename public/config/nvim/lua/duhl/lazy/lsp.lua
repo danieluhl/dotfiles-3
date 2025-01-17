@@ -60,6 +60,7 @@ return {
         end,
       },
       svelte = {},
+      jsonls = {},
       tailwindcss = {
         settings = {
           tailwindCSS = {

@@ -71,6 +71,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
       buffers = {
         sort_mru = true,
       },
+      cwd = vim.fn.getcwd(),
     })
 
     -- Enable Telescope extensions if they are installed
@@ -92,18 +93,18 @@ return { -- Fuzzy Finder (files, lsp, etc)
     -- vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
     -- search hidden files
     vim.keymap.set("n", "<leader>sh", function()
-      builtin.find_files({ hidden = true, defaults = { file_ignore_patterns = file_ignore_patterns } })
+      builtin.find_files({ hidden = true, file_ignore_patterns = file_ignore_patterns })
     end, { desc = "[S]earch [H]idden files" })
     vim.keymap.set("n", "<leader>sc", ":Telescope neoclip<cr>", { desc = "[Search] neo[C]lip" })
     vim.keymap.set("n", "<leader>st", builtin.treesitter, { desc = "[S]earch [T]reesitter" })
     vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
     vim.keymap.set("n", "<leader>sp", function()
-      builtin.find_files({ defaults = { file_ignore_patterns = file_ignore_patterns } })
+      builtin.find_files({ file_ignore_patterns = file_ignore_patterns })
     end, { desc = "[S]earch [F]iles" })
     vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
     vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
     vim.keymap.set("n", "<leader>sf", function()
-      builtin.live_grep({ defaults = { file_ignore_patterns = file_ignore_patterns } })
+      builtin.live_grep({ file_ignore_patterns = file_ignore_patterns })
     end, { desc = "[S]earch by [F]ind words" })
     -- vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
     vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
@@ -122,6 +123,11 @@ return { -- Fuzzy Finder (files, lsp, etc)
       local dir = vim.fn.input("Directory: ", vim.fn.expand("%:p:h"), "dir")
       require("telescope.builtin").live_grep({ cwd = dir })
     end, { desc = "Live grep in chosen directory" })
+
+    -- -- Shortcut for searching your Neovim configuration files
+    -- vim.keymap.set("n", "<leader>sn", function()
+    --   builtin.find_files({ cwd = vim.fn.stdpath("config") })
+    -- end, { desc = "[S]earch [N]eovim files" })
 
     -- -- Slightly advanced example of overriding default behavior and theme
     -- vim.keymap.set("n", "<leader>/", function()
