@@ -51,9 +51,27 @@ return {
       rust_analyzer = {},
       astro = {},
       gleam = {},
-      eslint = {},
+      eslint = {
+        on_attach = function(client, bufnr)
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = bufnr,
+            command = "EslintFixAll",
+          })
+        end,
+      },
       svelte = {},
-      tailwindcss = {},
+      tailwindcss = {
+        settings = {
+          tailwindCSS = {
+            experimental = {
+              classRegex = {
+                { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+                { "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+              },
+            },
+          },
+        },
+      },
     }
     for server, config in pairs(servers) do
       -- passing config.capabilities to blink.cmp merges with the capabilities in your
