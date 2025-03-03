@@ -69,7 +69,7 @@ local nmaps = {
   -- close buffer
   ["'q"] = ":Bdelete<cr>",
   -- Delete all buffers but the current one
-  ["<leader>bw"] = ":bufdo :Bwipeout<cr>",
+  ["<leader>b"] = ":bufdo :Bwipeout<cr>",
 
   -- FILE TREE (previously nvim-tree, now oil)
   ["<leader>e"] = ":Oil<cr>",
