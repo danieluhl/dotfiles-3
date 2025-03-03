@@ -123,6 +123,7 @@ alias lint='node_modules/.bin/eslint --rulesdir grunt_tasks/eslint/rules'
 alias grc='git rebase --continue'
 # example grone slush_branch (takes one commit and plays it on top of slush branch)
 alias grone='git rebase -i HEAD~1 --onto'
+
 alias cleanMac="find . -name 'node_modules' -type d -exec rm -rf '{}' + && brewup"
 
 #alias gclean='git remote prune origin && git fsck --full && git reflog expire --expire=now --all && git gc --prune=now && git clean -dfx && git stash clear && git branch -r | xargs -L 1 git branch -rD'
@@ -172,7 +173,6 @@ alias gdn="git diff --name-only $DEFAULT_BRANCH --color | diff-so-fancy | tee ~/
 alias gdm="git diff $DEFAULT_BRANCH --color | diff-so-fancy"
 
 # ********** non git ***********
-alias l='ls -CF'
 alias la='ls -lAt'
 alias ll='ls -alF'
 alias ls='ls -G'
@@ -182,9 +182,6 @@ alias toucheverything='find . -exec touch {} \; &'
 alias subl='open -a Sublime\ Text '
 alias stt='subl .'
 alias pf='open -a "path finder" ./'
-
-# open in atom
-alias att='open -a atom .'
 
 # open in vs code
 # alias vtt='code ./'

@@ -38,10 +38,10 @@ return {
       ts_ls = {
         on_attach = function(client, bufnr)
           client.server_capabilities.documentFormattingProvider = false
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            buffer = bufnr,
-            command = "OrganizeImports",
-          })
+          -- vim.api.nvim_create_autocmd("BufWritePre", {
+          --   buffer = bufnr,
+          --   command = "OrganizeImports",
+          -- })
         end,
         commands = {
           OrganizeImports = {
