@@ -345,3 +345,6 @@ alias ll='eza -alF'
 alias ls='eza -al --git --icons --no-permissions --no-user'
 # ls latest
 alias lsl='ls --sort=modified -r'
+
+# Jujitsu
+alias jst="jj st --no-pager"

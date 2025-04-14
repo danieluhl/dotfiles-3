@@ -3,6 +3,9 @@ return {
   name = "rose-pine",
   config = function()
     local palette = require("rose-pine.palette")
+    local config = require("rose-pine.config")
+    local styles = config.options.styles
+
     require("rose-pine").setup({
       dark_variant = "moon",
       styles = {
@@ -19,10 +22,12 @@ return {
       },
       highlight_groups = {
         -- RECIPES https://github.com/rose-pine/neovim/wiki/Recipes
-        Visual = { bg = palette.iris, blend = 25 },
-        Search = { bg = palette.gold, blend = 40 },
+        Visual = { bg = "#000000", blend = 100 },
+        Search = { bg = palette.gold, blend = 30 },
         IncSearch = { bg = palette.gold, blend = 40 },
-        CurSearch = { bg = palette.gold, blend = 90 },
+        -- CurSearch = { bg = palette.gold },
+        CursorLine = { bg = palette.base, blend = 90 },
+        -- CursorLineNr = { fg = palette.text, bold = styles.bold },
         -- StatusLine = { fg = "love", bg = "love", blend = 10 },
         -- StatusLineNC = { fg = "subtle", bg = "surface" },
         -- TelescopeBorder = { fg = "highlight_high", bg = "none" },

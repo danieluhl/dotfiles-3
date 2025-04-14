@@ -71,6 +71,20 @@ return {
       rust_analyzer = {},
       astro = {},
       gleam = {},
+      biome = {
+        on_attach = function(client, bufnr)
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = bufnr,
+            callback = function()
+              vim.lsp.buf.format({
+                filter = function(client)
+                  return client.name == "biome"
+                end,
+              })
+            end,
+          })
+        end,
+      },
       eslint = {
         on_attach = function(client, bufnr)
           vim.api.nvim_create_autocmd("BufWritePre", {
@@ -81,6 +95,21 @@ return {
       },
       svelte = {},
       jsonls = {},
+      elixirls = {},
+      denols = {
+        root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+        init_options = {
+          lint = true,
+          unstable = true, -- Enable unstable APIs (if needed)
+          suggest = {
+            imports = {
+              hosts = {
+                ["https://deno.land"] = true,
+              },
+            },
+          },
+        },
+      },
       tailwindcss = {
         settings = {
           tailwindCSS = {
