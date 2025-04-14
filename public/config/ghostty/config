@@ -2,8 +2,9 @@
 custom-shader = /Users/danieluhl/git/ghostty-shaders/cubes.glsl
 
 # FONT
-font-family = Dank Mono
+font-family = DankMono Nerd Font
 font-size = 22
+font-thicken = true
 ## This doesn't seem to work yet
 # font-feature = -liga,-calt,-dlig
 
@@ -18,7 +19,7 @@ palette = 4=#9ccfd8
 palette = 12=#9ccfd8
 
 selection-background = #44415a
-background-opacity = .9
+background-opacity = 1 
 background-blur-radius = 20
 macos-icon-ghost-color = #3e8fb0
 
