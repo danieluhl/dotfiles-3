@@ -22,11 +22,11 @@ return {
       },
       highlight_groups = {
         -- RECIPES https://github.com/rose-pine/neovim/wiki/Recipes
-        Visual = { bg = palette.pine, blend = 40 },
+        Visual = { bg = palette.iris, blend = 35 },
         Search = { bg = palette.gold, blend = 30 },
         IncSearch = { bg = palette.gold, blend = 40 },
         -- CurSearch = { bg = palette.gold },
-        CursorLine = { bg = palette.surface, blend = 100 },
+        CursorLine = { bg = palette.iris, blend = 20 },
         -- CursorLineNr = { fg = palette.text, bold = styles.bold },
         -- StatusLine = { fg = "love", bg = "love", blend = 10 },
         -- StatusLineNC = { fg = "subtle", bg = "surface" },
