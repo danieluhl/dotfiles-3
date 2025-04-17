@@ -1,22 +1,21 @@
-new_tab dot
-cd ~/git/dotfiles/public
-launch --title "dot"
+# new_tab dot
+# cd ~/git/dotfiles/public
+# launch --title "dot"
 
 new_tab scr
 cd ~/git/scratch
 launch --title "scr"
 
-new_tab learning
-cd ~/git/learning
-layout tall
-launch --var window=main
-launch --location=vsplit
+# new_tab learning
+# cd ~/git/learning
+# layout tall
+# launch --var window=main
+# launch --location=vsplit
 
 new_tab project
 cd ~/git
 layout tall
 launch --var window=main
 launch --location=vsplit
-launch --location=hsplit
 
 
