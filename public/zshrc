@@ -9,6 +9,7 @@ fi
 
 # first load oh-my-zsh so we can overwrite here
 source ~/.ohmyzshrc
+source ~/.config/secrets/.ai-secrets
 
 export DOTFILES_PATH="$HOME/git/dotfiles/public"
 

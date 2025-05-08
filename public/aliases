@@ -348,3 +348,6 @@ alias lsl='ls --sort=modified -r'
 
 # Jujitsu
 alias jst="jj st --no-pager"
+
+# RA.Aid
+alias ra="ra-aid"
