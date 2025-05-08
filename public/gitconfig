@@ -32,7 +32,7 @@
   path = ~/.gitconfig.local
 [user]
 	name = Dan Uhl
-	email = dan.uhl@posh.tech
+	email = danielruhl@gmail.com
 	signingKey = ""
 [merge]
   tool = opendiff
