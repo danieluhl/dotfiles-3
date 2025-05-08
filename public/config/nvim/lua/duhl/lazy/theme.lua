@@ -20,6 +20,7 @@ return {
           overlay = "#363738",
         },
       },
+      -- view all highlight groups with `:highlight`
       highlight_groups = {
         -- RECIPES https://github.com/rose-pine/neovim/wiki/Recipes
         Visual = { bg = palette.iris, blend = 35 },
@@ -36,6 +37,8 @@ return {
         -- TelescopeResultsNormal = { fg = "subtle", bg = "none" },
         -- TelescopeSelection = { fg = "text", bg = "base" },
         -- TelescopeSelectionCaret = { fg = "rose", bg = "rose" },
+        Comment = { italic = true },
+        Keyword = { italic = true },
       },
     })
     vim.cmd("colorscheme rose-pine-moon")
