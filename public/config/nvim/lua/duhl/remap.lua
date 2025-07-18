@@ -54,7 +54,7 @@ local nmaps = {
   -- yank line for inline paste (multi-line)
   ["yil"] = "^v$hy",
   -- Replace word with option to go next
-  ["R"] = ":let @0=@+<cr>*Nciw<C-r>0<esc>",
+  -- ["R"] = ":let @0=@+<cr>*Nciw<C-r>0<esc>",
   -- paste yanked text even after delete
   ["<leader>py"] = '"0p',
   -- print from clipboard
