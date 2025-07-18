@@ -50,7 +50,7 @@ local nmaps = {
   --   replace word with `y` register
   --   jump to `y` mark (set by previous yank)
   --   replace word with `x` register
-  ["siw"] = '"xyiwviw"yp`yviw"xp',
+  -- ["siw"] = '"xyiwviw"yp`yviw"xp',
   -- yank line for inline paste (multi-line)
   ["yil"] = "^v$hy",
   -- Replace word with option to go next
