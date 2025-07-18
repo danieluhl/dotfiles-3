@@ -10,8 +10,8 @@ return {
     sub.setup()
     vim.keymap.set("n", "s", sub.operator, { noremap = true, desc = "Substitute operator" })
     vim.keymap.set("n", "R", function()
-      vim.api.nvim_feedkeys("*N", "n", false)
-      sub.operator({ motion = "iw" })
+      vim.cmd("normal! *N")
+      sub.operator({ motion = "iw", register = "+" })
     end, { noremap = true, desc = "Substitute inner word" })
   end,
 }
