@@ -1,5 +1,5 @@
 # Shaders
-custom-shader = /Users/danieluhl/git/ghostty-shaders/cubes.glsl
+# custom-shader = /Users/danieluhl/git/ghostty-shaders/cubes.glsl
 
 # FONT
 font-family = DankMono Nerd Font
@@ -39,3 +39,5 @@ window-save-state = always
 ## This uses ansii escape sequences
 keybind = super+backspace=text:\x15
 
+# Don't ask me to close
+confirm-close-surface = false
