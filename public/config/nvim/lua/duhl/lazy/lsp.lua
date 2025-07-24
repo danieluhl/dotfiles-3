@@ -25,7 +25,12 @@ return {
     local blink = require("blink.cmp")
     local lspconfig = require("lspconfig")
 
+    -- see a list of servers here: https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
     local servers = {
+      elmls = {},
+      rust_analyzer = {},
+      astro = {},
+      gleam = {},
       lua_ls = {
         settings = {
           Lua = {
@@ -68,9 +73,6 @@ return {
           },
         },
       },
-      rust_analyzer = {},
-      astro = {},
-      gleam = {},
       biome = {
         on_attach = function(client, bufnr)
           vim.api.nvim_create_autocmd("BufWritePre", {
