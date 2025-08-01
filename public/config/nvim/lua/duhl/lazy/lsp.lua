@@ -19,7 +19,7 @@ return {
     require("mason").setup()
 
     require("mason-lspconfig").setup({
-      ensure_installed = { "lua_ls", "ts_ls", "rescriptls" },
+      ensure_installed = { "lua_ls", "ts_ls", "rescriptls", "biome" },
     })
 
     local blink = require("blink.cmp")
@@ -81,6 +81,20 @@ return {
               vim.lsp.buf.format({
                 filter = function(client)
                   return client.name == "biome"
+                end,
+              })
+            end,
+          })
+        end,
+      },
+      oxlint = {
+        on_attach = function(client, bufnr)
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = bufnr,
+            callback = function()
+              vim.lsp.buf.format({
+                filter = function(client)
+                  return client.name == "oxlint"
                 end,
               })
             end,
