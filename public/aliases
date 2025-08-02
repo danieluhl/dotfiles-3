@@ -55,6 +55,7 @@ alias scr='cd ~/git/scratch && nvim scratchpad.md'
 alias alss='nvim ~/.aliases'
 alias sess='nvim ~/.config/kitty/startup_session'
 alias dotn='nvim ~/.config/nvim/lua/duhl'
+alias dotg='nvim ~/.config/ghostty/config'
 alias reload='source ~/.aliases'
 
 alias wat='alias'
