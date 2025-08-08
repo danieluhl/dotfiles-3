@@ -351,3 +351,7 @@ alias jst="jj st --no-pager"
 
 # RA.Aid
 alias ra="ra-aid"
+
+alias gem="gemini"
+
+alias oc="opencode"
