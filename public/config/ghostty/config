@@ -3,7 +3,7 @@ custom-shader = /Users/danieluhl/git/ghostty-shaders/cubes.glsl
 
 # FONT
 font-family = DankMono Nerd Font
-font-size = 22
+font-size = 20
 font-thicken = true
 ## This doesn't seem to work yet
 # font-feature = -liga,-calt,-dlig
