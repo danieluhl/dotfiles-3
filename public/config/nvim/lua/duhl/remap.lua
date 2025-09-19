@@ -87,7 +87,7 @@ local nmaps = {
   ["<A-k>"] = ":m .-2<cr>==",
   ["<A-j>"] = ":m .+1<cr>==",
   ["]="] = "<Plug>(IndentWiseNextEqualIndent)",
-  -- delete word to black hole register
+  -- delete to black hole register
   ["<leader>d"] = '"_d',
   ["<leader>D"] = '"_D',
   ["<leader>c"] = '"_c',
