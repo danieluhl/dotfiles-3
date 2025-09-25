@@ -144,7 +144,8 @@ return {
       -- passing config.capabilities to blink.cmp merges with the capabilities in your
       -- `server.capabilities, if you've defined it
       config.capabilities = blink.get_lsp_capabilities(config.capabilities)
-      lspconfig[server].setup(config)
+      vim.lsp.config[server] = config
+      vim.lsp.enable({ server })
     end
 
     vim.diagnostic.config({
