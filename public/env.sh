@@ -11,7 +11,7 @@ export ZSH_WINDOW_TITLE_DIRECTORY_DEPTH=2
 # rust
 export RUSTPATH="$HOME/.cargo"
 # golang
-export GOPATH="#HOME/go"
+export GOPATH="$HOME/go"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 

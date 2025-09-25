@@ -52,5 +52,8 @@ eval "$(~/.local/bin/mise activate zsh)"
 eval "$(mise activate zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source <(fzf --zsh)
+
+
 
 

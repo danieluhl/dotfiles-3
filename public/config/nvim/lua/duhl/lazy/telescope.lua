@@ -80,13 +80,13 @@ return { -- Fuzzy Finder (files, lsp, etc)
     pcall(require("telescope").load_extension, "frecency")
 
     local file_ignore_patterns = {
-      "node_modules",
+      "node_modules/",
       "package%-lock%.json",
       "pnpm%-lock%.yaml",
-      "dist",
-      "build",
+      "build/",
+      "dist/",
       "%.git",
-      "deps",
+      "deps/",
     }
 
     -- See `:help telescope.builtin`
