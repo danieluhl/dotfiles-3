@@ -19,8 +19,11 @@ return {
     require("mason").setup()
 
     require("mason-lspconfig").setup({
-      ensure_installed = { "lua_ls", "ts_ls", "rescriptls", "biome" },
+      ensure_installed = { "elixirls", "lua_ls", "ts_ls", "rescriptls", "biome" },
     })
+
+    local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
+    local elixirls_path = vim.fn.glob(mason_bin .. "/elixir-ls")
 
     local blink = require("blink.cmp")
     local lspconfig = require("lspconfig")
@@ -111,7 +114,9 @@ return {
       },
       svelte = {},
       jsonls = {},
-      elixirls = {},
+      elixirls = {
+        cmd = { elixirls_path },
+      },
       denols = {
         root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
         init_options = {

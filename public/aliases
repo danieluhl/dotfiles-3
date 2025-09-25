@@ -5,7 +5,7 @@
 # git fetch origin [branch]:[branch] --force
 
 # vim plugin manager
-# git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+#  clone --depth 1 https://github.com/wbthomason/packer.nvim\
 # ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
 # Setup
@@ -351,7 +351,7 @@ alias jst="jj st --no-pager"
 
 # RA.Aid
 alias ra="ra-aid"
-
 alias gem="gemini"
-
 alias oc="opencode"
+alias ex="codex"
+
