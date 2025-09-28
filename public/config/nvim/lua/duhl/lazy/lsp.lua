@@ -112,7 +112,7 @@ return {
           })
         end,
       },
-      svelte = {},
+      -- svelte = {},
       jsonls = {},
       elixirls = {
         cmd = { elixirls_path },

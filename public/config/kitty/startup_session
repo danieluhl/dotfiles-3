@@ -14,7 +14,7 @@ launch --title "scr"
 
 new_tab project
 cd ~/git
-layout tall
+layout stack
 launch --var window=main
 launch --location=vsplit
 
