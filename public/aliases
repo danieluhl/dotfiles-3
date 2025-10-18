@@ -190,6 +190,7 @@ alias pf='open -a "path finder" ./'
 # open in vs code
 # alias vtt='code ./'
 
+
 alias nr="npm run"
 alias n="npm"
 alias pr="pnpm run"
