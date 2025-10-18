@@ -15,7 +15,7 @@ brew install neovim &&
 brew install asdf &&
 brew install lazygit &&
 brew install fmt &&
-brew install rtx &&
+brew install mise &&
 brew install coreutils &&
 brew install gnutls &&
 brew install pnpm &&

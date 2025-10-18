@@ -9,7 +9,7 @@
 # ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
 # put local aliases here
-if [ -f ./aliases.local]; then
+if [ -f ./aliases.local ]; then
     source ./aliases.local
 fi
 
