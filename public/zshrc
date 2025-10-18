@@ -54,6 +54,6 @@ if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-clou
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 source <(fzf --zsh)
 
-eval $(ssh-agent)
+eval "$(ssh-agent -s)"
 
 

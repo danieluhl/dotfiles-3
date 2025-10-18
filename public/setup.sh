@@ -7,6 +7,10 @@ sh ./vim-setup.sh
 # This script creates symlinks from the home directory to any desired dotfiles in ~/dotfiles
 ############################
 
+# NOTE: to setup github ssh keys read this 
+# https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#adding-your-ssh-key-to-the-ssh-agent
+# you can do `gh auth login` to login to github and `gh auth setup-ssh` to setup ssh keys
+
 ########## Variables
 
 dir=~/git/dotfiles/public        # dotfiles directory
