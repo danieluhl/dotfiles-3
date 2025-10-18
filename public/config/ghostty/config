@@ -1,5 +1,5 @@
 # Shaders
-custom-shader = /Users/danieluhl/git/ghostty-shaders/cubes.glsl
+custom-shader = ~/git/ghostty-shaders/cubes.glsl
 
 # FONT
 font-family = DankMono Nerd Font

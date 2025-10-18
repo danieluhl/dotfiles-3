@@ -44,5 +44,5 @@ for dir in "${PATH_DIRS[@]}"; do
 done
 
 # Adds deno env variables to path
-. "/Users/danieluhl/.deno/env"
+. "$HOME/.deno/env"
 

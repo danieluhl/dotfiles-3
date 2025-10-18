@@ -54,6 +54,6 @@
 [case]
   ignorecase = false
 [maintenance]
-	repo = /Users/danieluhl/git/dotfiles
+	repo = ~/git/dotfiles
 [core]
   hooksPath = .git/hooks

@@ -1,5 +1,7 @@
 .DS_Store
 *.DS_Store
+*.plist
+*.local
 npmrc
 /.history
 *.sw

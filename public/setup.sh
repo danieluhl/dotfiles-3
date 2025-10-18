@@ -14,7 +14,8 @@ olddir=~/dotfiles_old             # old dotfiles backup directory
 
 files="tool-versions zshrc ohmyzshrc aliases gitconfig eslintrc gitignore "\
 "gitmessage profile warp config/nvim config/raycast "\
-"config/karabiner config/kitty config/ghostty config/opencode config/zed"
+"config/karabiner config/kitty config/ghostty config/opencode config/zed "\
+"aliases.local"
 
 ##########
 
