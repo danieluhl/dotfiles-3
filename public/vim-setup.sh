@@ -8,13 +8,26 @@
 
 # brew list output:
 # ==> Formulae
-# brew install asdf &&
-# brew install lazygit &&
-# brew install fmt &&
+
+brew install zsh &&
+brew install tree-sitter &&
+brew install neovim &&
+brew install asdf &&
+brew install lazygit &&
+brew install fmt &&
+brew install mise &&
+brew install coreutils &&
+brew install gnutls &&
+brew install pnpm &&
+brew install npm &&
+brew install eza &&
+brew install gh &&
+brew install ripgrep
+
+
 # brew install flyctl &&
 # brew install libsodium &&
 # brew install lz4 &&
-# brew install rtx &&
 # brew install autoconf &&
 # brew install folly &&
 # brew install libtasn1 &&
@@ -42,7 +55,6 @@
 # brew install boost &&
 # brew install gflags &&
 # brew install libvterm &&
-# brew install neovim &&
 # brew install tree-sitter &&
 # brew install brotli &&
 # brew install gh &&
@@ -64,8 +76,6 @@
 # brew install libxdmcp &&
 # brew install p11-kit &&
 # brew install wangle &&
-# brew install coreutils &&
-# brew install gnutls &&
 # brew install libxext &&
 # brew install pcre &&
 # brew install xorgproto &&
@@ -89,7 +99,6 @@
 # brew install libevent &&
 # brew install lua-language-server &&
 # brew install python@3.10 &&
-# brew install zsh &&
 # brew install fb303 &&
 # brew install libffi &&
 # brew install luajit &&
@@ -106,7 +115,6 @@
 # brew install fizz &&
 # brew install libpng &&
 # brew install luv &&
-# brew install ripgrep
 
 # ==> Casks
 # KEYCASTR	WARP

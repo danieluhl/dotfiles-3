@@ -9,9 +9,7 @@
 # ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
 # put local aliases here
-if [ -f ./aliases.local]; then
-    source ./aliases.local
-fi
+[ -f ./aliases.local ] && source ./.aliases.local
 
 # Setup
 alias runsetup="bash $DOTFILES_PATH/setup.sh"
@@ -186,6 +184,7 @@ alias pf='open -a "path finder" ./'
 
 # open in vs code
 # alias vtt='code ./'
+
 
 alias nr="npm run"
 alias n="npm"
