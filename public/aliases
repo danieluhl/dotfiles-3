@@ -177,9 +177,6 @@ alias gdn="git diff --name-only $DEFAULT_BRANCH --color | diff-so-fancy | tee ~/
 alias gdm="git diff $DEFAULT_BRANCH --color | diff-so-fancy"
 
 # ********** non git ***********
-alias la='ls -lAt'
-alias ll='ls -alF'
-alias ls='ls -G'
 alias toucheverything='find . -exec touch {} \; &'
 
 # open in sublime
@@ -346,7 +343,12 @@ alias cc="codecrafters"
 alias la='eza -al --git --icons --no-permissions --no-user -snew'
 alias lt='eza -la --git --icons -T'
 alias ll='eza -alF'
-alias ls='eza -al --git --icons --no-permissions --no-user'
+alias ls='eza -al --git --icons --no-permissions --no-user -snew'
+
+# alias la='ls -lAt'
+# alias ll='ls -alF'
+# alias ls='ls -lAt'
+#
 # ls latest
 alias lsl='ls --sort=modified -r'
 
