@@ -81,11 +81,19 @@ return {
         on_attach = function(client, bufnr)
           vim.api.nvim_create_autocmd("BufWritePre", {
             buffer = bufnr,
-            callback = function()
+            callback = function(args)
               vim.lsp.buf.format({
                 filter = function(client)
                   return client.name == "biome"
                 end,
+              })
+              vim.lsp.buf.code_action({
+                context = {
+                  only = { "source.fixAll.biome" },
+                  diagnostics = {},
+                },
+                apply = true,
+                bufnr = args.buf,
               })
             end,
           })
