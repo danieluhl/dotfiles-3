@@ -62,6 +62,6 @@ vim.g.astro_stylus = "enable"
 -- vim.api.nvim_command("hi Nr guifg=#af00af")
 
 -- this makes it so that dashes are considered part of the word
-vim.cmd([[set iskeyword+=-]])
+-- vim.cmd([[set iskeyword+=-]])
 
 vim.loaded_matchit = 1

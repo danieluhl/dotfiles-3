@@ -28,6 +28,7 @@ return {
         IncSearch = { bg = palette.gold, blend = 40 },
         -- CurSearch = { bg = palette.gold },
         CursorLine = { bg = palette.iris, blend = 20 },
+        NormalFloat = { bg = palette.base, blend = 70 },
         -- CursorLineNr = { fg = palette.text, bold = styles.bold },
         -- StatusLine = { fg = "love", bg = "love", blend = 10 },
         -- StatusLineNC = { fg = "subtle", bg = "surface" },
