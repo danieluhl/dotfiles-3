@@ -9,7 +9,7 @@
 # ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
 # put local aliases here
-[ -f ./aliases.local ] && source ./.aliases.local
+[ -f ./aliases.local ] && source ./aliases.local
 
 # Setup
 alias runsetup="bash $DOTFILES_PATH/setup.sh"
@@ -359,4 +359,3 @@ alias ra="ra-aid"
 alias gem="gemini"
 alias oc="opencode"
 alias ex="codex"
-

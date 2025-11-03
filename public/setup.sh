@@ -47,5 +47,8 @@ done
 # make a symlink to this directory for self-reference
 ln -sfn "$dir" ~/.dotdir
 
+# add scratch directory if it doesn't exist
+mkdir -p ~/Documents/scratch
+
 # Add a symlink to my scratch file that syncs through icloud drive
 ln -s ~/Documents/scratch ~/git/scratch
