@@ -49,7 +49,6 @@ if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-clou
 
 # activate mise
 # eval "$(~/.local/bin/mise activate zsh)"
-# eval "$(mise activate zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 source <(fzf --zsh)
@@ -57,3 +56,6 @@ source <(fzf --zsh)
 eval "$(ssh-agent -s)"
 
 eval "$(zoxide init zsh)"
+eval "$(rbenv init - zsh)"
+
+eval "$(mise activate zsh)"

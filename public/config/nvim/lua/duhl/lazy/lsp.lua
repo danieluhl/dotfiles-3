@@ -19,7 +19,7 @@ return {
     require("mason").setup()
 
     require("mason-lspconfig").setup({
-      ensure_installed = { "elixirls", "lua_ls", "ts_ls", "rescriptls", "biome" },
+      ensure_installed = { "elixirls", "lua_ls", "ts_ls", "rescriptls", "biome", "ruby_lsp" },
     })
 
     local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
@@ -31,6 +31,8 @@ return {
     -- see a list of servers here: https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
     local base_on_attach = vim.lsp.config.eslint.on_attach
     local servers = {
+      ruby_lsp = {},
+      rubocop = {},
       elmls = {},
       rust_analyzer = {},
       astro = {},
@@ -151,8 +153,8 @@ return {
             experimental = {
               classRegex = {
                 { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
-                { "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-                { "cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+                { "cx\\(([^)]*)\\)",  "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+                { "cn\\(([^)]*)\\)",  "(?:'|\"|`)([^']*)(?:'|\"|`)" },
               },
             },
           },

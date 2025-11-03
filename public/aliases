@@ -9,7 +9,7 @@
 # ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
 # put local aliases here
-[ -f ./aliases.local ] && source ./aliases.local
+[ -f ~/.aliases.local ] && source ~/.aliases.local
 
 # Setup
 alias runsetup="bash $DOTFILES_PATH/setup.sh"
@@ -30,11 +30,12 @@ alias ...='cd -'
 alias brewup='brew update && brew upgrade && brew cleanup && brew doctor'
 
 # Set defualt branch to main vs master $DEFAULT_BRANCH
-alias gdmain="export DEFAULT_BRANCH='main' && echo Switched default: $DEFAULT_BRANCH"
-alias gdmaster="export DEFAULT_BRANCH='master' && echo Switched default: $DEFAULT_BRANCH"
+alias gdmain="export DEFAULT_BRANCH='main' && echo Switched default: main"
+alias gdmaster="export DEFAULT_BRANCH='master' && echo Switched default: master"
 
-## default branch when starting up is main
-export DEFAULT_BRANCH='main'
+# default branch when starting up is main, set in .aliases.local if different
+# for this computer
+export DEFAULT_BRANCH=${DEFAULT_BRANCH:="main"}
 
 # vscode wireup
 function code {
@@ -194,6 +195,8 @@ alias br="bun run"
 alias b="bun"
 alias dr="deno run"
 alias d="deno"
+alias yr="yarn run"
+alias y="yarn"
 
 # call functions
 alias deps="traceDependenciesByLeaf"
@@ -339,10 +342,9 @@ alias rtx="mise"
 alias cc="codecrafters"
 
 # eza replacement for ls
-alias la='eza -al --git --icons --no-permissions --no-user -snew'
+alias la='eza -al --git --icons --no-user -snew'
 alias lt='eza -la --git --icons -T'
 alias ll='eza -alF'
-alias ls='eza -al --git --icons --no-permissions --no-user -snew'
 
 # alias la='ls -lAt'
 # alias ll='ls -alF'
@@ -356,6 +358,6 @@ alias jst="jj st --no-pager"
 
 # RA.Aid
 alias ra="ra-aid"
-alias gem="gemini"
+# alias gem="gemini"
 alias oc="opencode"
 alias ex="codex"

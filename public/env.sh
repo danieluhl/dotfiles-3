@@ -17,7 +17,9 @@ export BUN_INSTALL="$HOME/.bun"
 
 PATH_DIRS=(
   # Homebrew packages
-  "/opt/homebrew/opt/ruby/bin:/opt/homebrew/bin"
+  # note: use rbenv to manage ruby installs
+  # "/opt/homebrew/opt/ruby/bin:/opt/homebrew/bin"
+  # "/opt/homebrew/lib/ruby/gems/3.4.0/bin"
   "/opt/homebrew/sbin"
   "$PNPM_HOME"
   "$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin"
@@ -47,3 +49,5 @@ done
 if [ -d "$HOME/.deno" ]; then
 . "$HOME/.deno/env"
 fi
+
+
