@@ -56,6 +56,5 @@ source <(fzf --zsh)
 eval "$(ssh-agent -s)"
 
 eval "$(zoxide init zsh)"
-eval "$(rbenv init - zsh)"
 
 eval "$(mise activate zsh)"
