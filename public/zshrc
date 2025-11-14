@@ -58,3 +58,10 @@ eval "$(ssh-agent -s)"
 eval "$(zoxide init zsh)"
 
 eval "$(mise activate zsh)"
+
+export SSL_CERT_FILE="$(brew --prefix)/etc/openssl@3/cert.pem"
+export SSL_CERT_DIR="$(brew --prefix)/etc/openssl@3/certs"
+
+# load up local ruby versions
+# eval "$(rbenv init - zsh)"
+

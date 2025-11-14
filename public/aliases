@@ -89,6 +89,7 @@ alias gla="git log --graph --decorate --oneline --all"
 # committing
 alias ga='git add -A'
 alias gcin='git add -A && git commit -m'
+alias gci='git add -A && git commit'
 # alias gcin='git commit -am'
 # alias gci='git add -A && git commit -n'
 alias gcamend='git add -A && git commit --amend'
@@ -109,6 +110,15 @@ alias grevertall='git reset --hard HEAD~1'
 alias gun='git reset --hard HEAD'
 alias gkilleverything='git reset --hard origin/$DEFAULT_BRANCH'
 alias resetBranch='git fetch && git reset --hard origin/$DEFAULT_BRANCH'
+# get latest on the current branch and reset to what is on the remote
+alias resetToRemote='resetToRemote'
+function resetToRemote()
+{
+  currentBranch="$(git symbolic-ref HEAD 2>/dev/null)";
+  currentBranch=${currentBranch##refs/heads/}
+  repo=${PWD##*/}
+  eval "git fetch && git reset --hard origin/$currentBranch";
+}
 
 # pushing and pulling
 alias gpush='git push -u origin HEAD'
@@ -170,10 +180,10 @@ alias gmtheirs='git merge --strategy-option theirs'
 alias gmours='git merge --strategy-option ours'
 
 # diffing
-alias gd='git diff --color | diff-so-fancy'
-alias gds='git diff --staged --color | diff-so-fancy'
-alias gdn="git diff --name-only $DEFAULT_BRANCH --color | diff-so-fancy | tee ~/git/patch/names.patch"
-alias gdm="git diff $DEFAULT_BRANCH --color | diff-so-fancy"
+alias gd='git diff --color | diff-so-fancy | less --tabs=4 -RF'
+alias gds='git diff --staged --color | diff-so-fancy | less --tabs=4 -RF'
+alias gdn="git --no-pager diff --name-only $DEFAULT_BRANCH"
+alias gdm="git diff $DEFAULT_BRANCH --color | diff-so-fancy | less --tabs=4 -RF"
 
 # ********** non git ***********
 alias toucheverything='find . -exec touch {} \; &'
@@ -214,6 +224,8 @@ function printBranches()
 {
   eval 'for k in `git branch | sed s/^..//`; do echo -e `git log -1 --pretty=format:"%Cgreen%ci %Cred%cr%Creset" $k --`\\t"$k";done | sort'
 }
+
+
 
 
 # pushes the current branch to the same named remote
@@ -276,6 +288,14 @@ function deleteBranch()
 {
   eval "git branch -D $1";
   eval "gb";
+}
+
+
+
+alias gcbm='createBranchFromMain'
+function createBranchFromMain() 
+{
+  eval "git fetch origin $DEFAULT_BRANCH:$1";
 }
 
 # requires "brew install fzf"
@@ -361,3 +381,5 @@ alias ra="ra-aid"
 # alias gem="gemini"
 alias oc="opencode"
 alias ex="codex"
+
+alias runbe="bundle exec sidekiq & bin/webpack-dev-server & rails s &"

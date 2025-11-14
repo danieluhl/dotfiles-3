@@ -22,12 +22,16 @@ PATH_DIRS=(
   # "/opt/homebrew/lib/ruby/gems/3.4.0/bin"
   "/opt/homebrew/sbin"
   "$PNPM_HOME"
-  "$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin"
+  "$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin",
   "$RUSTPATH"
   "$GOPATH"
   "$BUN_INSTALL/bin"
   "$HOME/bin"
   "/usr/local/bin"
+  "/opt/homebrew/opt/openssl@3/bin"
+  "/opt/homebrew/opt/curl/bin"
+  # ruby 
+  "$HOME/.rbenv/bin"
 )
 
 # Iterate over each directory in the list
@@ -49,5 +53,4 @@ done
 if [ -d "$HOME/.deno" ]; then
 . "$HOME/.deno/env"
 fi
-
 
