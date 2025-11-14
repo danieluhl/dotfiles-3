@@ -145,6 +145,7 @@ alias gignore="git update-index --assume-unchanged"
 alias gstopignore="git update-index --no-assume-unchanged"
 
 alias gcm='git checkout $DEFAULT_BRANCH'
+alias gcmm='git checkout master'
 alias gcmp='gcm && gpr'
 alias gmp='gm && gpr'
 
@@ -179,10 +180,10 @@ alias gmtheirs='git merge --strategy-option theirs'
 alias gmours='git merge --strategy-option ours'
 
 # diffing
-alias gd="git diff --color -- . ':!package-lock.json'"
-alias gds='git diff --staged --color'
+alias gd="git diff --color -- . ':!package-lock.json' | diff-so-fancy | less --tabs=4 -RF"
+alias gds='git diff --staged --color | diff-so-fancy | less --tabs=4 -RF'
 alias gdn="git diff --name-only $DEFAULT_BRANCH --color"
-alias gdm="git diff $DEFAULT_BRANCH --color -- . ':!package-lock.json'"
+alias gdm="git diff $DEFAULT_BRANCH --color -- . ':!package-lock.json' | diff-so-fancy | less --tabs=4 -RF"
 alias gdmn="git diff $DEFAULT_BRANCH --color --name-only"
 
 # ********** non git ***********
@@ -255,7 +256,7 @@ function diffRemoteBranch()
   currentBranch="$(git symbolic-ref HEAD 2>/dev/null)";
   currentBranch=${currentBranch##refs/heads/}
   repo=${PWD##*/}
-  eval "git diff --full-index origin/$currentBranch" | tee ~/git/patch/$repo/$currentBranch.patch
+  eval "git diff --full-index origin/$currentBranch"
 }
 
 
