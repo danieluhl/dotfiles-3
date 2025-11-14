@@ -9,10 +9,10 @@ return {
         -- Conform will run multiple formatters sequentially
         python = { "isort", "black" },
         -- Use a sub-list to run only the first available formatter
-        javascript = { "eslint", "prettier", stop_after_first = false },
-        javascriptreact = { "eslint", "prettier", stop_after_first = false },
-        typescript = { "eslint", "prettier", stop_after_first = false },
-        typescriptreact = { "eslint", "prettier", stop_after_first = false },
+        javascript = { "biome", "biome-organize-imports", "eslint", "prettier", stop_after_first = false },
+        javascriptreact = { "biome", "biome-organize-imports", "eslint", "prettier", stop_after_first = false },
+        typescript = { "biome", "biome-organize-imports", "eslint", "prettier", stop_after_first = false },
+        typescriptreact = { "biome", "biome-organize-imports", "eslint", "prettier", stop_after_first = false },
         svelte = { "prettier", stop_after_first = true },
         css = { "prettier", stop_after_first = true },
         html = { "htmlbeautifier", "prettier", stop_after_first = false },

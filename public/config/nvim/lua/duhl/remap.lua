@@ -16,6 +16,14 @@ function Open_in_git()
   return vim.cmd("silent !open " .. url)
 end
 
+local function print_iso_datetime()
+  local iso_datetime = vim.fn.strftime("%Y-%m-%dT%H:%M:%SZ")
+  vim.api.nvim_put({ iso_datetime }, "", true, true)
+end
+
+-- Create a Vim command that calls the Lua function
+vim.api.nvim_create_user_command("ISO", print_iso_datetime, {})
+
 local nmaps = {
 
   -- notes on yanking and the clipboard: we set

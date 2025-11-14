@@ -87,6 +87,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
       "dist/",
       "%.git",
       "deps/",
+      "%.gen",
     }
 
     -- See `:help telescope.builtin`

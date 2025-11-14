@@ -48,6 +48,7 @@ function code {
 alias dot='godot && nvim $DOTFILES_PATH'
 alias godot="cd $DOTFILES_PATH"
 alias go='cd $(find . -maxdepth 3 -type d | fzf)'
+alias cdd='cd $(find . -maxdepth 1 -type d | fzf)'
 alias gg="cd ~/git"
 alias pulldot="cd $DOTFILES_PATH && git pull && git status && cd -"
 alias packs='cd ~/.local/share/nvim/site/pack/packer/'
@@ -107,17 +108,15 @@ alias gkilleverything='git reset --hard origin/$DEFAULT_BRANCH'
 alias resetBranch='git fetch && git reset --hard origin/$DEFAULT_BRANCH'
 
 # pushing and pulling
-alias gpush='git push -u origin HEAD'
+alias gpu='pullremote'
 alias gpf='git push --force-with-lease'
-alias gpa='git push --no-verify'
-alias gp='pullremote'
+alias gp='pushremote'
 alias gpr='git pull --rebase'
+alias gpp='gpu && gp'
 # rebase is saying, "instead of building my features on that old commit, build them all on this new commit"
-
 alias grm='git fetch origin $DEFAULT_BRANCH:$DEFAULT_BRANCH && git rebase origin/$DEFAULT_BRANCH'
 
 alias gf='git fetch --all --prune'
-alias gpp='gp && gpush'
 alias lint='node_modules/.bin/eslint --rulesdir grunt_tasks/eslint/rules'
 alias grc='git rebase --continue'
 # example grone slush_branch (takes one commit and plays it on top of slush branch)
@@ -166,10 +165,11 @@ alias gmtheirs='git merge --strategy-option theirs'
 alias gmours='git merge --strategy-option ours'
 
 # diffing
-alias gd='git diff --color | diff-so-fancy'
-alias gds='git diff --staged --color | diff-so-fancy'
-alias gdn="git diff --name-only $DEFAULT_BRANCH --color | diff-so-fancy | tee ~/git/patch/names.patch"
-alias gdm="git diff $DEFAULT_BRANCH --color | diff-so-fancy"
+alias gd="git diff --color -- . ':!package-lock.json'"
+alias gds='git diff --staged --color'
+alias gdn="git diff --name-only $DEFAULT_BRANCH --color"
+alias gdm="git diff $DEFAULT_BRANCH --color -- . ':!package-lock.json'"
+alias gdmn="git diff $DEFAULT_BRANCH --color --name-only"
 
 # ********** non git ***********
 alias la='ls -lAt'
