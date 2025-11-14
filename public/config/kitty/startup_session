@@ -12,7 +12,13 @@ launch --title "scr"
 # launch --var window=main
 # launch --location=vsplit
 
-new_tab project
+new_tab frontend
+cd ~/git
+layout stack
+launch --var window=main
+launch --location=vsplit
+
+new_tab backend
 cd ~/git
 layout stack
 launch --var window=main

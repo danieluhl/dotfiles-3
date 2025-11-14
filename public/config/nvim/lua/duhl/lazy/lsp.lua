@@ -19,7 +19,7 @@ return {
     require("mason").setup()
 
     require("mason-lspconfig").setup({
-      ensure_installed = { "elixirls", "lua_ls", "ts_ls", "rescriptls", "biome" },
+      ensure_installed = { "elixirls", "lua_ls", "ts_ls", "rescriptls", "biome", "ruby_lsp" },
     })
 
     local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
@@ -29,7 +29,35 @@ return {
     local lspconfig = require("lspconfig")
 
     -- see a list of servers here: https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
+    local base_on_attach = vim.lsp.config.eslint.on_attach
     local servers = {
+      ruby_lsp = {
+        -- cmd = { "bundle", "exec", "ruby-lsp" },
+        cmd = { 'ruby-lsp' },
+        filetypes = { 'ruby', 'eruby' },
+        root_markers = { 'Gemfile', '.git' },
+        init_options = {
+          formatter = 'auto',
+        },
+        reuse_client = function(client, config)
+          config.cmd_cwd = config.root_dir
+          return client.config.cmd_cwd == config.cmd_cwd
+        end,
+
+        -- if there was a version in mise that worked with <3 ruby then this would work, but alas
+        -- mason = false,
+        -- cmd = { vim.fn.expand("~/.local/share/mise/shims/ruby-lsp") },
+      },
+      rubocop = {
+        cmd = { "bundle", "exec", "rubocop", "--lsp" },
+        -- cmd = { 'rubocop', '--lsp' },
+        filetypes = { 'ruby' },
+        root_markers = { 'Gemfile', '.git' },
+
+        -- if there was a version in mise that worked with <3 ruby then this would work, but alas
+        -- mason = false,
+        -- cmd = { vim.fn.expand("~/.local/share/mise/shims/rubocop"), "--lsp" },
+      },
       elmls = {},
       rust_analyzer = {},
       astro = {},
@@ -80,11 +108,19 @@ return {
         on_attach = function(client, bufnr)
           vim.api.nvim_create_autocmd("BufWritePre", {
             buffer = bufnr,
-            callback = function()
+            callback = function(args)
               vim.lsp.buf.format({
                 filter = function(client)
                   return client.name == "biome"
                 end,
+              })
+              vim.lsp.buf.code_action({
+                context = {
+                  only = { "source.fixAll.biome" },
+                  diagnostics = {},
+                },
+                apply = true,
+                bufnr = args.buf,
               })
             end,
           })
@@ -106,9 +142,14 @@ return {
       },
       eslint = {
         on_attach = function(client, bufnr)
+          if not base_on_attach then
+            return
+          end
+
+          base_on_attach(client, bufnr)
           vim.api.nvim_create_autocmd("BufWritePre", {
             buffer = bufnr,
-            command = "EslintFixAll",
+            command = "LspEslintFixAll",
           })
         end,
       },
@@ -137,8 +178,8 @@ return {
             experimental = {
               classRegex = {
                 { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
-                { "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-                { "cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+                { "cx\\(([^)]*)\\)",  "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+                { "cn\\(([^)]*)\\)",  "(?:'|\"|`)([^']*)(?:'|\"|`)" },
               },
             },
           },

@@ -1,3 +1,3 @@
-. "$HOME/.cargo/env"
-source "$HOME/.docker/init-bash.sh" || true # Added by Docker Desktop
-. "/Users/danieluhl/.deno/env"
+# . "$HOME/.cargo/env"
+# source "$HOME/.docker/init-bash.sh" || true # Added by Docker Desktop
+# . "$HOME/.deno/env"

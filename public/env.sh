@@ -17,15 +17,21 @@ export BUN_INSTALL="$HOME/.bun"
 
 PATH_DIRS=(
   # Homebrew packages
-  "/opt/homebrew/opt/ruby/bin:/opt/homebrew/bin"
+  # note: use rbenv to manage ruby installs
+  # "/opt/homebrew/opt/ruby/bin:/opt/homebrew/bin"
+  # "/opt/homebrew/lib/ruby/gems/3.4.0/bin"
   "/opt/homebrew/sbin"
   "$PNPM_HOME"
-  "$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin"
+  "$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin",
   "$RUSTPATH"
   "$GOPATH"
   "$BUN_INSTALL/bin"
   "$HOME/bin"
   "/usr/local/bin"
+  "/opt/homebrew/opt/openssl@3/bin"
+  "/opt/homebrew/opt/curl/bin"
+  # ruby 
+  "$HOME/.rbenv/bin"
 )
 
 # Iterate over each directory in the list
@@ -44,5 +50,7 @@ for dir in "${PATH_DIRS[@]}"; do
 done
 
 # Adds deno env variables to path
-. "/Users/danieluhl/.deno/env"
+if [ -d "$HOME/.deno" ]; then
+. "$HOME/.deno/env"
+fi
 

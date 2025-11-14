@@ -8,6 +8,9 @@
 #  clone --depth 1 https://github.com/wbthomason/packer.nvim\
 # ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
+# put local aliases here
+[ -f ~/.aliases.local ] && source ~/.aliases.local
+
 # Setup
 alias runsetup="bash $DOTFILES_PATH/setup.sh"
 
@@ -27,11 +30,12 @@ alias ...='cd -'
 alias brewup='brew update && brew upgrade && brew cleanup && brew doctor'
 
 # Set defualt branch to main vs master $DEFAULT_BRANCH
-alias gdmain="export DEFAULT_BRANCH='main' && echo Switched default: $DEFAULT_BRANCH"
-alias gdmaster="export DEFAULT_BRANCH='master' && echo Switched default: $DEFAULT_BRANCH"
+alias gdmain="export DEFAULT_BRANCH='main' && echo Switched default: main"
+alias gdmaster="export DEFAULT_BRANCH='master' && echo Switched default: master"
 
-## default branch when starting up is main
-export DEFAULT_BRANCH='main'
+# default branch when starting up is main, set in .aliases.local if different
+# for this computer
+export DEFAULT_BRANCH=${DEFAULT_BRANCH:="main"}
 
 # vscode wireup
 function code {
@@ -86,6 +90,7 @@ alias gla="git log --graph --decorate --oneline --all"
 # committing
 alias ga='git add -A'
 alias gcin='git add -A && git commit -m'
+alias gci='git add -A && git commit'
 # alias gcin='git commit -am'
 # alias gci='git add -A && git commit -n'
 alias gcamend='git add -A && git commit --amend'
@@ -106,6 +111,15 @@ alias grevertall='git reset --hard HEAD~1'
 alias gun='git reset --hard HEAD'
 alias gkilleverything='git reset --hard origin/$DEFAULT_BRANCH'
 alias resetBranch='git fetch && git reset --hard origin/$DEFAULT_BRANCH'
+# get latest on the current branch and reset to what is on the remote
+alias resetToRemote='resetToRemote'
+function resetToRemote()
+{
+  currentBranch="$(git symbolic-ref HEAD 2>/dev/null)";
+  currentBranch=${currentBranch##refs/heads/}
+  repo=${PWD##*/}
+  eval "git fetch && git reset --hard origin/$currentBranch";
+}
 
 # pushing and pulling
 alias gpu='pullremote'
@@ -172,9 +186,6 @@ alias gdm="git diff $DEFAULT_BRANCH --color -- . ':!package-lock.json'"
 alias gdmn="git diff $DEFAULT_BRANCH --color --name-only"
 
 # ********** non git ***********
-alias la='ls -lAt'
-alias ll='ls -alF'
-alias ls='ls -G'
 alias toucheverything='find . -exec touch {} \; &'
 
 # open in sublime
@@ -185,6 +196,7 @@ alias pf='open -a "path finder" ./'
 # open in vs code
 # alias vtt='code ./'
 
+
 alias nr="npm run"
 alias n="npm"
 alias pr="pnpm run"
@@ -193,6 +205,8 @@ alias br="bun run"
 alias b="bun"
 alias dr="deno run"
 alias d="deno"
+alias yr="yarn run"
+alias y="yarn"
 
 # call functions
 alias deps="traceDependenciesByLeaf"
@@ -210,6 +224,8 @@ function printBranches()
 {
   eval 'for k in `git branch | sed s/^..//`; do echo -e `git log -1 --pretty=format:"%Cgreen%ci %Cred%cr%Creset" $k --`\\t"$k";done | sort'
 }
+
+
 
 
 # pushes the current branch to the same named remote
@@ -272,6 +288,14 @@ function deleteBranch()
 {
   eval "git branch -D $1";
   eval "gb";
+}
+
+
+
+alias gcbm='createBranchFromMain'
+function createBranchFromMain() 
+{
+  eval "git fetch origin $DEFAULT_BRANCH:$1";
 }
 
 # requires "brew install fzf"
@@ -338,10 +362,14 @@ alias rtx="mise"
 alias cc="codecrafters"
 
 # eza replacement for ls
-alias la='eza -al --git --icons --no-permissions --no-user -snew'
+alias la='eza -al --git --icons --no-user -snew'
 alias lt='eza -la --git --icons -T'
 alias ll='eza -alF'
-alias ls='eza -al --git --icons --no-permissions --no-user'
+
+# alias la='ls -lAt'
+# alias ll='ls -alF'
+# alias ls='ls -lAt'
+#
 # ls latest
 alias lsl='ls --sort=modified -r'
 
@@ -350,7 +378,8 @@ alias jst="jj st --no-pager"
 
 # RA.Aid
 alias ra="ra-aid"
-alias gem="gemini"
+# alias gem="gemini"
 alias oc="opencode"
 alias ex="codex"
 
+alias runbe="bundle exec sidekiq & bin/webpack-dev-server & rails s &"
