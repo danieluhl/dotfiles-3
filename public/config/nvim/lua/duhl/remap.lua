@@ -4,18 +4,6 @@ local xnoremap = require("duhl.keymap").xnoremap
 local vnoremap = require("duhl.keymap").vnoremap
 local cnoremap = require("duhl.keymap").cnoremap
 
--- CUSTOM FUNCTIONS
-function Open_in_git()
-  local file_dir = vim.fn.expand("%:h")
-  local git_root = vim.fn.system("cd " .. file_dir .. "; git rev-parse --show-toplevel | tr -d '\n'")
-  local file_path = vim.fn.substitute(vim.fn.expand("%:p"), git_root .. "/", "", "")
-  local git_remote = vim.fn.system("cd " .. file_dir .. "; git remote get-url origin")
-  local repo_path = string.gsub(git_remote, ".*:", "")
-  repo_path = string.gsub(repo_path, "%..*", "")
-  local url = "https://gitlab.com/" .. repo_path .. "/-/blob/main/" .. file_path .. "/"
-  return vim.cmd("silent !open " .. url)
-end
-
 local function print_iso_datetime()
   local iso_datetime = vim.fn.strftime("%Y-%m-%dT%H:%M:%SZ")
   vim.api.nvim_put({ iso_datetime }, "", true, true)
@@ -151,9 +139,10 @@ local nmaps = {
   ["g;"] = "g;zz",
   ["g,"] = "g,zz",
   ["gi"] = "gi<esc>zzi",
+
   -- github
-  ["gh"] = ":Git<cr>",
-  ["<leader>ghf"] = ":OpenGithubFile<cr>",
+  ["<leader>gh"] = ":Git<cr>",
+  ["<leader>ghf"] = ":lua Snacks.gitbrowse()<cr>",
   ["<leader>ghc"] = ":Git commit -a<cr>",
   ["<leader>ghp"] = ":!git pull && git push<cr>",
 
