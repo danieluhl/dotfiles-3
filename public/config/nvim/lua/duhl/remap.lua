@@ -4,25 +4,24 @@ local xnoremap = require("duhl.keymap").xnoremap
 local vnoremap = require("duhl.keymap").vnoremap
 local cnoremap = require("duhl.keymap").cnoremap
 
--- CUSTOM FUNCTIONS
-function Open_in_git()
-  local file_dir = vim.fn.expand("%:h")
-  local git_root = vim.fn.system("cd " .. file_dir .. "; git rev-parse --show-toplevel | tr -d '\n'")
-  local file_path = vim.fn.substitute(vim.fn.expand("%:p"), git_root .. "/", "", "")
-  local git_remote = vim.fn.system("cd " .. file_dir .. "; git remote get-url origin")
-  local repo_path = string.gsub(git_remote, ".*:", "")
-  repo_path = string.gsub(repo_path, "%..*", "")
-  local url = "https://gitlab.com/" .. repo_path .. "/-/blob/main/" .. file_path .. "/"
-  return vim.cmd("silent !open " .. url)
-end
-
+-- ways of printing dates and times
 local function print_iso_datetime()
   local iso_datetime = vim.fn.strftime("%Y-%m-%dT%H:%M:%SZ")
-  vim.api.nvim_put({ iso_datetime }, "", true, true)
+  vim.api.nvim_put({ iso_datetime }, "", false, true)
 end
+vim.api.nvim_create_user_command("PrintIsoDatetime", print_iso_datetime, {})
 
--- Create a Vim command that calls the Lua function
-vim.api.nvim_create_user_command("ISO", print_iso_datetime, {})
+local function print_date()
+  local the_date = os.date("%B %d, %Y")
+  vim.api.nvim_put({ the_date }, "", true, true)
+end
+vim.api.nvim_create_user_command("PrintDate", print_date, {})
+
+local function print_timestamp()
+  local timestamp = tostring(os.time())
+  vim.api.nvim_put({ timestamp }, "", false, true)
+end
+vim.api.nvim_create_user_command("PrintTimestamp", print_timestamp, {})
 
 local nmaps = {
 
@@ -68,9 +67,12 @@ local nmaps = {
   -- print from clipboard
   ["<leader>pp"] = ":Telescope neoclip<cr>",
   -- print date as a markdown heading
-  ["<leader>pd"] = "i#<esc>:r!gdate<cr>kJ",
+  ["<leader>pd"] = "i# <esc>:PrintDate<cr>",
+  ["<leader>pt"] = ":PrintTimestamp<cr>",
   --print the current file
   ["<leader>pf"] = ":let @*=expand('%')<cr>p",
+  -- copy the current file to clipboard
+  ["<leader>cf"] = ":let @+=expand('%')<cr>",
 
   -- Change word with option to go to next
   ["ciw"] = "*Nciw",
@@ -151,9 +153,10 @@ local nmaps = {
   ["g;"] = "g;zz",
   ["g,"] = "g,zz",
   ["gi"] = "gi<esc>zzi",
+
   -- github
-  ["gh"] = ":Git<cr>",
-  ["<leader>ghf"] = ":OpenGithubFile<cr>",
+  ["<leader>gh"] = ":Git<cr>",
+  ["<leader>ghf"] = ":lua Snacks.gitbrowse()<cr>",
   ["<leader>ghc"] = ":Git commit -a<cr>",
   ["<leader>ghp"] = ":!git pull && git push<cr>",
 
@@ -162,7 +165,7 @@ local nmaps = {
   -- ["<leader>gl"] = "<Plug>(openbrowser-open)",
 
   -- Tabularize - for formatting markdown tables
-  ["<Leader>a="] = ":Tabularize /<bar><cr>",
+  ["<leader>a="] = ":Tabularize /<bar><cr>",
 
   -- Seamlessly treat visual lines as actual lines when moving around.
   ["j"] = "gj",

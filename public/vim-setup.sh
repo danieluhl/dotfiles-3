@@ -24,7 +24,7 @@ brew install eza &&
 brew install gh &&
 brew install ripgrep
 
-
+# brew install --cask bluesnooze &&
 # brew install flyctl &&
 # brew install libsodium &&
 # brew install lz4 &&
