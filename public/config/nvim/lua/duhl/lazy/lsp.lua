@@ -19,7 +19,8 @@ return {
     require("mason").setup()
 
     require("mason-lspconfig").setup({
-      ensure_installed = { "elixirls", "lua_ls", "ts_ls", "rescriptls", "biome", "ruby_lsp" },
+      -- note: use mise not mason for gleam: `mise use gleam@latest`
+      ensure_installed = { "elixirls", "lua_ls", "ts_ls", "rescriptls", "biome", "jsonls", "oxlint" },
     })
 
     local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
@@ -58,9 +59,9 @@ return {
         -- mason = false,
         -- cmd = { vim.fn.expand("~/.local/share/mise/shims/rubocop"), "--lsp" },
       },
-      elmls = {},
-      rust_analyzer = {},
-      astro = {},
+      -- elmls = {},
+      -- rust_analyzer = {},
+      -- astro = {},
       gleam = {},
       lua_ls = {
         settings = {
@@ -140,38 +141,38 @@ return {
           })
         end,
       },
-      eslint = {
-        on_attach = function(client, bufnr)
-          if not base_on_attach then
-            return
-          end
+      -- eslint = {
+      --   on_attach = function(client, bufnr)
+      --     if not base_on_attach then
+      --       return
+      --     end
 
-          base_on_attach(client, bufnr)
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            buffer = bufnr,
-            command = "LspEslintFixAll",
-          })
-        end,
-      },
+      --     base_on_attach(client, bufnr)
+      --     vim.api.nvim_create_autocmd("BufWritePre", {
+      --       buffer = bufnr,
+      --       command = "LspEslintFixAll",
+      --     })
+      --   end,
+      -- },
       -- svelte = {},
       jsonls = {},
       elixirls = {
         cmd = { elixirls_path },
       },
-      denols = {
-        root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
-        init_options = {
-          lint = true,
-          unstable = true, -- Enable unstable APIs (if needed)
-          suggest = {
-            imports = {
-              hosts = {
-                ["https://deno.land"] = true,
-              },
-            },
-          },
-        },
-      },
+      -- denols = {
+      --   root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+      --   init_options = {
+      --     lint = true,
+      --     unstable = true, -- Enable unstable APIs (if needed)
+      --     suggest = {
+      --       imports = {
+      --         hosts = {
+      --           ["https://deno.land"] = true,
+      --         },
+      --       },
+      --     },
+      --   },
+      -- },
       tailwindcss = {
         settings = {
           tailwindCSS = {

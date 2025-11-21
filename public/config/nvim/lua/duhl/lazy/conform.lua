@@ -9,10 +9,14 @@ return {
         -- Conform will run multiple formatters sequentially
         python = { "isort", "black" },
         -- Use a sub-list to run only the first available formatter
-        javascript = { "biome", "biome-organize-imports", "eslint", "prettier", stop_after_first = false },
-        javascriptreact = { "biome", "biome-organize-imports", "eslint", "prettier", stop_after_first = false },
-        typescript = { "biome", "biome-organize-imports", "eslint", "prettier", stop_after_first = false },
-        typescriptreact = { "biome", "biome-organize-imports", "eslint", "prettier", stop_after_first = false },
+        -- javascript = { "eslint", "prettier", stop_after_first = false },
+        -- javascriptreact = { "eslint", "prettier", stop_after_first = false },
+        -- typescript = { "eslint", "prettier", stop_after_first = false },
+        -- typescriptreact = { "eslint", "prettier", stop_after_first = false },
+        javascript = { "biome" },
+        javascriptreact = { "biome" },
+        typescript = { "biome" },
+        typescriptreact = { "biome" },
         svelte = { "prettier", stop_after_first = true },
         css = { "prettier", stop_after_first = true },
         html = { "htmlbeautifier", "prettier", stop_after_first = false },
@@ -25,7 +29,7 @@ return {
       format_on_save = {
         lsp_fallback = true,
         async = false,
-        timeout_ms = 500,
+        timeout_ms = 1000,
       },
     })
     vim.keymap.set({ "n", "v" }, "<leader>f", function()
