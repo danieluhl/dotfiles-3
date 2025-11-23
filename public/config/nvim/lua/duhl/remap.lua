@@ -12,7 +12,7 @@ end
 vim.api.nvim_create_user_command("PrintIsoDatetime", print_iso_datetime, {})
 
 local function print_date()
-  local the_date = os.date("%B %d, %Y")
+  local the_date = os.date("%b %d, %Y")
   vim.api.nvim_put({ the_date }, "", true, true)
 end
 vim.api.nvim_create_user_command("PrintDate", print_date, {})
