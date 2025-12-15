@@ -32,13 +32,18 @@ return {
     -- see a list of servers here: https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
     local base_on_attach = vim.lsp.config.eslint.on_attach
     local servers = {
+      herb_ls = {
+        -- cmd = { "herb-language-server", "--stdio" },
+        filetypes = { "html", "eruby" },
+        root_markers = { "Gemfile", ".git" },
+      },
       ruby_lsp = {
         -- cmd = { "bundle", "exec", "ruby-lsp" },
-        cmd = { 'ruby-lsp' },
-        filetypes = { 'ruby', 'eruby' },
-        root_markers = { 'Gemfile', '.git' },
+        cmd = { "ruby-lsp" },
+        filetypes = { "ruby", "eruby" },
+        root_markers = { "Gemfile", ".git" },
         init_options = {
-          formatter = 'auto',
+          formatter = "auto",
         },
         reuse_client = function(client, config)
           config.cmd_cwd = config.root_dir
@@ -52,8 +57,8 @@ return {
       rubocop = {
         cmd = { "bundle", "exec", "rubocop", "--lsp" },
         -- cmd = { 'rubocop', '--lsp' },
-        filetypes = { 'ruby' },
-        root_markers = { 'Gemfile', '.git' },
+        filetypes = { "ruby" },
+        root_markers = { "Gemfile", ".git" },
 
         -- if there was a version in mise that worked with <3 ruby then this would work, but alas
         -- mason = false,
@@ -179,8 +184,8 @@ return {
             experimental = {
               classRegex = {
                 { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
-                { "cx\\(([^)]*)\\)",  "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-                { "cn\\(([^)]*)\\)",  "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+                { "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+                { "cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
               },
             },
           },
