@@ -3,7 +3,8 @@
 # launch --title "dot"
 
 new_tab scr
-cd ~/git/scratch
+cd ~/Documents/scratch
+
 launch --title "scr"
 
 # new_tab learning
