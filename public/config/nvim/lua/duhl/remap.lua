@@ -30,8 +30,8 @@ local nmaps = {
   --  in the "+ clipboard register
 
   -- jump up and down
-  ["<C-j>"] = "8jzz",
-  ["<C-k>"] = "8kzz",
+  ["<C-j>"] = "8j",
+  ["<C-k>"] = "8k",
 
   -- undo tree history toggle
   ["<leader>u"] = ":UndotreeToggle<cr>",
@@ -68,6 +68,7 @@ local nmaps = {
   ["<leader>pp"] = ":Telescope neoclip<cr>",
   -- print date as a markdown heading
   ["<leader>pd"] = "i# <esc>:PrintDate<cr>",
+  ["<leader>pi"] = "i# <esc>:PrintIsoDatetime<cr>",
   ["<leader>pt"] = ":PrintTimestamp<cr>",
   --print the current file
   ["<leader>pf"] = ":let @*=expand('%')<cr>p",

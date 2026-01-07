@@ -14,6 +14,7 @@ return {
         -- typescript = { "eslint", "prettier", stop_after_first = false },
         -- typescriptreact = { "eslint", "prettier", stop_after_first = false },
         javascript = { "biome" },
+        -- markdown = { "prettier" },
         javascriptreact = { "biome" },
         typescript = { "biome" },
         typescriptreact = { "biome" },
@@ -32,6 +33,11 @@ return {
         timeout_ms = 1000,
       },
     })
+
+    -- vim.keymap.set("v", "gw", function()
+    --   require("conform").format({ async = true, lsp_fallback = true })
+    -- end, { desc = "Line wrap selection formatting (mostly for markdown)" })
+
     vim.keymap.set({ "n", "v" }, "<leader>f", function()
       conform.format({
         lsp_fallback = true,

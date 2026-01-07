@@ -12,7 +12,6 @@ return {
       require("nvim-ts-autotag").setup()
     end,
   },
-  "sheerun/vim-polyglot",
   "neoclide/vim-jsx-improve",
   "fatih/vim-go",
   {

@@ -61,3 +61,6 @@ eval "$(mise activate zsh)"
 eval "$(mise activate zsh --shims)"
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+# make cursor a block
+# echo -ne '\e[2 q'

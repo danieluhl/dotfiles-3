@@ -12,7 +12,7 @@ local opts = {
   -- colorcolumn = "+1,+41",
   termguicolors = true,
 
-  guicursor = "i:ver100", -- cursor to line in insert mode,
+  guicursor = "i:ver100",    -- cursor to line in insert mode,
   -- sets the default paste register to clipboard: "+
   clipboard = "unnamedplus", -- allow neovim to access clipboard,
   number = true,
@@ -47,6 +47,7 @@ local opts = {
   -- JavaScript
   conceallevel = 0,
   compatible = false,
+  guifont = "DankMono Nerd Font",
 }
 
 for k, v in pairs(opts) do

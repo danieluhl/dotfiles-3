@@ -1,21 +1,12 @@
-local o = vim.o
+-- Basic Markdown settings
+vim.opt_local.wrap = true
+vim.opt_local.linebreak = true
+vim.opt_local.expandtab = true
+vim.opt_local.tabstop = 2
+vim.opt_local.shiftwidth = 2
 
--- wrap lines for markdown by defualt, use gqq to hard wrap
-vim.opt.wrap = true
-vim.opt.linebreak = true
-vim.opt.expandtab = true
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
-
--- Text behaviour
--- o.formatoptions = o.formatoptions
---                    + 't'    -- auto-wrap text using textwidth
---                    + 'c'    -- auto-wrap comments using textwidth
---                    + 'r'    -- auto insert comment leader on pressing enter
---                    - 'o'    -- don't insert comment leader on pressing o
---                    + 'q'    -- format comments with gq
---                    - 'a'    -- don't autoformat the paragraphs (use some formatter instead)
---                    + 'n'    -- autoformat numbered list
---                    - '2'    -- I am a programmer and not a writer
---                    + 'j'    -- Join comments smartly
-o.formatoptions = o.formatoptions .. "tcrnj"
+-- NOTE: These are controlled by the `vim-polyglot` plugin
+--  look up the global options in their documentation
+-- vim.opt_local.formatoptions = "tnjq"
+-- vim.opt_local.formatoptions:remove { "r", "o" }
+-- vim.opt_local.comments = ""
