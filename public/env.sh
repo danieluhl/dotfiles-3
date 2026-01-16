@@ -32,8 +32,8 @@ PATH_DIRS=(
   "/opt/homebrew/opt/curl/bin"
   # ruby 
   # "$HOME/.rbenv/bin"
-  # mise lsp for nvim
-  "$HOME/.local/share/mise/shims"
+  # mise lsp for nvim (when mise is activated in .zshrc we shouldn't need this)
+  # "$HOME/.local/share/mise/shims"
 )
 
 # Iterate over each directory in the list
