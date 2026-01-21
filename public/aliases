@@ -360,15 +360,17 @@ alias cc="codecrafters"
 
 # eza replacement for ls
 alias la='eza -al --git --icons --no-user -snew'
+# full tree view
 alias lt='eza -la --git --icons -T'
 alias ll='eza -alF'
+# latest first
+alias lsl='eza -al --git --icons --no-user --sort=modified'
 
 # alias la='ls -lAt'
 # alias ll='ls -alF'
 # alias ls='ls -lAt'
 #
 # ls latest
-alias lsl='ls --sort=modified -r'
 
 # Jujitsu
 alias jst="jj st --no-pager"
