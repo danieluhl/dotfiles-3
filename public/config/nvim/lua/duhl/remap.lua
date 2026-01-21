@@ -36,7 +36,7 @@ local nmaps = {
   -- undo tree history toggle
   ["<leader>u"] = ":UndotreeToggle<cr>",
   -- console.log the current word
-  ["clw"] = "yiwoconsole.log(<esc>pa);<esc>",
+  ["cll"] = "yiwoconsole.log(<esc>pa);<esc>",
   -- console.log on the next line
   ["clo"] = "oconsole.log();<esc>hi",
   -- disable q: because I accidentally hit it all the time

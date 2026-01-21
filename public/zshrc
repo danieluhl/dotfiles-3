@@ -64,3 +64,7 @@ eval "$(mise activate zsh --shims)"
 
 # make cursor a block
 # echo -ne '\e[2 q'
+
+# FE shell autocompletions with @bomb.sh
+source <(tab pnpm zsh)
+

@@ -18,5 +18,9 @@ return {
       },
       default_model_index = 1,
     },
+    keys = {
+      { "<leader>ae", function() require("nvim-redraft").edit() end,         mode = "v",              desc = "AI Edit Selection" },
+      { "<leader>am", function() require("nvim-redraft").select_model() end, desc = "Select AI Model" },
+    },
   },
 }

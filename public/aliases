@@ -186,17 +186,17 @@ alias gdm="git diff $DEFAULT_BRANCH --color -- . ':!package-lock.json' | diff-so
 alias gdmn="git diff $DEFAULT_BRANCH --color --name-only"
 
 # ********** non git ***********
-alias toucheverything='find . -exec touch {} \; &'
+# alias toucheverything='find . -exec touch {} \; &'
 
 # open in sublime
-alias subl='open -a Sublime\ Text '
-alias stt='subl .'
-alias pf='open -a "path finder" ./'
+# alias subl='open -a Sublime\ Text '
+# alias stt='subl .'
+# alias pf='open -a "path finder" ./'
 
 # open in vs code
 # alias vtt='code ./'
 
-
+# FE Package managers
 alias nr="npm run"
 alias n="npm"
 alias pr="pnpm run"
@@ -224,9 +224,6 @@ function printBranches()
 {
   eval 'for k in `git branch | sed s/^..//`; do echo -e `git log -1 --pretty=format:"%Cgreen%ci %Cred%cr%Creset" $k --`\\t"$k";done | sort'
 }
-
-
-
 
 # pushes the current branch to the same named remote
 function pushRemoteBranch()
@@ -380,8 +377,35 @@ alias jst="jj st --no-pager"
 alias ra="ra-aid"
 # alias gem="gemini"
 alias oc="opencode"
-alias ex="codex"
 
 alias runbe="bundle exec sidekiq & bin/webpack-dev-server & rails s &"
 
 alias present="cd ~/Documents/scratch/presenterm/"
+
+# Codex direct from terminal commands
+alias ex="codex"
+
+# NOTE: replaced these with custom prompts in ~/.codex/prompts
+# Give me a good commit message that I can quickly accept if I like it
+# PROMPTS_DIR="$HOME/git/prompts"
+# COMMIT_MESSAGE_PROMPT=$(cat $PROMPTS_DIR/commit-message.md)
+# # prints output to a file, deletes all but the last line 
+# #  which should always be the commit message
+# function exm() 
+# {
+#   codex exec "$COMMIT_MESSAGE_PROMPT" \
+#     | tee "$PROMPTS_DIR/output/commit-message.md" \
+#     && sed -i '' '$!d' "$PROMPTS_DIR/output/commit-message.md" \
+#     && cat "$PROMPTS_DIR/output/commit-message.md"
+# }
+# # once we're happy with that commit message, ship it
+# alias cinex="gcin \"$(cat $PROMPTS_DIR/output/commit-message.md)\""
+
+# # Do a quick code review on that latest commit
+# CODE_REVIEW_PROMPT=$(cat $PROMPTS_DIR/code-review.md)
+# alias exr='codex exec "$CODE_REVIEW_PROMPT"'
+
+# # Summarise the last week of changes
+# CHANGE_SUMMARY_PROMPT=$(cat $PROMPTS_DIR/change-summary.md)
+# alias exsummary='codex exec "$CHANGE_SUMMARY_PROMPT"'
+
