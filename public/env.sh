@@ -1,5 +1,8 @@
 #!/bin/zsh
 
+# PRESENTERM
+export PRESENTERM_CONFIG_FILE="$HOME/.config/presenterm/config.yaml"
+
 # package managers
 export PNPM_HOME="$HOME/pnpm"
 
@@ -55,4 +58,6 @@ done
 if [ -d "$HOME/.deno" ]; then
 . "$HOME/.deno/env"
 fi
+
+
 

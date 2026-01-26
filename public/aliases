@@ -152,7 +152,7 @@ alias gmp='gm && gpr'
 alias gcl='git clean -fdx'
 
 # branches
-alias gbd='git branch -D'
+alias gbd='git branch -D $(git branch | fzf)'
 alias gb='printBranches'
 # rename a branch
 alias gbn='git branch -m'
