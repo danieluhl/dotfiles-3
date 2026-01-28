@@ -3,6 +3,9 @@
 # PRESENTERM
 export PRESENTERM_CONFIG_FILE="$HOME/.config/presenterm/config.yaml"
 
+# gog-cli
+export GOG_ACCOUNT
+
 # package managers
 export PNPM_HOME="$HOME/pnpm"
 

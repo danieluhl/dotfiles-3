@@ -18,11 +18,12 @@ brew install fmt &&
 brew install mise &&
 brew install coreutils &&
 brew install gnutls &&
-brew install pnpm &&
-brew install npm &&
 brew install eza &&
 brew install gh &&
-brew install ripgrep
+brew install ripgrep &&
+# Presentations with markdown files
+brew install presenterm &&
+brew install mermaid-cli
 
 # brew install --cask bluesnooze &&
 # brew install flyctl &&

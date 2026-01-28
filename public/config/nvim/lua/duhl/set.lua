@@ -60,6 +60,22 @@ vim.opt.shortmess:append({ c = true })
 vim.g.astro_typescript = "enable"
 vim.g.astro_stylus = "enable"
 
+vim.filetype.add({
+  extension = {
+    conf = "conf",
+    env = "sh",
+  },
+  filename = {
+    [".env"] = "sh",
+    ["tsconfig.json"] = "jsonc",
+    [".yamlfmt"] = "yaml",
+  },
+  pattern = {
+    ["%.env%.[%w_.-]+"] = "sh",
+  },
+})
+
+
 -- vim.api.nvim_command("hi Nr guifg=#af00af")
 
 -- this makes it so that dashes are considered part of the word
