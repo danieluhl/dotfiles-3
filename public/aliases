@@ -143,7 +143,7 @@ alias cleanMac="find . -name 'node_modules' -type d -exec rm -rf '{}' + && brewu
 alias gignore="git update-index --assume-unchanged"
 alias gstopignore="git update-index --no-assume-unchanged"
 
-alias gcm='git checkout $DEFAULT_BRANCH'
+alias gcm='set_default_branch && git checkout $DEFAULT_BRANCH'
 alias gcmm='git checkout master'
 alias gcmp='gcm && gpr'
 alias gmp='gm && gpr'
@@ -167,7 +167,7 @@ alias pullremote="pullRemoteBranch"
 alias gpl="pullRemoteBranch"
 alias diffremote="diffRemoteBranch"
 alias gs="git status" # upgrade your git if -sb breaks for you. it's fun.
-alias seediff="git difftool $DEFAULT_BRANCH"
+alias seediff="set_default_branch && git difftool $DEFAULT_BRANCH"
 
 alias gremote='git remote set-url origin git@github.com/danieluhl/' # last param should be the github repo name.git - git@github.com/danieluhl/my_repo.git
 
@@ -181,9 +181,9 @@ alias gmours='git merge --strategy-option ours'
 # diffing
 alias gd="git diff --color -- . ':!package-lock.json' | diff-so-fancy | less --tabs=4 -RF"
 alias gds='git diff --staged --color | diff-so-fancy | less --tabs=4 -RF'
-alias gdn="git diff --name-only $DEFAULT_BRANCH --color"
-alias gdm="git diff $DEFAULT_BRANCH --color -- . ':!package-lock.json' | diff-so-fancy | less --tabs=4 -RF"
-alias gdmn="git diff $DEFAULT_BRANCH --color --name-only"
+alias gdn="set_default_branch && git diff --name-only $DEFAULT_BRANCH --color"
+alias gdm="set_default_branch && git diff $DEFAULT_BRANCH --color -- . ':!package-lock.json' | diff-so-fancy | less --tabs=4 -RF"
+alias gdmn="set_default_branch && git diff $DEFAULT_BRANCH --color --name-only"
 
 # ********** non git ***********
 # alias toucheverything='find . -exec touch {} \; &'
@@ -293,7 +293,7 @@ function deleteBranch()
 alias gcbm='createBranchFromMain'
 function createBranchFromMain() 
 {
-  eval "git fetch origin $DEFAULT_BRANCH:$1";
+  eval "set_default_branch && git fetch origin $DEFAULT_BRANCH:$1";
 }
 
 # requires "brew install fzf"
@@ -412,3 +412,17 @@ alias ex="codex"
 # CHANGE_SUMMARY_PROMPT=$(cat $PROMPTS_DIR/change-summary.md)
 # alias exsummary='codex exec "$CHANGE_SUMMARY_PROMPT"'
 
+
+set_default_branch() {
+  # Bail if not in a git repo
+  git rev-parse --git-dir >/dev/null 2>&1 || return 1
+
+  if git show-ref --verify --quiet refs/heads/main || \
+     git show-ref --verify --quiet refs/remotes/origin/main; then
+    export DEFAULT_BRANCH="main"
+  else
+    export DEFAULT_BRANCH="master"
+  fi
+}
+
+alias gcm='set_default_branch && git checkout $DEFAULT_BRANCH'

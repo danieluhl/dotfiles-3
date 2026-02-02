@@ -114,6 +114,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     end, { desc = "[S]earch by [F]ind words" })
     -- vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
     vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
+    -- vim.keymap.set("n", "<leader>sr", builtin.search_history, { desc = "[S]earch [R]esume" })
     vim.keymap.set("n", "<leader><leader>", function()
       builtin.oldfiles({ hidden = true })
     end, { desc = "[S]earch old files" })
@@ -129,6 +130,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
       local dir = vim.fn.input("Directory: ", vim.fn.expand("%:p:h"), "dir")
       require("telescope.builtin").live_grep({ cwd = dir })
     end, { desc = "Live grep in chosen directory" })
+
 
     -- -- Shortcut for searching your Neovim configuration files
     -- vim.keymap.set("n", "<leader>sn", function()

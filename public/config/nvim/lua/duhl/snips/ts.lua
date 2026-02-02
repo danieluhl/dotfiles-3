@@ -33,3 +33,4 @@ local tsSnips = {
 ls.add_snippets("all", tsSnips)
 -- ls.add_snippets("typescript", tsSnips)
 -- ls.add_snippets("typescriptreact", tsSnips)
+--
