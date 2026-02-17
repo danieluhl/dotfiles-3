@@ -127,7 +127,7 @@ alias gp='pushremote'
 alias gpr='git pull --rebase'
 alias gpp='gpu && gp'
 # rebase is saying, "instead of building my features on that old commit, build them all on this new commit"
-alias grm='git fetch origin $DEFAULT_BRANCH:$DEFAULT_BRANCH && git rebase origin/$DEFAULT_BRANCH'
+alias grm='set_default_branch && git fetch origin $DEFAULT_BRANCH:$DEFAULT_BRANCH && git rebase origin/$DEFAULT_BRANCH'
 
 alias gf='git fetch --all --prune'
 alias lint='node_modules/.bin/eslint --rulesdir grunt_tasks/eslint/rules'
@@ -179,7 +179,7 @@ alias gmtheirs='git merge --strategy-option theirs'
 alias gmours='git merge --strategy-option ours'
 
 # diffing
-alias gd="git diff --color -- . ':!package-lock.json' | diff-so-fancy | less --tabs=4 -RF"
+alias gd="git diff --color -- . ':(exclude)*-lock*' | diff-so-fancy | less --tabs=4 -RF"
 alias gds='git diff --staged --color | diff-so-fancy | less --tabs=4 -RF'
 alias gdn="set_default_branch && git diff --name-only $DEFAULT_BRANCH --color"
 alias gdm="set_default_branch && git diff $DEFAULT_BRANCH --color -- . ':!package-lock.json' | diff-so-fancy | less --tabs=4 -RF"
