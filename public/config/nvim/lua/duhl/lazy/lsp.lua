@@ -164,20 +164,20 @@ return {
       elixirls = {
         cmd = { elixirls_path },
       },
-      -- denols = {
-      --   root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
-      --   init_options = {
-      --     lint = true,
-      --     unstable = true, -- Enable unstable APIs (if needed)
-      --     suggest = {
-      --       imports = {
-      --         hosts = {
-      --           ["https://deno.land"] = true,
-      --         },
-      --       },
-      --     },
-      --   },
-      -- },
+      denols = {
+        root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+        init_options = {
+          lint = true,
+          unstable = true, -- Enable unstable APIs (if needed)
+          suggest = {
+            imports = {
+              hosts = {
+                ["https://deno.land"] = true,
+              },
+            },
+          },
+        },
+      },
       tailwindcss = {
         settings = {
           tailwindCSS = {
