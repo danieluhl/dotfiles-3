@@ -4,6 +4,8 @@ return { -- Fuzzy Finder (files, lsp, etc)
   branch = "0.1.x",
   dependencies = {
     "nvim-lua/plenary.nvim",
+    "ahmedkhalf/project.nvim",
+    "imNel/monorepo.nvim",
     "AckslD/nvim-neoclip.lua",
     { -- If encountering errors, see telescope-fzf-native README for installation instructions
       "nvim-telescope/telescope-fzf-native.nvim",
@@ -81,6 +83,8 @@ return { -- Fuzzy Finder (files, lsp, etc)
     pcall(require("telescope").load_extension, "fzf")
     pcall(require("telescope").load_extension, "ui-select")
     pcall(require("telescope").load_extension, "frecency")
+    pcall(require("telescope").load_extension, "projects")
+    -- pcall(require("telescope").load_extension, "monorepo")
 
     local file_ignore_patterns = {
       "node_modules/",
@@ -103,17 +107,21 @@ return { -- Fuzzy Finder (files, lsp, etc)
     end, { desc = "[S]earch [H]idden files" })
     vim.keymap.set("n", "<leader>sc", ":Telescope neoclip<cr>", { desc = "[Search] neo[C]lip" })
     vim.keymap.set("n", "<leader>st", builtin.treesitter, { desc = "[S]earch [T]reesitter" })
-    vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
+    -- vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
     vim.keymap.set("n", "<leader>sp", function()
       builtin.find_files({ file_ignore_patterns = file_ignore_patterns })
     end, { desc = "[S]earch [F]iles" })
-    vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
+    -- vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
     vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
     vim.keymap.set("n", "<leader>sf", function()
       builtin.live_grep({ file_ignore_patterns = file_ignore_patterns })
     end, { desc = "[S]earch by [F]ind words" })
+    vim.keymap.set("n", "<leader>sk", function()
+      builtin.live_grep({ file_ignore_patterns = file_ignore_patterns, additional_args = { "--hidden" } })
+    end, { desc = "[S]earch by [F]ind words" })
     -- vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
     vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
+    -- vim.keymap.set("n", "<leader>sr", builtin.search_history, { desc = "[S]earch [R]esume" })
     vim.keymap.set("n", "<leader><leader>", function()
       builtin.oldfiles({ hidden = true })
     end, { desc = "[S]earch old files" })
@@ -129,6 +137,10 @@ return { -- Fuzzy Finder (files, lsp, etc)
       local dir = vim.fn.input("Directory: ", vim.fn.expand("%:p:h"), "dir")
       require("telescope.builtin").live_grep({ cwd = dir })
     end, { desc = "Live grep in chosen directory" })
+    -- Projects (project.nvim) plugin
+    vim.keymap.set("n", "<leader>ss", function()
+      require("telescope").extensions.projects.projects()
+    end, { desc = "Find Projects" })
 
     -- -- Shortcut for searching your Neovim configuration files
     -- vim.keymap.set("n", "<leader>sn", function()

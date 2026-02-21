@@ -78,6 +78,12 @@ return {
         },
       },
       ts_ls = {
+        init_options = {
+          preferences = {
+            importModuleSpecifierPreference = "non-relative",
+            importModuleSpecifierEnding = "minimal",
+          },
+        },
         on_attach = function(client, bufnr)
           client.server_capabilities.documentFormattingProvider = false
           -- vim.api.nvim_create_autocmd("BufWritePre", {
@@ -184,8 +190,8 @@ return {
             experimental = {
               classRegex = {
                 { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
-                { "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-                { "cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+                { "cx\\(([^)]*)\\)",  "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+                { "cn\\(([^)]*)\\)",  "(?:'|\"|`)([^']*)(?:'|\"|`)" },
               },
             },
           },
