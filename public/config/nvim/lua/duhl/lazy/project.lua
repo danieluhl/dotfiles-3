@@ -1,3 +1,5 @@
+-- NOTE: use :ProjectRoot to change the root directory and get it added to the
+-- list of recent projects
 return {
   "ahmedkhalf/project.nvim",
   config = function()

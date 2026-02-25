@@ -4,6 +4,7 @@ local xnoremap = require("duhl.keymap").xnoremap
 local vnoremap = require("duhl.keymap").vnoremap
 local cnoremap = require("duhl.keymap").cnoremap
 
+
 -- ways of printing dates and times
 local function print_iso_datetime()
   local iso_datetime = vim.fn.strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -71,9 +72,9 @@ local nmaps = {
   ["<leader>pi"] = "i# <esc>:PrintIsoDatetime<cr>",
   ["<leader>pt"] = ":PrintTimestamp<cr>",
   --print the current file
-  ["<leader>pf"] = ":let @*=expand('%')<cr>p",
+  ["<leader>pf"] = ":let @*=expand('%:p')<cr>p",
   -- copy the current file to clipboard
-  ["<leader>cf"] = ":let @+=expand('%')<cr>",
+  ["<leader>cf"] = ":let @+=expand('%:p')<cr>",
 
   -- Change word with option to go to next
   ["ciw"] = "*Nciw",

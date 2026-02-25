@@ -8,6 +8,7 @@ return {
   opts = {
     llm = {
       models = {
+        -- { provider = "openai", model = "gpt-5.3-codex", label = "codex latest" },
         { provider = "openai", model = "gpt-4o-mini", label = "GPT-4o Mini" },
         { provider = "openai", model = "gpt-4o",      label = "GPT-4o" },
         -- { provider = "anthropic",  model = "claude-3-5-sonnet-20241022",     label = "Claude 3.5 Sonnet" },
