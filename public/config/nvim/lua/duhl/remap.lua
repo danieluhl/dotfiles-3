@@ -4,7 +4,6 @@ local xnoremap = require("duhl.keymap").xnoremap
 local vnoremap = require("duhl.keymap").vnoremap
 local cnoremap = require("duhl.keymap").cnoremap
 
-
 -- ways of printing dates and times
 local function print_iso_datetime()
   local iso_datetime = vim.fn.strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -66,7 +65,9 @@ local nmaps = {
   -- paste yanked text even after delete
   ["<leader>py"] = '"0p',
   -- print from clipboard
-  ["<leader>pp"] = ":Telescope neoclip<cr>",
+  -- ["<leader>pp"] = ":Telescope neoclip<cr>",
+  -- inline print for when you select line and want it to be inline instead
+  ["<leader>pp"] = 'myp_D"_dd`yp',
   -- print date as a markdown heading
   ["<leader>pd"] = "i# <esc>:PrintDate<cr>",
   ["<leader>pi"] = "i# <esc>:PrintIsoDatetime<cr>",

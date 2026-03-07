@@ -179,10 +179,10 @@ alias gmtheirs='git merge --strategy-option theirs'
 alias gmours='git merge --strategy-option ours'
 
 # diffing
-alias gd="git diff --color -- . ':(exclude)*-lock*' | diff-so-fancy | less --tabs=4 -RF"
-alias gds='git diff --staged --color | diff-so-fancy | less --tabs=4 -RF'
+alias gd="git diff --color -- . ':(exclude)*-lock*'"
+alias gds='git diff --staged --color'
 alias gdn="set_default_branch && git diff --name-only $DEFAULT_BRANCH --color"
-alias gdm="set_default_branch && git diff $DEFAULT_BRANCH --color -- . ':!package-lock.json' | diff-so-fancy | less --tabs=4 -RF"
+alias gdm="set_default_branch && git diff $DEFAULT_BRANCH --color -- . ':!package-lock.json'"
 alias gdmn="set_default_branch && git diff $DEFAULT_BRANCH --color --name-only"
 
 # ********** non git ***********

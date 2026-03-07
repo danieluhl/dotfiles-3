@@ -24,6 +24,9 @@ brew install ripgrep &&
 # Presentations with markdown files
 brew install presenterm &&
 brew install mermaid-cli
+# diffing tool
+brew install dlvhdr/formulae/diffnav
+
 
 # brew install --cask bluesnooze &&
 # brew install flyctl &&

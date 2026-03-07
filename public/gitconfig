@@ -23,9 +23,8 @@
   autocrlf = input
   editor = nvim
 	fileMode = false
-  pager = "diff-so-fancy | less --tabs=4 -RF"
-[interactive]
-  diffFilter = "diff-so-fancy --patch"
+  hooksPath = .git/hooks
+  pager = diffnav
 [commit]
   template = ~/.gitmessage
 	gpgSign = false
@@ -33,13 +32,12 @@
   prune = true
 [rebase]
   autosquash = true
-[include]
-  path = ~/.gitconfig.local
 [user]
 	name = Dan Uhl
 	email = danielruhl@gmail.com
 	signingKey = ""
 [merge]
+  conflictStyle = zdiff3
   tool = opendiff
 [diff]
     tool = default-difftool
@@ -60,5 +58,5 @@
   ignorecase = false
 [maintenance]
 	repo = ~/git/dotfiles
-[core]
-  hooksPath = .git/hooks
+[include]
+  path = ~/.gitconfig.local
