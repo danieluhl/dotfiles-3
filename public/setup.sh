@@ -16,8 +16,8 @@ sh ./vim-setup.sh
 dir=~/git/dotfiles/public        # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
 
-files="tool-versions zshrc ohmyzshrc aliases gitconfig eslintrc gitignore "\
-"gitmessage profile warp config/nvim config/raycast "\
+files="tool-versions zshrc ohmyzshrc aliases gitconfig gitconfig.local "\
+"eslintrc gitignore gitmessage profile warp config/nvim config/raycast "\
 "config/karabiner config/kitty config/ghostty config/opencode config/zed "\
 "aliases.local zshrc.local config/presenterm"
 
