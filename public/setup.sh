@@ -16,10 +16,33 @@ sh ./vim-setup.sh
 dir=~/git/dotfiles/public        # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
 
-files="tool-versions zshrc ohmyzshrc aliases gitconfig gitconfig.local "\
-"eslintrc gitignore gitmessage profile warp config/nvim config/raycast "\
-"config/karabiner config/kitty config/ghostty config/opencode config/zed "\
-"aliases.local zshrc.local config/presenterm"
+# Each of these files gets a symlink from home, 
+# e.g. ~/.aliases -> ./aliases
+# ~/.config/zed -> ./config/zed
+files=(
+  aliases
+  aliases.local
+  config/ghostty
+  config/karabiner
+  config/kitty
+  config/nvim
+  config/opencode
+  config/presenterm
+  config/raycast
+  config/zed
+  eslintrc
+  gitconfig
+  gitconfig.local
+  gitignore
+  gitmessage
+  ohmyzshrc
+  pnpm-completion.zsh
+  profile
+  tool-versions
+  warp
+  zshrc
+  zshrc.local
+)
 
 ##########
 
@@ -35,7 +58,7 @@ echo "done"
 
 # Move any existing dotfiles in homedir to dotfiles_old directory
 #  then create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
-for file in $files; do
+for file in "${files[@]}"; do
   echo "Moving any existing dotfiles from ~ to $olddir"
   mv ~/.$file ~/dotfiles_old/
   echo "Deleting any remaining symlinks"
