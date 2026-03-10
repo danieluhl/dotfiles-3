@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "theme": "opencode",
   "autoupdate": true,
   "model": "gemini-2.5-flash",
   "provider": {
