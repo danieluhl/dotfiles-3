@@ -12,10 +12,10 @@
   "permission": {
     "edit": "ask",
   },
-  "mcp": {
-    "chrome-devtools": {
-      "type": "local",
-      "command": ["npx", "-y", "chrome-devtools-mcp@latest"],
-    },
-  },
+  // "mcp": {
+  //   "chrome-devtools": {
+  //     "type": "local",
+  //     "command": ["npx", "-y", "chrome-devtools-mcp@latest"],
+  //   },
+  // },
 }

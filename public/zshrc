@@ -69,5 +69,6 @@ eval "$(mise activate zsh --shims)"
 # FE shell autocompletions with @bomb.sh
 # These are installed locally now
 # source <(tab pnpm zsh)
+# npx @bomb.sh/tab pnpm zsh > ~/.pnpm-completion.zsh
 source ~/.pnpm-completion.zsh
 
