@@ -24,7 +24,8 @@
   editor = nvim
 	fileMode = false
   hooksPath = .git/hooks
-  pager = diffnav -u
+[pager]
+  diff = diffnav -u
 [commit]
   template = ~/.gitmessage
 	gpgSign = false

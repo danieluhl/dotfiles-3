@@ -14,13 +14,13 @@ launch --title "scr"
 # launch --location=vsplit
 
 new_tab proj
-cd ~/git/health-check-retro
+cd ~/git/
 layout stack
 launch --var window=main
 launch --location=vsplit
 
 new_tab curs
-cd ~/git/health-check-retro
+cd ~/git/
 layout stack
 launch --var window=main
 launch --location=vsplit
