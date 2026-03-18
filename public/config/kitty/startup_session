@@ -14,13 +14,19 @@ launch --title "scr"
 # launch --location=vsplit
 
 new_tab proj
-cd ~/git/
+cd ~/git
 layout stack
 launch --var window=main
 launch --location=vsplit
 
-new_tab curs
-cd ~/git/
+new_tab bot
+cd ~/git
+layout stack
+launch --var window=main
+launch --location=vsplit
+
+new_tab dot
+cd ~/git/dotfiles/public/
 layout stack
 launch --var window=main
 launch --location=vsplit
