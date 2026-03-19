@@ -24,7 +24,6 @@
   editor = nvim
 	fileMode = false
   hooksPath = .git/hooks
-  pager = diffnav -u
 [commit]
   template = ~/.gitmessage
 	gpgSign = false
@@ -40,9 +39,11 @@
   conflictStyle = zdiff3
   tool = opendiff
 [diff]
-    tool = default-difftool
+  tool = default-difftool
+[pager]
+  diff = diffnav -u
 [difftool "default-difftool"]
-    cmd = nvim
+  cmd = nvim
 [gc]
 	auto = 0
 [http]
