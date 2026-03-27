@@ -426,3 +426,6 @@ set_default_branch() {
 }
 
 alias gcm='set_default_branch && git checkout $DEFAULT_BRANCH'
+
+
+alias r='rails'
