@@ -9,6 +9,8 @@ source $DOTFILES_PATH/env.sh
 
 # for ai sescrets
 [[ -f ~/.config/secrets/.ai-secrets ]] && source ~/.config/secrets/.ai-secrets
+# for secret env vars (shared from bitwarden)
+[[ -f ~/.config/secrets/.env-secrets ]] && source ~/.config/secrets/.env-secrets
 
 # Load z
 [ -f $(brew --prefix)/etc/profile.d/z.sh ] && source $(brew --prefix)/etc/profile.d/z.sh
@@ -25,19 +27,14 @@ compinit -i
 
 autoload -U +X bashcompinit && bashcompinit
 
+# Source misc completions
+source $DOTFILES_PATH/completions/index.sh
+
 # source $HOME/.docker/init-zsh.sh || true # Added by Docker Desktop
 
 # disabling for faster load times
 # source $DOTFILES_PATH/login.sh
 
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# Add deno completions to search path
-if [[ ":$FPATH:" != *":$HOME/.zsh/completions:"* ]]; then export FPATH="$HOME/.zsh/completions:$FPATH"; fi
-
-# Load git completion
-[[ -f ~/.git-completion.sh ]] && source ~/.git-completion.sh
 
 # opam configuration (OCaml)
 [[ ! -r "$HOME/.opam/opam-init/init.zsh" ]] || source "$HOME/.opam/opam-init/init.zsh"  > /dev/null 2> /dev/null
@@ -66,9 +63,4 @@ eval "$(mise activate zsh --shims)"
 # make cursor a block
 # echo -ne '\e[2 q'
 
-# FE shell autocompletions with @bomb.sh
-# These are installed locally now
-# source <(tab pnpm zsh)
-# npx @bomb.sh/tab pnpm zsh > ~/.pnpm-completion.zsh
-source ~/.pnpm-completion.zsh
 
