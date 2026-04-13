@@ -206,21 +206,11 @@ return {
       vim.lsp.enable({ server })
     end
 
-    vim.diagnostic.config({
-      virtual_text = true,
-    })
-
     -- diagnostics global defaults
-    vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      -- Disable underline, it's very annoyinglsp
+    vim.diagnostic.config({
       underline = true,
       virtual_text = true,
-      -- Enable virtual text, override spacing to 4
-      -- virtual_text = {spacing = 4},
-      -- Use a function to dynamically turn signs off
-      -- and on, using buffer local variables
       signs = true,
-      -- update_in_insert = false,
     })
 
     -- CMP SETUP
