@@ -30,4 +30,15 @@
   //     "command": ["npx", "-y", "chrome-devtools-mcp@latest"],
   //   },
   // },
+  // "mcp": {
+  //   "github": {
+  //     "type": "remote",
+  //     "url": "https://api.githubcopilot.com/mcp/readonly",
+  //     "enabled": true,
+  //     "oauth": false,
+  //     "headers": {
+  //       "Authorization": "Bearer {env:GITHUB_PERSONAL_ACCESS_TOKEN}",
+  //     },
+  //   },
+  // },
 }

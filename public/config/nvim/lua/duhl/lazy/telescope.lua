@@ -66,6 +66,9 @@ return { -- Fuzzy Finder (files, lsp, etc)
           },
         },
         path_display = { "smart" },
+        preview = {
+          treesitter = false
+        }
       },
       -- pickers = {}
       extensions = {
