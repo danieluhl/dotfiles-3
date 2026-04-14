@@ -8,6 +8,18 @@
         "apiKey": "{env:GEMINI_API_KEY}",
       },
     },
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama",
+      "options": {
+        "baseURL": "http://localhost:11434/v1"
+      },
+      "models": {
+        "gemma4": {
+          "name": "gemma4"
+        }
+      }
+    }
   },
   "permission": {
     "edit": "ask",
