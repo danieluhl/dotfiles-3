@@ -25,6 +25,10 @@ vim.api.nvim_create_user_command("PrintTimestamp", print_timestamp, {})
 
 local nmaps = {
 
+  -- remove all non alphanumeric characters from the start of the line
+  ["<leader>T"] = ":s/^\\s*\\[ \\] /<cr>:noh<cr>",
+  ["<leader>t"] = "I[ ] ",
+
   -- notes on yanking and the clipboard: we set
   --  global setting `unnamedplus` which stores things
   --  in the "+ clipboard register
@@ -57,9 +61,9 @@ local nmaps = {
   --   replace word with `y` register
   --   jump to `y` mark (set by previous yank)
   --   replace word with `x` register
-  ["siw"] = '"xyiwviw"yp`yviw"xp',
+  -- ["siw"] = '"xyiwviw"yp`yviw"xp',
   -- yank line for inline paste (multi-line)
-  ["yil"] = "^v$hy",
+  -- ["yil"] = "^v$hy",
   -- Replace word with option to go next
   -- ["R"] = ":let @0=@+<cr>*Nciw<C-r>0<esc>",
   -- paste yanked text even after delete
@@ -197,7 +201,7 @@ local nmaps = {
   ["gD"] = ":lua vim.lsp.buf.declaration()<cr>",
   ["gd"] = ":lua vim.lsp.buf.definition()<cr>",
   ["<leader>gi"] = ":lua vim.lsp.buf.implementation()<cr>",
-  -- ["<leader>gr"] = ":lua vim.lsp.buf.references()<cr>",
+  ["<leader>gr"] = ":lua vim.lsp.buf.references()<cr>",
   ["<C-Space>"] = ":lua vim.lsp.buf.hover()<cr>",
   ["<leader>k"] = ":lua vim.diagnostic.open_float()<cr>",
   ["<leader>gs"] = ":lua vim.lsp.buf.signature_help()<cr>",
