@@ -22,8 +22,8 @@ brew install eza &&
 brew install gh &&
 brew install ripgrep &&
 # Presentations with markdown files
-brew install presenterm &&
-brew install mermaid-cli
+# brew install presenterm &&
+# brew install mermaid-cli
 # diffing tool
 brew install dlvhdr/formulae/diffnav
 
