@@ -25,9 +25,12 @@ vim.api.nvim_create_user_command("PrintTimestamp", print_timestamp, {})
 
 local nmaps = {
 
+  -- DEPRECATED: doing this in the markdown ftplugin file instead using <C-x>
   -- remove all non alphanumeric characters from the start of the line
-  ["<leader>T"] = ":s/^\\s*\\[ \\] /<cr>:noh<cr>",
-  ["<leader>t"] = "I[ ] ",
+  -- ["<leader>T"] = ":s/^\\s*\\[.\\] /<cr>:noh<cr>",
+  -- ["<leader>t"] = "I[ ] ",
+  -- ["<leader>x"] = ":s/^\\s*\\[.\\] /\\[x\\] /<cr>:noh<cr>",
+  -- ["<leader>X"] = ":s/^\\s*\\[.\\] /\\[ \\] /<cr>:noh<cr>",
 
   -- notes on yanking and the clipboard: we set
   --  global setting `unnamedplus` which stores things
@@ -237,7 +240,6 @@ local vmaps = {
 }
 
 local imaps = {
-  ["<M-b>ackspace"] = "<C-w>",
   -- Insert Mode Edits
   ["<C-d>"] = "<del>",
   ["<M-h>"] = "<esc>bi",
