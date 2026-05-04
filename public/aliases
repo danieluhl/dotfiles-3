@@ -121,6 +121,7 @@ function resetToRemote()
 }
 
 # pushing and pulling
+alias gshove='HUSKY=0 git push --force-with-lease --no-verify'
 alias gpu='pullremote'
 alias gpf='git push --force-with-lease'
 alias gp='pushremote'
@@ -429,3 +430,4 @@ alias gcm='set_default_branch && git checkout $DEFAULT_BRANCH'
 
 
 alias r='rails'
+

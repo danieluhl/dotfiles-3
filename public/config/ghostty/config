@@ -1,5 +1,5 @@
 # Shaders
-custom-shader = ~/git/ghostty-shaders/cubes.glsl
+# custom-shader = ~/git/ghostty-shaders/cubes.glsl
 
 # FONT
 font-family = DankMono Nerd Font
@@ -44,7 +44,7 @@ keybind = super+backspace=text:\x15
 # keybind = super+bracket_right=goto_split:next
 # keybind = chain=toggle_split_zoom
 # ACTUALLY, this is better and should do the job
-# split-preserve-zoom = navigation
+split-preserve-zoom = navigation
 # https://github.com/ghostty-org/ghostty/issues/8458
 
 # Don't ask me to close

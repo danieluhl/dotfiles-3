@@ -1,5 +1,7 @@
 return {
-  "cbochs/grapple.nvim",
+  "danieluhl/grapple.nvim",
+  -- dir = "~/git/external/grapple.nvim",
+  branch = "main",
   -- Plugin dependencies required for grapple.nvim to function properly
   dependencies = {
     { "nvim-tree/nvim-web-devicons", lazy = true }

@@ -63,3 +63,5 @@
 	repo = ~/git/dotfiles
 [include]
   path = ~/.gitconfig.local
+[safe]
+	directory = /home/agent/workspace
