@@ -6,33 +6,33 @@ local dir = home .. "/git/dotfiles/public"
 local olddir = home .. "/dotfiles_old"
 
 local links = {
-  ["aliases"] = home .. "/.aliases",
-  ["aliases.local"] = home .. "/.aliases.local",
+  [home .. "/.aliases"] = "aliases",
+  [home .. "/.aliases.local"] = "aliases.local",
   -- note that some configs land in /config and others land in the root home
   -- directory
-  ["config/claude"] = home .. "/.claude",
-  ["config/codex"] = home .. "/.codex",
-  ["config/cursor"] = home .. "/.cursor",
-  ["config/ghostty"] = home .. "/.config/ghostty",
-  ["config/karabiner"] = home .. "/.config/karabiner",
-  ["config/kitty"] = home .. "/.config/kitty",
-  ["config/nvim"] = home .. "/.config/nvim",
-  ["config/opencode"] = home .. "/.config/opencode",
-  ["config/presenterm"] = home .. "/.config/presenterm",
-  ["config/raycast"] = home .. "/.config/raycast",
-  ["config/warp"] = home .. "/.warp",
-  ["config/zed"] = home .. "/.config/zed",
-  ["eslintrc"] = home .. "/.eslintrc",
-  ["gitconfig"] = home .. "/.gitconfig",
-  ["gitconfig.local"] = home .. "/.gitconfig.local",
-  ["gitignore"] = home .. "/.gitignore",
-  ["gitmessage"] = home .. "/.gitmessage",
-  ["ohmyzshrc"] = home .. "/.ohmyzshrc",
-  ["pnpm-completion.zsh"] = home .. "/.pnpm-completion.zsh",
-  ["profile"] = home .. "/.profile",
-  ["tool-versions"] = home .. "/.tool-versions",
-  ["zshrc"] = home .. "/.zshrc",
-  ["zshrc.local"] = home .. "/.zshrc.local",
+  [home .. "/.claude/skills"] = "config/skills",
+  [home .. "/.codex/skills"] = "config/skills",
+  [home .. "/.cursor/skills"] = "config/skills",
+  [home .. "/.config/ghostty"] = "config/ghostty",
+  [home .. "/.config/karabiner"] = "config/karabiner",
+  [home .. "/.config/kitty"] = "config/kitty",
+  [home .. "/.config/nvim"] = "config/nvim",
+  [home .. "/.config/opencode"] = "config/opencode",
+  [home .. "/.config/presenterm"] = "config/presenterm",
+  [home .. "/.config/raycast"] = "config/raycast",
+  [home .. "/.warp"] = "config/warp",
+  [home .. "/.config/zed"] = "config/zed",
+  [home .. "/.eslintrc"] = "eslintrc",
+  [home .. "/.gitconfig"] = "gitconfig",
+  [home .. "/.gitconfig.local"] = "gitconfig.local",
+  [home .. "/.gitignore"] = "gitignore",
+  [home .. "/.gitmessage"] = "gitmessage",
+  [home .. "/.ohmyzshrc"] = "ohmyzshrc",
+  [home .. "/.pnpm-completion.zsh"] = "pnpm-completion.zsh",
+  [home .. "/.profile"] = "profile",
+  [home .. "/.tool-versions"] = "tool-versions",
+  [home .. "/.zshrc"] = "zshrc",
+  [home .. "/.zshrc.local"] = "zshrc.local",
 }
 
 local function shell_quote(s)
@@ -41,7 +41,7 @@ end
 
 os.execute("mkdir -p " .. shell_quote(olddir))
 
-for src, dest in pairs(links) do
+for dest, src in pairs(links) do
   local source = dir .. "/" .. src
 
   print("Backing up " .. dest)
