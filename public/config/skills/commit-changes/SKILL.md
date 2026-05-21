@@ -40,6 +40,8 @@ Compose a message following this format:
 
 ```
 <type>(<scope>): <summary>
+
+<details>
 ```
 
 **Type** — choose the most accurate:
@@ -68,6 +70,26 @@ Compose a message following this format:
 - Avoid vague words: "update", "improve", "misc", "changes", "stuff"
 - Write as a principal-level engineer would — clear, precise, professional
 
+**Details rules:**
+
+- Convert low-level implementation details into clear engineering outcomes.
+- Emphasize reliability, maintainability, scalability, developer experience, performance, or user impact when supported by the changes.
+- Infer likely intent from filenames, diffs, tests, and architectural changes.
+- Write in a concise but polished professional tone suitable for engineering leadership review.
+- Avoid vague wording like “stuff”, “fixes”, or “changes”.
+- Avoid fabricated metrics, business impact, customer claims, or performance improvements unless explicitly evidenced.
+- Prefer explaining why the change matters, not just what changed.
+
+Examples of good framing:
+
+- "improve reliability of..."
+- "reduce duplication in..."
+- "streamline onboarding flow..."
+- "strengthen type safety around..."
+- "optimize rendering performance for..."
+- "simplify extension points for future..."
+- "standardize validation behavior across..."
+
 ### Step 5: Commit
 
 Use a heredoc to preserve formatting:
@@ -75,6 +97,8 @@ Use a heredoc to preserve formatting:
 ```bash
 git commit -m "$(cat <<'EOF'
 <type>(<scope>): <summary>
+
+<details>
 EOF
 )"
 ```
@@ -83,33 +107,8 @@ EOF
 
 Run `git status` and `git log --oneline -1` to confirm the commit was created, then report the result.
 
-## Examples
-
-**Good messages:**
-
-```
-feat(campaigns): add create and update campaign flows backed by org API
-fix(auth): prevent redirect loop when access token expires mid-session
-refactor(dashboard): replace hardcoded campaign data with live API calls
-test(campaigns): add unit tests for tenant-scoped campaign CRUD operations
-chore(deps): upgrade @tanstack/react-form to v1.2.0
-perf(api): batch tenant and user lookups into single bootstrap request
-docs(workspace): document new workspace creation flow and tenant types
-```
-
-**Bad messages (and why):**
-
-```
-fix: update stuff                     # vague, no scope
-feat(campaigns): Adds new feature.    # wrong tense, trailing period, vague
-refactor: improve code quality        # meaningless, no scope
-chore(misc): various changes          # says nothing
-```
-
 ## Guidelines
 
-- If changes span multiple unrelated areas, use the dominant area as scope.
-- If the change is truly cross-cutting, use a broad scope like `app` or `core`.
 - Never split into multiple commits — this skill creates exactly one commit for all current changes.
 - Do not warn or ask for confirmation before committing. Just do it.
 - Do not skip the `git add -A` step — always stage everything.

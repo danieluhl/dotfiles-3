@@ -51,6 +51,7 @@ function code {
 
 alias dot='godot && nvim $DOTFILES_PATH'
 alias godot="cd $DOTFILES_PATH"
+alias goskills="cd $DOTFILES_PATH/config/skills"
 alias go='cd $(find . -maxdepth 3 -type d | fzf)'
 alias cdd='cd $(find . -maxdepth 1 -type d | fzf)'
 alias gg="cd ~/git"

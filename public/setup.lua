@@ -11,6 +11,7 @@ local links = {
   -- note that some configs land in /config and others land in the root home
   -- directory
   [home .. "/.claude/skills"] = "config/skills",
+  [home .. "/.opencode/skills"] = "config/skills",
   [home .. "/.codex/skills"] = "config/skills",
   [home .. "/.cursor/skills"] = "config/skills",
   [home .. "/.config/ghostty"] = "config/ghostty",
