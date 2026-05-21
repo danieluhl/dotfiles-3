@@ -1,0 +1,7 @@
+---
+pid: 61207
+cwd: /Users/duhl/git/scripts
+last_command: Agent pid 61245
+---
+Agent pid 61245
+➜  scripts 

@@ -12,18 +12,24 @@
       "npm": "@ai-sdk/openai-compatible",
       "name": "Ollama",
       "options": {
-        "baseURL": "http://localhost:11434/v1"
+        "baseURL": "http://localhost:11434/v1",
       },
       "models": {
         "gemma4": {
-          "name": "gemma4"
-        }
-      }
-    }
+          "name": "gemma4",
+        },
+      },
+    },
   },
   "permission": {
     "edit": "ask",
   },
+  // "mcp": {
+  //   "semble": {
+  //     "type": "local",
+  //     "command": ["uvx", "--from", "semble[mcp]", "semble"],
+  //   },
+  // },
   // "mcp": {
   //   "chrome-devtools": {
   //     "type": "local",

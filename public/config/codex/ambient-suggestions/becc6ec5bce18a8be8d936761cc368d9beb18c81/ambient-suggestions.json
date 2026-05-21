@@ -1,0 +1,159 @@
+{
+  "projectRoot": "/Users/duhl/git/ui",
+  "generatedAtMs": 1778857069731,
+  "currentSuggestionIds": [
+    "d6ba4f6a-cf23-462f-ba5e-d39ae512a145"
+  ],
+  "suggestions": [
+    {
+      "id": "dddf2338-ec81-43ea-84fc-1fd349fc78e5",
+      "title": "Fix sandcastle prompt args mismatch",
+      "description": "Your current `dan/sandcastle-integration` worktree adds `.sandcastle/main.mts`, but `review-prompt.md` expects `SOURCE_BRANCH` and `merge-prompt.md` expects `TASK_ID` even though the runner never passes them. That is a concrete local break that will stop the first full sandcastle loop.",
+      "prompt": "Fix the prompt argument mismatches in `.sandcastle` so `pnpm sandcastle` can complete a full plan, implement, review, and merge cycle. Update the runner and prompt templates consistently, then add a minimal smoke check or usage note if needed.",
+      "appIds": [],
+      "status": "pending",
+      "createdAtMs": 1777643086693,
+      "updatedAtMs": 1777643086693
+    },
+    {
+      "id": "eda4085d-c780-46af-8537-9bd8b47350ba",
+      "title": "Wire org-next auth redirect flow",
+      "description": "Recent commits added the auth app and the first org-next auth pages, but `apps/org-next/docs/README.md` still says the return/callback wiring is not implemented, and `src/routes/-auth.ts` currently sends users to the bare auth app URL instead of the documented `/authorize?...` contract. This looks like the main remaining user-facing hole in the new app.",
+      "prompt": "Implement the org-next auth redirect contract end to end: send users to the auth app with the right authorize params, handle the return or callback path in org-next, and update the org-next docs and tests to match.",
+      "appIds": [],
+      "status": "pending",
+      "createdAtMs": 1777643086693,
+      "updatedAtMs": 1777643086693
+    },
+    {
+      "id": "7767356e-e34e-4ac4-9548-ecaf4c0b53f8",
+      "title": "Cover campaign rename in Playwright",
+      "description": "Commit `7453f23` added the org-next campaign detail screen with inline rename, but `apps/org-next/tests/campaigns.spec.ts` still only covers listing campaigns and the create modal. Given how often your recent Codex threads were about Playwright regressions, this is a focused gap worth closing now.",
+      "prompt": "Add an org-next Playwright test for renaming a campaign from the campaign detail page, including the `updateCampaign` mock and assertions that the edited name persists after the router refresh.",
+      "appIds": [],
+      "status": "pending",
+      "createdAtMs": 1777643086693,
+      "updatedAtMs": 1777643086693
+    },
+    {
+      "id": "bd67f105-a519-4a66-a4f3-6a2340c416d2",
+      "title": "Build org-next PKCE callback path",
+      "description": "Today's thread says org-next is pivoting off the auth app and onto Cognito directly. In the repo, `apps/org-next/docs/README.md` still says the callback wiring is not implemented, and `src/routes/-auth.ts` still just redirects to `VITE_AUTH_APP_URL`, so the main missing artifact is the self-contained PKCE flow.",
+      "prompt": "Replace org-next's current auth-app redirect stub with a self-contained Cognito PKCE flow. Add the authorize redirect builder, callback route and state verifier, exchange the code at Cognito `/oauth2/token`, persist access and refresh tokens in the existing session cookies, and update the org-next docs and tests to match.",
+      "appIds": [],
+      "status": "pending",
+      "createdAtMs": 1777899280737,
+      "updatedAtMs": 1777899280737
+    },
+    {
+      "id": "e4956743-fda6-4157-88c6-960c8d1bab28",
+      "title": "Finish org-next logout flow",
+      "description": "Today's auth threads included logout in the target flow. In `apps/org-next`, `performLogout` still POSTs a bare `/logout`, but `apps/auth/docs/client-integration.md` requires `client_id` and `logout_uri`, and the authenticated UI does not expose a logout action yet.",
+      "prompt": "Implement the org-next logout flow end to end. Add a visible logout action in the authenticated UI, redirect through the auth app using the documented `/logout?client_id=...&logout_uri=...` contract, clear any org-next local session state that should be dropped, and cover the flow with tests plus doc updates in `apps/org-next/docs/README.md`.",
+      "appIds": [],
+      "status": "pending",
+      "createdAtMs": 1777917887590,
+      "updatedAtMs": 1777917887590
+    },
+    {
+      "id": "b192a752-0a7d-48cd-ab4b-95e9149e4a52",
+      "title": "Make local auth integration runnable",
+      "description": "The latest org-next auth thread asked for exact local setup steps, and the repo still fights that: `apps/org-next/package.json` sets `VITE_API_HOSTNAME` instead of `API_HOSTNAME`, `.env.template` defaults to bypass auth, and the auth README allowlist example still points at `org.anedot.me` instead of a local org-next callback/logout URL.",
+      "prompt": "Make the real org-next/auth integration runnable locally. Fix the broken local script and env wiring, add the missing local callback and logout values or templates needed on both apps, and write a concise setup doc with the exact env vars, hosts, and manual verification steps for login and logout end to end.",
+      "appIds": [],
+      "status": "pending",
+      "createdAtMs": 1777917887590,
+      "updatedAtMs": 1777917887590
+    },
+    {
+      "id": "9197ef07-e766-4378-9f7d-14216a2380b1",
+      "title": "Preserve return_to through org-next login",
+      "description": "The current branch already built signed `return_to` support in `apps/org-next/src/server/auth-state.ts`, but `apps/org-next/src/routes/login.tsx` still calls `initiateLogin()` without the user’s original path. That means protected deep links still collapse to `/` after auth, which is the next obvious gap in this flow.",
+      "prompt": "Finish the org-next return_to flow. When an unauthenticated user hits a protected route, preserve the exact in-app destination through `/login`, pass it into `initiateLogin`, validate it as a relative path, and add tests/docs proving the user lands back on the original route after auth instead of always falling back to `/`.",
+      "appIds": [],
+      "status": "pending",
+      "createdAtMs": 1777982787667,
+      "updatedAtMs": 1777982787667
+    },
+    {
+      "id": "e65a3d25-3aad-4599-bbc5-7deeca95b135",
+      "title": "Retry org API calls after auth refresh",
+      "description": "`apps/auth` now exposes the app-mode `POST /apps/refresh` endpoint, but `apps/org-next/src/server/org-api.server.ts` still treats a missing or expired access token as an immediate 401-to-login path. The contract says refresh is auth-owned, so org-next is still missing the piece that keeps active sessions alive.",
+      "prompt": "Implement auth-owned refresh retry in org-next. On a 401 from the Org API, call the auth app’s `/apps/refresh?app=org-next`, retry the original request once if refresh succeeds, and only redirect to `/login` if refresh fails. Update the org-next auth docs and add focused tests around expired access tokens, successful refresh, and refresh failure.",
+      "appIds": [],
+      "status": "pending",
+      "createdAtMs": 1777982787667,
+      "updatedAtMs": 1777982787667
+    },
+    {
+      "id": "badc4bf0-ee87-405b-b79b-b2bf0da5e367",
+      "title": "Add a real org-next auth smoke spec",
+      "description": "The repo has both halves of the new contract, but the tests stop short of proving them together: `apps/auth/tests/integration/app-mode.spec.ts` mocks a fake consumer origin, while `apps/org-next/tests/auth-flow.spec.ts` only intercepts the redirect out to auth. A single cross-app smoke spec would close the main confidence gap before more auth work lands.",
+      "prompt": "Add one real cross-app smoke test for org-next and the auth app. Spin both apps in test mode, drive a browser through org-next login, verify the auth app writes the signed `authToken`/`refreshToken`/`idToken` cookies org-next expects, and confirm org-next can reach an authenticated route without test seeding. Keep the setup minimal but runnable locally.",
+      "appIds": [],
+      "status": "pending",
+      "createdAtMs": 1777982787667,
+      "updatedAtMs": 1777982787667
+    },
+    {
+      "id": "bd7ef7c3-68d9-4fa9-92be-d35601785b54",
+      "title": "Refresh expired org-next sessions instead of sending users back to login",
+      "description": "Today’s auth-app integration writes a `refreshToken` cookie, but org-next still only reads `authToken` and redirects on any 401. Codex can wire the auth app’s refresh contract into org-next so expired access tokens recover silently.",
+      "prompt": "Implement refresh-token handling in `apps/org-next` for the new auth-app integration. Use the existing `refreshToken` cookie and the auth app refresh contract so an expired Org API access token retries once before redirecting to `/login`. Update the org-next docs and add Playwright coverage for an expired session that refreshes successfully.",
+      "appIds": [],
+      "status": "pending",
+      "createdAtMs": 1778525957163,
+      "updatedAtMs": 1778525957163
+    },
+    {
+      "id": "ab7cdde5-281e-4e11-ac5b-7a17d4599e21",
+      "title": "Make organization cards actually switch the selected tenant",
+      "description": "The `/organizations` page looks like a tenant switcher, but clicking a card only navigates to `/` and never updates `selectedTenantId`. Codex can fix the mismatch with the sidebar behavior and add a regression test for multi-tenant users.",
+      "prompt": "Fix the tenant-switch flow on the `/organizations` page in `apps/org-next`. When a user clicks an organization card, persist that tenant through the user session before navigating home, and add a Playwright test that proves the selected tenant changes for a multi-tenant user.",
+      "appIds": [],
+      "status": "pending",
+      "createdAtMs": 1778525957163,
+      "updatedAtMs": 1778525957163
+    },
+    {
+      "id": "9c3e2090-5008-4a30-99e3-98f2d9153b1f",
+      "title": "Finish the APPS_SESSION_SECRET rename before org-next stops booting",
+      "description": "Your current `dan/374-local-dev` changes switch org-next auth cookies to `AUTH_SESSION_SECRET`, but `src/server/user-session.server.ts` still reads `env.SESSION_SECRET`, which no longer exists in `src/env.ts`. Codex can patch the remaining runtime breakages and make the env contract internally consistent.",
+      "prompt": "Finish the local-dev secret rename in `apps/org-next` and `apps/virtual-terminal`. Find every remaining place that still expects `SESSION_SECRET` or the old per-app secret shape, patch the code so both apps boot cleanly with the new env contract, and update the relevant docs/templates in the same change.",
+      "appIds": [],
+      "status": "pending",
+      "createdAtMs": 1778770784088,
+      "updatedAtMs": 1778770784088
+    },
+    {
+      "id": "eda0a9d9-629f-43ba-b74f-f8c1e977f095",
+      "title": "Reconcile auth app integration docs and tests with the new shared-secret model",
+      "description": "The auth app now reads `APPS_SESSION_SECRET`, but `apps/auth/docs/app-integration.md` and several auth tests still describe or exercise `ORG_NEXT_SESSION_SECRET` / `VIRTUAL_TERMINAL_SESSION_SECRET`. This looks like an unfinished contract change on the same active branch.",
+      "prompt": "Update the auth-side app integration contract to match the new `APPS_SESSION_SECRET` model. Fix the stale docs and tests under `apps/auth` so they describe and verify the actual runtime behavior, and call out any consumer-side assumptions that still need to stay per-app.",
+      "appIds": [],
+      "status": "pending",
+      "createdAtMs": 1778770784088,
+      "updatedAtMs": 1778770784088
+    },
+    {
+      "id": "192b8560-8b85-43d0-9ded-24a62fa5f0ec",
+      "title": "Make virtual-terminal local env files match the app it actually is now",
+      "description": "`apps/virtual-terminal/.env.template`, docs, and `src/env.ts` disagree today: the template still uses `SESSION_SECRET`, while the code expects `AUTH_SESSION_SECRET` plus additional org-next-style vars. Codex can turn that into a working local setup instead of a dead template.",
+      "prompt": "Clean up `apps/virtual-terminal` local configuration so the env template, validator, and docs all agree. Keep only the variables the app really needs right now, preserve the auth-app integration flow, and make the README usable for someone trying to run VT locally on this branch.",
+      "appIds": [],
+      "status": "pending",
+      "createdAtMs": 1778770784088,
+      "updatedAtMs": 1778770784088
+    },
+    {
+      "id": "d6ba4f6a-cf23-462f-ba5e-d39ae512a145",
+      "title": "Harden the Amos demo payment route before this branch leaves your machine",
+      "description": "Today’s `dan/381-amos-demo` work-in-progress has two immediate push blockers in `apps/org-next`: the new demo route imports `payments.server.ts` directly from a route file, and tracked files now contain SubFi sandbox credentials plus a full render token. Codex can refactor the server boundary, move secrets to local-only env wiring, and update the org-next docs in one pass.",
+      "prompt": "Harden the new org-next Amos demo payment flow before this branch gets pushed. Refactor the route so no server-only modules are imported into a route file, move the SubFi credentials and render token out of tracked source/env files into the right local-only env setup, keep the demo working, and update the relevant org-next docs for the new payment route and config.",
+      "appIds": [],
+      "status": "pending",
+      "createdAtMs": 1778857069731,
+      "updatedAtMs": 1778857069731
+    }
+  ]
+}

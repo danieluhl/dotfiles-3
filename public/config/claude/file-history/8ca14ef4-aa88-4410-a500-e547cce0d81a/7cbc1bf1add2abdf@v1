@@ -1,0 +1,85 @@
+import type { AppBootstrap, Tenant, User } from "../types/bootstrap";
+import { OrgApiError } from "./error";
+import { getOrgApiJson } from "./org-api.server";
+import { resolveOrgApiAccessToken } from "./org-api-access-token.server";
+
+const pickCurrentTenant = (accessibleTenants: Tenant[], tenantId?: number) => {
+  if (tenantId === undefined) {
+    return accessibleTenants[0] ?? null;
+  }
+
+  return accessibleTenants.find((tenant) => tenant.id === tenantId) ?? null;
+};
+
+const buildAppBootstrap = ({
+  accessibleTenants,
+  tenantId,
+  user,
+}: {
+  accessibleTenants: Tenant[];
+  tenantId?: number;
+  user: User;
+}): AppBootstrap => {
+  const currentTenant = pickCurrentTenant(accessibleTenants, tenantId);
+
+  return {
+    accessibleTenants,
+    currentTenant,
+    currentUser: user,
+    tenant: currentTenant,
+    tenants: accessibleTenants,
+    user,
+    users: [user],
+  };
+};
+
+async function fetchCurrentUser(): Promise<User | null> {
+  let user: User;
+
+  try {
+    user = await getOrgApiJson<User>("/users/me");
+    return user;
+  } catch (error) {
+    if (error instanceof OrgApiError && error.status === 404) {
+      return null;
+    }
+
+    throw error;
+  }
+}
+
+async function fetchAccessibleTenants(): Promise<Tenant[]> {
+  try {
+    return await getOrgApiJson<Tenant[]>("/tenants");
+  } catch (error) {
+    if (error instanceof OrgApiError && error.status === 401) {
+      throw error;
+    }
+
+    return [];
+  }
+}
+
+export async function getAppBootstrapData({
+  tenantId,
+}: {
+  tenantId?: number;
+} = {}): Promise<AppBootstrap | null> {
+  const accessToken = await resolveOrgApiAccessToken();
+
+  if (accessToken === null) {
+    return null;
+  }
+
+  const user = await fetchCurrentUser();
+  if (user === null) {
+    return null;
+  }
+  const accessibleTenants = await fetchAccessibleTenants();
+
+  return buildAppBootstrap({
+    accessibleTenants,
+    tenantId,
+    user,
+  });
+}

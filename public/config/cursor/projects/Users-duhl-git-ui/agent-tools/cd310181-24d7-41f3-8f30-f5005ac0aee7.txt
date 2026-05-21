@@ -1,0 +1,3235 @@
+M  apps/auth/.env.template
+M  apps/auth/.env.test
+M  apps/auth/README.md
+M  apps/auth/docs/app-integration.md
+M  apps/auth/docs/spec.md
+M  apps/auth/src/features/auth/contracts.test.ts
+M  apps/auth/src/features/auth/contracts.ts
+M  apps/auth/src/features/auth/server-functions.ts
+D  apps/auth/src/lib/app-integration.org-next.test.ts
+M  apps/auth/src/lib/app-integration.test.ts
+M  apps/auth/src/lib/app-integration.ts
+D  apps/auth/src/lib/app-integration.virtual-terminal.test.ts
+M  apps/auth/src/lib/app-token-cookies.test.ts
+M  apps/auth/src/lib/session.ts
+M  apps/auth/src/routes/apps.refresh.tsx
+M  apps/auth/tests/integration/app-mode.spec.ts
+M  apps/auth/tests/integration/helpers.ts
+M  apps/org-next/.env.e2e
+M  apps/org-next/.env.template
+M  apps/org-next/docs/README.md
+M  apps/org-next/src/env.ts
+M  apps/org-next/src/routes/-auth.ts
+M  apps/org-next/src/server/auth-app-url.server.ts
+M  apps/org-next/src/server/auth-state.test.ts
+M  apps/org-next/src/server/auth-state.ts
+M  apps/org-next/src/server/session.server.ts
+M  apps/org-next/src/server/session.test.ts
+M  apps/org-next/src/server/user-session.server.ts
+M  apps/org-next/tests/auth-flow.spec.ts
+M  apps/ui-next-catalog/package.json
+M  apps/ui-next-catalog/vite.config.ts
+M  apps/virtual-terminal/.env.e2e
+M  apps/virtual-terminal/.env.template
+M  apps/virtual-terminal/docs/README.md
+M  apps/virtual-terminal/src/env.ts
+M  apps/virtual-terminal/src/routes/-auth.ts
+M  apps/virtual-terminal/src/server/auth-app-url.server.ts
+M  apps/virtual-terminal/src/server/auth-state.test.ts
+M  apps/virtual-terminal/src/server/auth-state.ts
+M  apps/virtual-terminal/src/server/session.server.ts
+D  apps/virtual-terminal/src/server/session.test.ts
+M  scripts/dev.sh
+ apps/auth/.env.template                            |   4 +-
+ apps/auth/.env.test                                |   5 +-
+ apps/auth/README.md                                |   2 +-
+ apps/auth/docs/app-integration.md                  | 258 ++++---------
+ apps/auth/docs/spec.md                             |   8 +-
+ apps/auth/src/features/auth/contracts.test.ts      |  25 +-
+ apps/auth/src/features/auth/contracts.ts           |   9 +-
+ apps/auth/src/features/auth/server-functions.ts    | 164 ++-------
+ apps/auth/src/lib/app-integration.org-next.test.ts |  64 ----
+ apps/auth/src/lib/app-integration.test.ts          | 410 ++++++---------------
+ apps/auth/src/lib/app-integration.ts               | 345 ++---------------
+ .../lib/app-integration.virtual-terminal.test.ts   |  66 ----
+ apps/auth/src/lib/app-token-cookies.test.ts        |   3 -
+ apps/auth/src/lib/session.ts                       |   1 -
+ apps/auth/src/routes/apps.refresh.tsx              |  12 +-
+ apps/auth/tests/integration/app-mode.spec.ts       |  20 +-
+ apps/auth/tests/integration/helpers.ts             |  20 +-
+ apps/org-next/.env.e2e                             |   4 +-
+ apps/org-next/.env.template                        |   7 +-
+ apps/org-next/docs/README.md                       |  25 +-
+ apps/org-next/src/env.ts                           |   3 +-
+ apps/org-next/src/routes/-auth.ts                  |   2 -
+ apps/org-next/src/server/auth-app-url.server.ts    |  17 +-
+ apps/org-next/src/server/auth-state.test.ts        | 118 ++++--
+ apps/org-next/src/server/auth-state.ts             |  55 ++-
+ apps/org-next/src/server/session.server.ts         |   6 +-
+ apps/org-next/src/server/session.test.ts           |   2 +-
+ apps/org-next/src/server/user-session.server.ts    |   2 +-
+ apps/org-next/tests/auth-flow.spec.ts              |   8 +-
+ apps/ui-next-catalog/package.json                  |   2 +-
+ apps/ui-next-catalog/vite.config.ts                |   2 +-
+ apps/virtual-terminal/.env.e2e                     |   4 +-
+ apps/virtual-terminal/.env.template                |  22 +-
+ apps/virtual-terminal/docs/README.md               |  19 +-
+ apps/virtual-terminal/src/env.ts                   |   5 +-
+ apps/virtual-terminal/src/routes/-auth.ts          |   2 -
+ .../src/server/auth-app-url.server.ts              |  17 +-
+ .../virtual-terminal/src/server/auth-state.test.ts | 127 +++++--
+ apps/virtual-terminal/src/server/auth-state.ts     |  55 ++-
+ apps/virtual-terminal/src/server/session.server.ts |   6 +-
+ apps/virtual-terminal/src/server/session.test.ts   |  24 --
+ scripts/dev.sh                                     |   4 +-
+ 42 files changed, 663 insertions(+), 1291 deletions(-)
+diff --git a/apps/auth/.env.template b/apps/auth/.env.template
+index 0a80433..10c5277 100644
+--- a/apps/auth/.env.template
++++ b/apps/auth/.env.template
+@@ -1,6 +1,8 @@
+ VITE_AUTH_MOCK_MODE=true
+-AUTH_SESSION_SECRET=replace-with-at-least-32-characters
++APPS_SESSION_SECRET=replace-with-at-least-32-characters
+ AUTH_ALLOWED_URIS_BY_CLIENT_ID={"local-client":["https://org.anedot.me/oauth","https://org.anedot.me/logout"]}
++# Must match all other aps' AUTH_SESSION_SECRET.
++AUTH_SESSION_SECRET=
+ 
+ # Production Cognito settings
+ COGNITO_DOMAIN=
+diff --git a/apps/auth/.env.test b/apps/auth/.env.test
+index 1bfb228..36fdcee 100644
+--- a/apps/auth/.env.test
++++ b/apps/auth/.env.test
+@@ -1,6 +1,3 @@
+ VITE_AUTH_MOCK_MODE=true
+-AUTH_SESSION_SECRET=test-only-session-secret-at-least-32
++APPS_SESSION_SECRET=test-only-session-secret-at-least-32
+ AUTH_ALLOWED_URIS_BY_CLIENT_ID={"local-client":["https://org.anedot.me/oauth","https://org.anedot.me/logout","http://localhost:3208"]}
+-TEST_APP_SECRET=test-app-secret-must-be-at-least-32-characters-long
+-ORG_NEXT_SESSION_SECRET=test-only-session-secret-at-least-32
+-AUTH_APPS={"test-app":{"sessionSecretEnv":"TEST_APP_SECRET","allowedOrigins":["http://localhost:3210"],"cookieNames":{"auth":"authToken","refresh":"refreshToken","id":"idToken"},"cookieDomain":""},"org-next":{"sessionSecretEnv":"ORG_NEXT_SESSION_SECRET","allowedOrigins":["http://localhost:3210"],"cookieNames":{"auth":"authToken","refresh":"refreshToken","id":"idToken"},"cookieDomain":""}}
+diff --git a/apps/auth/README.md b/apps/auth/README.md
+index b0f2567..6bcff7a 100644
+--- a/apps/auth/README.md
++++ b/apps/auth/README.md
+@@ -35,7 +35,7 @@ to exercise real redirect orchestration and higher-environment auth validation.
+     - `{"local-client":["https://org.anedot.me/oauth","https://org.anedot.me/logout"]}`
+ 
+ - `AUTH_SESSION_SECRET`
+-  - Secret used to sign/encrypt auth session data.
++  - Secret used to sign/encrypt app-mode session data.
+   - Use a strong value (at least 32 characters) in non-local environments.
+   - Startup/deploy fails fast when this variable is missing, insecure, or too short.
+ 
+diff --git a/apps/auth/docs/app-integration.md b/apps/auth/docs/app-integration.md
+index f3e27e0..ee975b6 100644
+--- a/apps/auth/docs/app-integration.md
++++ b/apps/auth/docs/app-integration.md
+@@ -1,225 +1,103 @@
+-# AnedotAuth — App Integration Mode (same-domain token cookies)
++# AnedotAuth — App Integration Mode
+ 
+-This document describes the **generic app-integration mode** of `auth.anedot.com`,
+-intended for any internal Anedot app that runs as a TanStack Start
+-application (or any app that can read TanStack `useSession` cookies signed by
+-a shared secret).
++This document describes the generic app-integration mode of `auth.anedot.com`,
++intended for first-party apps that can read TanStack `useSession` cookies
++signed by a shared secret.
+ 
+ > Looking for the classic OAuth2 contract for external clients
+ > (`client_id` + `redirect_uri` + `session_url`)? See
+ > [client-integration.md](./client-integration.md) and
+-> [session-bootstrap.md](./session-bootstrap.md). Those flows are unchanged
+-> and continue to be the right choice for any consumer that doesn't share a
+-> session secret with the auth app.
++> [session-bootstrap.md](./session-bootstrap.md). Those flows are unchanged.
+ 
+----
++## Contract Summary
+ 
+-## Why two modes?
++App-mode no longer keeps an auth-side registry of allowed apps. The auth app is
++ambiguous to the caller and trusts only the signed `return_to` contract:
+ 
+-The classic OAuth contract treats every consumer as an opaque external
+-client. It assumes nothing about the consumer's stack and leaves token
+-exchange and session storage to the consumer.
++- Auth reads `AUTH_SESSION_SECRET`.
++- The consuming app reads the same value as `AUTH_SESSION_SECRET`.
++- The consuming app sends an absolute `return_to` URL and signs that exact URL
++  in `auth_state`.
++- Auth verifies `auth_state` with `AUTH_SESSION_SECRET` before redirecting.
++- Auth writes `authToken`, `refreshToken`, and `idToken` cookies with the same
++  secret so the caller can read them.
+ 
+-For first-party Anedot apps that already share infrastructure with the auth
+-app (TanStack Start, same parent domain, shared secret manager), that
+-contract is heavier than necessary. The app-integration mode trades that
+-generality for a much simpler consumer footprint:
+-
+-- The auth app writes per-app, signed, `httpOnly` cookies for the access
+-  token, refresh token, and id token.
+-- The consuming app reads those cookies via TanStack `useSession`.
+-- Refresh stays auth-owned. Consuming apps never see or store the refresh
+-  token in their own code paths.
+-
+-The cost is that consumer and auth must share the cookie envelope (names +
+-secret + domain), encoded in the auth app's `AUTH_APPS` registry and
+-in the consumer's own `SESSION_SECRET` env.
+-
+----
+-
+-## App Integration Registry
+-
+-`AUTH_APPS` is a JSON object keyed by **app slug**. Each entry describes one
+-integrated app:
+-
+-```jsonc
+-{
+-  "<slug>": {
+-    "sessionSecretEnv": "ORG_NEXT_SESSION_SECRET", // env name holding the shared secret
+-    // OR "sessionSecret": "<inline secret>"
+-    "allowedOrigins": ["https://org.anedot.com", "http://localhost:3210"],
+-    "cookieNames": {
+-      "auth": "authToken",
+-      "refresh": "refreshToken",
+-      "id": "idToken"
+-    },
+-    "cookieDomain": ".anedot.com", // empty for same-host localhost dev
+-    "returnToPolicy": "relative-only", // or { "allowedOrigins": [...] }
+-    "cognitoClientId": "abc..." // optional override; defaults to COGNITO_CLIENT_ID
+-  }
+-}
+-```
+-
+-Adding a new consuming app is purely a config change — no code in the auth
+-app is aware of any specific slug. All app-mode code paths take a resolved
+-`AppConfig` value and operate generically on it.
+-
+-Current first-party consumers covered by tests:
+-
+-- `org-next` on `http://localhost:3210`, with
+-  `sessionSecretEnv: "ORG_NEXT_SESSION_SECRET"`.
+-- `virtual-terminal` on `http://localhost:3211`, with
+-  `sessionSecretEnv: "VIRTUAL_TERMINAL_SESSION_SECRET"`.
+-
+-### Required environment
++## Required Environment
+ 
+ | Var | Set on | Notes |
+ |---|---|---|
+-| `AUTH_APPS` | auth | Full registry JSON. |
+-| `<sessionSecretEnv>` for each app | auth + the consuming app | At least 32 chars; must be byte-identical on both sides. |
+-| `COGNITO_CLIENT_ID` etc. | auth | Used for refresh unless an entry overrides it. |
+-
+----
++| `AUTH_SESSION_SECRET` | auth | At least 32 chars; signs app-mode state and cookies. |
++| `AUTH_SESSION_SECRET` | consuming app | Must be byte-identical to auth's `AUTH_SESSION_SECRET`. |
++| `AUTH_COOKIE_DOMAIN` | auth production | Parent domain for cross-subdomain cookies, e.g. `.anedot.com`. Omitted for localhost. |
++| `COGNITO_CLIENT_ID` etc. | auth | Used for Cognito sign-in and refresh. |
+ 
+-## Cookie envelope (the contract)
++## Cookie Envelope
+ 
+-For each registered app, the auth app writes three TanStack `useSession`
+-cookies. Each cookie is a sealed envelope keyed by the app's session secret;
+-the consuming app must read them with the same name + secret.
++Auth writes three TanStack `useSession` cookies:
+ 
+ | Cookie key | Payload | Lifetime | Notes |
+ |---|---|---|---|
+-| `cookieNames.auth` | `{ authToken: string }` | ~access token TTL | Cognito access token. Sent on backend API calls. |
+-| `cookieNames.id` | `{ idToken: string }` | ~access token TTL | Cognito id token. For client-side identity surface only — never sent to backend. |
+-| `cookieNames.refresh` | `{ refreshToken: string }` | ~30 days | Refresh token. Read only by the auth app. |
+-
+-Defaults (`authToken` / `refreshToken` / `idToken`) match what TanStack apps
+-have historically used; you can rename them per app via `cookieNames`.
++| `authToken` | `{ authToken: string }` | Access token TTL | Cognito access token. |
++| `idToken` | `{ idToken: string }` | Access token TTL | Cognito id token. |
++| `refreshToken` | `{ refreshToken: string }` | About 30 days | Read only by the auth app. |
+ 
+-The cookie attributes are fixed by the auth app:
+-`httpOnly`, `sameSite=lax`, `path=/`, `secure` in production, with
+-`domain` set to `cookieDomain` (or omitted entirely for blank domains so
+-the cookie is host-scoped — the dev default).
++Cookie attributes are fixed by auth: `httpOnly`, `sameSite=lax`, `path=/`,
++`secure` in production, and `domain=AUTH_COOKIE_DOMAIN` when configured. In
++localhost development, no domain is set; cookies are host-scoped and shared
++across ports on `localhost`.
+ 
+----
++## Authorize URL
+ 
+-## Authorize URL (`/authorize`)
+-
+-App-mode URL contract:
+-
+-```
++```text
+ GET https://auth.anedot.com/authorize
+-  ?app=<slug>
+-  &return_to=<relative path>     # validated against app's returnToPolicy
+-  &auth_state=<signed token>     # round-trip CSRF token; verified on return
+-  &state=<optional>              # opaque, echoed back unmodified if needed
+-  &debug=1                       # optional
++  ?return_to=<absolute URL>
++  &auth_state=<signed token>
++  &state=<optional>
++  &debug=1
+ ```
+ 
+-`auth_state` is signed by the consuming app with **its own session secret**
+-and verified by the auth app. The token's payload is
+-`{ slug, returnTo, nonce, iat }`; the signature is HMAC-SHA256 over the
+-base64url-encoded payload.
+-
+-### Outcomes (in order)
++`auth_state` is HMAC-SHA256 over a base64url payload:
+ 
+-1. **Unknown / malformed app slug** → redirect to `/error?reason=unknown_app`.
+-2. **`auth_state` fails verification** (bad signature, slug mismatch,
+-   expired) → redirect to `/error?reason=invalid_auth_state`.
+-3. **`return_to` violates the app's policy** →
+-   `/error?reason=invalid_return_to`.
+-4. **App's `authToken` cookie still valid** → silently redirect back to
+-   `<origin><return_to>`.
+-5. **App's `refreshToken` cookie present** → auth app silently refreshes via
+-   Cognito and, on success, redirects back to `<origin><return_to>`.
+-6. **Otherwise** → render the sign-in screen. After successful credentials,
+-   MFA, force-change-password, or confirm-sign-up, the auth app writes the
+-   three cookies and redirects to `<origin><return_to>`.
+-
+-`return_to` is always combined with the app's first `allowedOrigins` entry
+-when the policy is `relative-only`, so the consuming app cannot smuggle a
+-cross-origin destination through the parameter.
+-
+----
++```json
++{
++  "purpose": "authorize",
++  "returnTo": "http://localhost:3210/dashboard",
++  "nonce": "<uuid>",
++  "iat": 1760000000
++}
++```
+ 
+-## Logout URL (`/logout`)
++Auth requires the payload `returnTo` to exactly match the `return_to` query
++parameter, requires the purpose to be `authorize`, and rejects expired,
++tampered, or non-HTTP(S) targets.
+ 
+-App-mode URL contract:
++## Logout URL
+ 
+-```
++```text
+ GET https://auth.anedot.com/logout
+-  ?app=<slug>
+-  &return_to=<relative path>     # optional
++  ?return_to=<absolute URL>
++  &auth_state=<signed token>
+ ```
+ 
+-Behavior:
+-
+-1. **Best-effort `GlobalSignOutCommand`** against the app's stored access
+-   token. Failure here is logged but does not block local cookie clearing.
+-2. **`clearAppTokenCookies`** for the three cookies on the configured
+-   domain.
+-3. **Transaction session cleared** to remove any in-flight challenge state.
+-4. **Redirect** to the validated `<origin><return_to>` if provided, else
+-   return a `200 { signedOut: true }`.
++Logout uses the same state shape with `"purpose": "logout"`. The signed state
++is required before auth accepts the absolute `return_to` URL.
+ 
+-Just like authorize, an unknown slug or invalid `return_to` lands on the
+-generic `/error` page rather than redirecting to an unvalidated URL.
++## Refresh Endpoint
+ 
+----
++```text
++POST https://auth.anedot.com/apps/refresh
++```
+ 
+-## Refresh endpoint (`POST /apps/refresh`)
++The endpoint reads the generic `refreshToken` cookie, performs Cognito
++`REFRESH_TOKEN_AUTH`, and rewrites the three app cookies on success. On failure
++it clears the cookies and returns `401`.
+ 
+-```
+-POST https://auth.anedot.com/apps/refresh?app=<slug>
+-```
++## Consumer Responsibilities
+ 
+-The endpoint is generic and reads the named app's `refreshToken` cookie,
+-calls Cognito's `REFRESH_TOKEN_AUTH`, and rewrites the three app cookies on
+-success. On failure (missing cookie, Cognito refusal, malformed response) it
+-clears the cookies and returns `401`.
+-
+-Consuming apps generally do not need to call this endpoint directly — the
+-authorize flow performs a silent refresh first when a refresh cookie is
+-present. The endpoint exists as a stable surface for future use cases that
+-need an explicit refresh trigger.
+-
+----
+-
+-## What a consuming app must do
+-
+-A new consumer must:
+-
+-1. **Run on TanStack Start** (or use a compatible session-cookie library) so
+-   it can read the cookies the auth app writes.
+-2. **Share its `SESSION_SECRET`** with the auth app via the `sessionSecretEnv`
+-   referenced in the `AUTH_APPS` entry.
+-3. **Read `authToken`** in server-only code paths and forward it as
+-   `Authorization: Bearer <token>` to the backend API. Treat missing cookie
+-   as 401 (do not invent a fallback token).
+-4. **Sign `auth_state`** locally with `SESSION_SECRET` before redirecting to
+-   `/authorize`, and verify it on return.
+-5. **Logout** by browser-redirecting to
+-   `/logout?app=<slug>&return_to=<relative path>`.
+-6. **Document the integration** in the app's own docs and link back here.
+-
+-There is no need to call Cognito directly, exchange codes, or store refresh
+-tokens. The auth app owns those pieces.
+-
+----
+-
+-## Local development assumptions
+-
+-- Each app runs on its own `localhost` port (host-scoped cookies). Set
+-  `cookieDomain` to `""` so the cookies are scoped to the host the auth app
+-  serves on. Each consuming app has to read cookies set on its own host —
+-  the auth app must therefore run on the same hostname (different port is
+-  fine; cookies are scoped per host, not per port, in browsers).
+-- For Playwright fixtures that need an authenticated session without
+-  exercising the full sign-in flow, the consuming app can expose a
+-  test-only seed endpoint that calls its `useSession(...).update(...)`
+-  helpers directly. Production deployments must keep that endpoint
+-  unmounted (gate on an env flag).
+-
+-In production, all integrated apps must share a parent domain (e.g.
+-`*.anedot.com`) and the registry's `cookieDomain` must be set to the parent
+-(`.anedot.com`).
++1. Build absolute return URLs from the current request origin plus a safe
++   relative path.
++2. Sign authorize and logout states with `AUTH_SESSION_SECRET`.
++3. Redirect to auth with `return_to` and `auth_state`; do not send an app slug.
++4. Read `authToken`, `refreshToken`, and `idToken` with TanStack `useSession`
++   using `AUTH_SESSION_SECRET`.
++5. Treat missing or invalid cookies as unauthenticated and redirect to login.
+diff --git a/apps/auth/docs/spec.md b/apps/auth/docs/spec.md
+index 5c47b0c..eb02a63 100644
+--- a/apps/auth/docs/spec.md
++++ b/apps/auth/docs/spec.md
+@@ -27,10 +27,10 @@ the consuming app:
+    (access / refresh / id) directly; the consuming app reads them via
+    TanStack `useSession`. Refresh stays auth-owned.
+ 
+-Both modes coexist on the same `/authorize` and `/logout` URLs — they are
+-distinguished by the presence of an `app=<slug>` query parameter, which
+-selects the app from the `AUTH_APPS` registry. Everything below describes
+-the classic contract.
++Both modes coexist on the same `/authorize` and `/logout` URLs. Classic OAuth
++requests use `client_id`/`redirect_uri`; app-mode requests use signed
++`return_to`/`auth_state` parameters. Everything below describes the classic
++contract.
+ 
+ ---
+ 
+diff --git a/apps/auth/src/features/auth/contracts.test.ts b/apps/auth/src/features/auth/contracts.test.ts
+index 04aff54..71f1b31 100644
+--- a/apps/auth/src/features/auth/contracts.test.ts
++++ b/apps/auth/src/features/auth/contracts.test.ts
+@@ -35,10 +35,9 @@ describe("authorizeSearchSchema (oauth mode)", () => {
+ });
+ 
+ describe("authorizeSearchSchema (app mode)", () => {
+-  it("accepts app/return_to/auth_state without client_id/redirect_uri", () => {
++  it("accepts return_to/auth_state without client_id/redirect_uri or app", () => {
+     const result = authorizeSearchSchema.safeParse({
+-      app: "test-app",
+-      return_to: "/dashboard",
++      return_to: "http://localhost:3210/dashboard",
+       auth_state: "signed-state",
+     });
+ 
+@@ -46,23 +45,20 @@ describe("authorizeSearchSchema (app mode)", () => {
+     if (result.success) {
+       expect(isAppAuthorize(result.data)).toBe(true);
+       if (isAppAuthorize(result.data)) {
+-        expect(result.data.app).toBe("test-app");
+-        expect(result.data.return_to).toBe("/dashboard");
++        expect(result.data.return_to).toBe("http://localhost:3210/dashboard");
+       }
+     }
+   });
+ 
+   it("rejects app mode without auth_state", () => {
+     const result = authorizeSearchSchema.safeParse({
+-      app: "test-app",
+-      return_to: "/",
++      return_to: "http://localhost:3210/",
+     });
+     expect(result.success).toBe(false);
+   });
+ 
+   it("rejects app mode without return_to", () => {
+     const result = authorizeSearchSchema.safeParse({
+-      app: "test-app",
+       auth_state: "x",
+     });
+     expect(result.success).toBe(false);
+@@ -101,18 +97,21 @@ describe("logoutSearchSchema (oauth mode)", () => {
+ });
+ 
+ describe("logoutSearchSchema (app mode)", () => {
+-  it("accepts app + return_to", () => {
++  it("accepts signed return_to without app", () => {
+     const result = logoutSearchSchema.safeParse({
+-      app: "test-app",
+-      return_to: "/login?logged_out=1",
++      auth_state: "signed-state",
++      return_to: "http://localhost:3210/login?logged_out=1",
+     });
+     expect(result.success).toBe(true);
+     if (result.success) expect(isAppLogout(result.data)).toBe(true);
+   });
+ 
+-  it("accepts app without return_to", () => {
+-    const result = logoutSearchSchema.safeParse({ app: "test-app" });
++  it("does not classify logout return_to without signed state as app mode", () => {
++    const result = logoutSearchSchema.safeParse({
++      return_to: "http://localhost:3210/login?logged_out=1",
++    });
+     expect(result.success).toBe(true);
++    if (result.success) expect(isAppLogout(result.data)).toBe(false);
+   });
+ });
+ 
+diff --git a/apps/auth/src/features/auth/contracts.ts b/apps/auth/src/features/auth/contracts.ts
+index 21a42f6..7273768 100644
+--- a/apps/auth/src/features/auth/contracts.ts
++++ b/apps/auth/src/features/auth/contracts.ts
+@@ -27,7 +27,6 @@ export const oauthAuthorizeSearchSchema = z.object({
+ });
+ 
+ export const appAuthorizeSearchSchema = z.object({
+-  app: z.string().min(1),
+   auth_state: z.string().min(1),
+   debug: z.coerce.boolean().default(false),
+   return_to: z.string().min(1),
+@@ -46,7 +45,7 @@ export type AuthorizeSearch = z.infer<typeof authorizeSearchSchema>;
+ export function isAppAuthorize(
+   value: AuthorizeSearch,
+ ): value is AppAuthorizeSearch {
+-  return "app" in value && typeof value.app === "string";
++  return "auth_state" in value && typeof value.auth_state === "string";
+ }
+ 
+ export const oauthLogoutSearchSchema = z
+@@ -67,8 +66,8 @@ export const oauthLogoutSearchSchema = z
+   });
+ 
+ export const appLogoutSearchSchema = z.object({
+-  app: z.string().min(1),
+-  return_to: z.string().min(1).optional(),
++  auth_state: z.string().min(1),
++  return_to: z.string().min(1),
+ });
+ 
+ export const logoutSearchSchema = z.union([
+@@ -81,7 +80,7 @@ export type AppLogoutSearch = z.infer<typeof appLogoutSearchSchema>;
+ export type LogoutSearch = z.infer<typeof logoutSearchSchema>;
+ 
+ export function isAppLogout(value: LogoutSearch): value is AppLogoutSearch {
+-  return "app" in value && typeof value.app === "string";
++  return "auth_state" in value && typeof value.auth_state === "string";
+ }
+ 
+ export const signInInputSchema = z.object({
+diff --git a/apps/auth/src/features/auth/server-functions.ts b/apps/auth/src/features/auth/server-functions.ts
+index 027016e..1bb74d7 100644
+--- a/apps/auth/src/features/auth/server-functions.ts
++++ b/apps/auth/src/features/auth/server-functions.ts
+@@ -1,9 +1,7 @@
+ import {
+   type AppConfig,
+-  AppRegistryError,
+-  getAppRegistryDebugInfo,
++  getAppConfig,
+   pickReturnToTarget,
+-  resolveAppConfig,
+   verifyAuthState,
+ } from "@/lib/app-integration";
+ import {
+@@ -97,55 +95,11 @@ type ActiveAuthRequest =
+   | { mode: "oauth"; oauth: OauthRequestState }
+   | { mode: "app"; app: AppConfig; appRequest: AppRequestState };
+ 
+-type UnknownAppLogContext = {
+-  authStateLength?: number;
+-  authStatePresent?: boolean;
+-  debug?: boolean;
+-  operation: "authorize" | "logout" | "refresh" | "transaction_active_request";
+-  returnTo?: string;
+-  statePresent?: boolean;
+-  transactionAppRequest?: AppRequestState;
+-};
+-
+-function logUnknownAppFailure(
+-  err: AppRegistryError,
+-  requestedSlug: string,
+-  context: UnknownAppLogContext,
+-): void {
+-  console.error("[auth] app integration resolved to unknown_app", {
+-    context,
+-    failure: {
+-      message: err.message,
+-      registryReason: err.reason,
+-      userFacingReason: "unknown_app",
+-    },
+-    registry: getAppRegistryDebugInfo(requestedSlug),
+-  });
+-}
+-
+ function requireActiveRequest(
+   sessionData: Awaited<ReturnType<typeof useTransactionSession>>["data"],
+ ): ActiveAuthRequest {
+   if (sessionData.appRequest) {
+-    let app: AppConfig;
+-    try {
+-      app = resolveAppConfig(sessionData.appRequest.slug);
+-    } catch (err) {
+-      if (err instanceof AppRegistryError) {
+-        logUnknownAppFailure(err, sessionData.appRequest.slug, {
+-          debug: sessionData.appRequest.debug,
+-          operation: "transaction_active_request",
+-          returnTo: sessionData.appRequest.returnTo,
+-          statePresent: Boolean(sessionData.appRequest.state),
+-          transactionAppRequest: sessionData.appRequest,
+-        });
+-        throw redirect({
+-          to: "/error",
+-          search: { reason: "unknown_app" },
+-        });
+-      }
+-      throw err;
+-    }
++    const app = getAppConfig();
+     return { mode: "app", app, appRequest: sessionData.appRequest };
+   }
+   if (sessionData.oauthRequest) {
+@@ -157,11 +111,8 @@ function requireActiveRequest(
+   });
+ }
+ 
+-function redirectToAppReturn(
+-  app: AppConfig,
+-  appRequest: AppRequestState,
+-): never {
+-  const target = pickReturnToTarget(app, appRequest.returnTo);
++function redirectToAppReturn(appRequest: AppRequestState): never {
++  const target = pickReturnToTarget(appRequest.returnTo);
+   if (!target) {
+     throw redirect({
+       to: "/error",
+@@ -190,7 +141,7 @@ async function completeAuthSuccess(
+       });
+     }
+     await clearTransactionSession();
+-    redirectToAppReturn(active.app, active.appRequest);
++    redirectToAppReturn(active.appRequest);
+   }
+ 
+   await setAuthCookie(authResult);
+@@ -291,28 +242,12 @@ export const beginAuthorizeFn = createServerFn({ method: "GET" })
+   .inputValidator(authorizeSearchSchema)
+   .handler(async ({ data }) => {
+     if (isAppAuthorize(data)) {
+-      let app: AppConfig;
+-      try {
+-        app = resolveAppConfig(data.app);
+-      } catch (err) {
+-        if (err instanceof AppRegistryError) {
+-          logUnknownAppFailure(err, data.app, {
+-            authStateLength: data.auth_state.length,
+-            authStatePresent: Boolean(data.auth_state),
+-            debug: data.debug,
+-            operation: "authorize",
+-            returnTo: data.return_to,
+-            statePresent: Boolean(data.state),
+-          });
+-          throw redirect({
+-            to: "/error",
+-            search: { reason: "unknown_app" },
+-          });
+-        }
+-        throw err;
+-      }
++      const app = getAppConfig();
+ 
+-      const verified = verifyAuthState(app, data.auth_state);
++      const verified = verifyAuthState(app, data.auth_state, {
++        expectedPurpose: "authorize",
++        expectedReturnTo: data.return_to,
++      });
+       if (!verified.ok) {
+         throw redirect({
+           to: "/error",
+@@ -320,7 +255,7 @@ export const beginAuthorizeFn = createServerFn({ method: "GET" })
+         });
+       }
+ 
+-      const target = pickReturnToTarget(app, data.return_to);
++      const target = pickReturnToTarget(verified.payload.returnTo);
+       if (!target) {
+         throw redirect({
+           to: "/error",
+@@ -347,8 +282,7 @@ export const beginAuthorizeFn = createServerFn({ method: "GET" })
+       const txSession = await useTransactionSession();
+       await txSession.update({
+         appRequest: {
+-          slug: app.slug,
+-          returnTo: data.return_to,
++          returnTo: verified.payload.returnTo,
+           state: data.state,
+           debug: data.debug,
+         },
+@@ -569,7 +503,7 @@ export const submitSignInFn = createServerFn({ method: "POST" })
+ 
+       if (active.mode === "app") {
+         await clearTransactionSession();
+-        return redirectToAppReturn(active.app, active.appRequest);
++        return redirectToAppReturn(active.appRequest);
+       }
+ 
+       await setMockAuthCookie(data.email);
+@@ -673,7 +607,7 @@ export const submitConfirmSignUpFn = createServerFn({ method: "POST" })
+ 
+     if (active.mode === "app") {
+       await clearTransactionSession();
+-      return redirectToAppReturn(active.app, active.appRequest);
++      return redirectToAppReturn(active.appRequest);
+     }
+ 
+     await setMockAuthCookie(data.email);
+@@ -871,7 +805,7 @@ export const submitChallengeFn = createServerFn({ method: "POST" })
+ 
+       if (active.mode === "app") {
+         await clearTransactionSession();
+-        return redirectToAppReturn(active.app, active.appRequest);
++        return redirectToAppReturn(active.appRequest);
+       }
+ 
+       await setMockAuthCookie(mockEmail);
+@@ -887,21 +821,16 @@ export const beginLogoutFn = createServerFn({ method: "GET" })
+   .inputValidator(logoutSearchSchema)
+   .handler(async ({ data }) => {
+     if (isAppLogout(data)) {
+-      let app: AppConfig;
+-      try {
+-        app = resolveAppConfig(data.app);
+-      } catch (err) {
+-        if (err instanceof AppRegistryError) {
+-          logUnknownAppFailure(err, data.app, {
+-            operation: "logout",
+-            returnTo: data.return_to,
+-          });
+-          throw redirect({
+-            to: "/error",
+-            search: { reason: "unknown_app" },
+-          });
+-        }
+-        throw err;
++      const app = getAppConfig();
++      const verified = verifyAuthState(app, data.auth_state, {
++        expectedPurpose: "logout",
++        expectedReturnTo: data.return_to,
++      });
++      if (!verified.ok) {
++        throw redirect({
++          to: "/error",
++          search: { reason: "invalid_auth_state" },
++        });
+       }
+ 
+       // biome-ignore lint/correctness/useHookAtTopLevel: server function, not a React component
+@@ -924,21 +853,16 @@ export const beginLogoutFn = createServerFn({ method: "GET" })
+       const txSession = await useTransactionSession();
+       await txSession.clear();
+ 
+-      if (data.return_to) {
+-        const target = pickReturnToTarget(app, data.return_to);
+-        if (!target) {
+-          throw redirect({
+-            to: "/error",
+-            search: { reason: "invalid_return_to" },
+-          });
+-        }
+-        throw redirect({ href: target });
++      const target = pickReturnToTarget(verified.payload.returnTo);
++      if (!target) {
++        throw redirect({
++          to: "/error",
++          search: { reason: "invalid_return_to" },
++        });
+       }
+-
+-      return { signedOut: true };
++      throw redirect({ href: target });
+     }
+ 
+-    // biome-ignore lint/correctness/useHookAtTopLevel: server function, not a React component
+     const authCookie = await useAuthCookieSession();
+ 
+     if (!isMockAuthEnabled() && authCookie.data.accessToken) {
+@@ -956,7 +880,6 @@ export const beginLogoutFn = createServerFn({ method: "GET" })
+ 
+     await authCookie.clear();
+ 
+-    // biome-ignore lint/correctness/useHookAtTopLevel: server function, not a React component
+     const txSession = await useTransactionSession();
+     await txSession.clear();
+ 
+@@ -1018,7 +941,7 @@ export const handleCallbackFn = createServerFn({ method: "GET" })
+         expiresIn: tokens.expires_in,
+       });
+       await clearTransactionSession();
+-      redirectToAppReturn(active.app, active.appRequest);
++      redirectToAppReturn(active.appRequest);
+     }
+ 
+     const session = await useAuthCookieSession();
+@@ -1101,13 +1024,12 @@ async function refreshAppTokensInternal(
+   }
+ 
+   const { clientId } = getCognitoConfig();
+-  const targetClientId = app.cognitoClientId ?? clientId;
+ 
+   try {
+     const response = await getCognitoClient().send(
+       new InitiateAuthCommand({
+         AuthFlow: "REFRESH_TOKEN_AUTH",
+-        ClientId: targetClientId,
++        ClientId: clientId,
+         AuthParameters: {
+           REFRESH_TOKEN: refreshToken,
+         },
+@@ -1131,24 +1053,12 @@ async function refreshAppTokensInternal(
+   }
+ }
+ 
+-const refreshAppInputSchema = z.object({ app: z.string().min(1) });
++const refreshAppInputSchema = z.object({}).optional();
+ 
+ export const refreshAppTokensFn = createServerFn({ method: "POST" })
+   .inputValidator(refreshAppInputSchema)
+-  .handler(async ({ data }): Promise<{ ok: true }> => {
+-    let app: AppConfig;
+-    try {
+-      app = resolveAppConfig(data.app);
+-    } catch (err) {
+-      if (err instanceof AppRegistryError) {
+-        logUnknownAppFailure(err, data.app, {
+-          operation: "refresh",
+-        });
+-        throw new Response("unknown_app", { status: 401 });
+-      }
+-      throw err;
+-    }
+-
++  .handler(async (): Promise<{ ok: true }> => {
++    const app = getAppConfig();
+     const result = await refreshAppTokensInternal(app);
+     if (!result.ok) {
+       throw new Response(result.reason, { status: 401 });
+diff --git a/apps/auth/src/lib/app-integration.org-next.test.ts b/apps/auth/src/lib/app-integration.org-next.test.ts
+deleted file mode 100644
+index 9d178d2..0000000
+--- a/apps/auth/src/lib/app-integration.org-next.test.ts
++++ /dev/null
+@@ -1,64 +0,0 @@
+-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+-import { resolveAppConfig } from "./app-integration";
+-import { appSessionConfig } from "./app-token-cookies";
+-
+-const ORIGINAL_AUTH_APPS = process.env.AUTH_APPS;
+-const ORIGINAL_ORG_NEXT_SECRET = process.env.ORG_NEXT_SESSION_SECRET;
+-
+-const ORG_NEXT_SECRET = "org-next-test-secret-32-chars-min-padding";
+-
+-beforeEach(() => {
+-  process.env.ORG_NEXT_SESSION_SECRET = ORG_NEXT_SECRET;
+-  process.env.AUTH_APPS = JSON.stringify({
+-    "org-next": {
+-      sessionSecretEnv: "ORG_NEXT_SESSION_SECRET",
+-      allowedOrigins: ["http://localhost:3210"],
+-      cookieNames: {
+-        auth: "authToken",
+-        refresh: "refreshToken",
+-        id: "idToken",
+-      },
+-      cookieDomain: "",
+-    },
+-  });
+-});
+-
+-afterEach(() => {
+-  if (ORIGINAL_AUTH_APPS === undefined) {
+-    delete process.env.AUTH_APPS;
+-  } else {
+-    process.env.AUTH_APPS = ORIGINAL_AUTH_APPS;
+-  }
+-  if (ORIGINAL_ORG_NEXT_SECRET === undefined) {
+-    delete process.env.ORG_NEXT_SESSION_SECRET;
+-  } else {
+-    process.env.ORG_NEXT_SESSION_SECRET = ORIGINAL_ORG_NEXT_SECRET;
+-  }
+-});
+-
+-describe("org-next AUTH_APPS entry", () => {
+-  it("resolves to a valid AppConfig with the expected org-next defaults", () => {
+-    const app = resolveAppConfig("org-next");
+-    expect(app.slug).toBe("org-next");
+-    expect(app.allowedOrigins).toContain("http://localhost:3210");
+-    expect(app.cookieNames).toEqual({
+-      auth: "authToken",
+-      refresh: "refreshToken",
+-      id: "idToken",
+-    });
+-    expect(app.sessionSecret).toBe(ORG_NEXT_SECRET);
+-    expect(app.returnToPolicy.kind).toBe("relative-only");
+-  });
+-
+-  it("produces TanStack session configs that match what org-next reads", () => {
+-    const app = resolveAppConfig("org-next");
+-
+-    // These must match the names used in apps/org-next/src/server/session.server.ts.
+-    expect(appSessionConfig(app, "auth").name).toBe("authToken");
+-    expect(appSessionConfig(app, "refresh").name).toBe("refreshToken");
+-    expect(appSessionConfig(app, "id").name).toBe("idToken");
+-
+-    // Same shared secret on both sides so org-next can decode auth-side cookies.
+-    expect(appSessionConfig(app, "auth").password).toBe(ORG_NEXT_SECRET);
+-  });
+-});
+diff --git a/apps/auth/src/lib/app-integration.test.ts b/apps/auth/src/lib/app-integration.test.ts
+index 8929ae8..770e344 100644
+--- a/apps/auth/src/lib/app-integration.test.ts
++++ b/apps/auth/src/lib/app-integration.test.ts
+@@ -1,362 +1,188 @@
+-import { afterEach, beforeEach, describe, expect, it } from "vitest";
++import { afterEach, describe, expect, it } from "vitest";
+ import {
+-  AppRegistryError,
+-  getAppRegistryDebugInfo,
++  getAppConfig,
+   isAllowedReturnTo,
+-  listAppSlugs,
+   pickReturnToTarget,
+-  resolveAppConfig,
+   signAuthState,
+-  tryResolveAppConfig,
+   verifyAuthState,
+ } from "./app-integration";
+ 
+-const ORIGINAL_AUTH_APPS = process.env.AUTH_APPS;
+-const ORIGINAL_TEST_APP_SECRET = process.env.TEST_APP_SECRET;
++const ORIGINAL_AUTH_COOKIE_DOMAIN = process.env.AUTH_COOKIE_DOMAIN;
++const ORIGINAL_NODE_ENV = process.env.NODE_ENV;
++const ORIGINAL_SESSION_SECRET = process.env.AUTH_SESSION_SECRET;
++const ORIGINAL_MOCK_MODE = process.env.VITE_AUTH_MOCK_MODE;
+ 
+-const TEST_APP_SECRET = "x".repeat(48);
++const TEST_SECRET = "x".repeat(48);
+ 
+-const writeRegistry = (config: Record<string, unknown>) => {
+-  process.env.AUTH_APPS = JSON.stringify(config);
+-};
+-
+-beforeEach(() => {
+-  process.env.TEST_APP_SECRET = TEST_APP_SECRET;
+-  writeRegistry({
+-    "test-app": {
+-      sessionSecretEnv: "TEST_APP_SECRET",
+-      allowedOrigins: ["http://localhost:9999"],
+-      cookieNames: {
+-        auth: "authToken",
+-        refresh: "refreshToken",
+-        id: "idToken",
+-      },
+-      cookieDomain: "",
+-    },
+-  });
++afterEach(() => {
++  restore("AUTH_COOKIE_DOMAIN", ORIGINAL_AUTH_COOKIE_DOMAIN);
++  restore("AUTH_SESSION_SECRET", ORIGINAL_SESSION_SECRET);
++  restore("NODE_ENV", ORIGINAL_NODE_ENV);
++  restore("VITE_AUTH_MOCK_MODE", ORIGINAL_MOCK_MODE);
+ });
+ 
+-afterEach(() => {
+-  if (ORIGINAL_AUTH_APPS === undefined) {
+-    delete process.env.AUTH_APPS;
++function restore(key: string, original: string | undefined) {
++  if (original === undefined) {
++    delete process.env[key];
+   } else {
+-    process.env.AUTH_APPS = ORIGINAL_AUTH_APPS;
++    process.env[key] = original;
+   }
+-  if (ORIGINAL_TEST_APP_SECRET === undefined) {
+-    delete process.env.TEST_APP_SECRET;
+-  } else {
+-    process.env.TEST_APP_SECRET = ORIGINAL_TEST_APP_SECRET;
+-  }
+-});
+-
+-describe("resolveAppConfig", () => {
+-  it("returns config for a known slug", () => {
+-    const app = resolveAppConfig("test-app");
+-    expect(app.slug).toBe("test-app");
+-    expect(app.allowedOrigins).toEqual(["http://localhost:9999"]);
+-    expect(app.cookieNames).toEqual({
+-      auth: "authToken",
+-      refresh: "refreshToken",
+-      id: "idToken",
+-    });
+-    expect(app.sessionSecret).toBe(TEST_APP_SECRET);
+-    expect(app.returnToPolicy.kind).toBe("relative-only");
+-  });
+-
+-  it("throws AppRegistryError(unknown_app) for unknown slug", () => {
+-    expect(() => resolveAppConfig("missing")).toThrow(AppRegistryError);
+-    try {
+-      resolveAppConfig("missing");
+-    } catch (err) {
+-      expect((err as AppRegistryError).reason).toBe("unknown_app");
+-    }
+-  });
+-
+-  it("throws AppRegistryError(missing_env) when AUTH_APPS is unset", () => {
+-    delete process.env.AUTH_APPS;
+-    expect(() => resolveAppConfig("test-app")).toThrow(AppRegistryError);
+-  });
+-
+-  it("throws AppRegistryError(missing_secret) when sessionSecretEnv is missing", () => {
+-    delete process.env.TEST_APP_SECRET;
+-    try {
+-      resolveAppConfig("test-app");
+-      expect.unreachable("should have thrown");
+-    } catch (err) {
+-      expect((err as AppRegistryError).reason).toBe("missing_secret");
+-    }
+-  });
+-
+-  it("accepts inline sessionSecret", () => {
+-    writeRegistry({
+-      "test-app": {
+-        sessionSecret: "y".repeat(40),
+-        allowedOrigins: ["http://localhost:9999"],
+-      },
+-    });
+-    const app = resolveAppConfig("test-app");
+-    expect(app.sessionSecret).toBe("y".repeat(40));
+-  });
+-
+-  it("rejects too-short sessionSecretEnv values", () => {
+-    process.env.TEST_APP_SECRET = "too-short";
+-    try {
+-      resolveAppConfig("test-app");
+-      expect.unreachable("should have thrown");
+-    } catch (err) {
+-      expect((err as AppRegistryError).reason).toBe("missing_secret");
+-    }
+-  });
+-
+-  it("falls back to default cookie names when omitted", () => {
+-    writeRegistry({
+-      "test-app": {
+-        sessionSecretEnv: "TEST_APP_SECRET",
+-        allowedOrigins: ["http://localhost:9999"],
+-      },
+-    });
+-    expect(resolveAppConfig("test-app").cookieNames).toEqual({
+-      auth: "authToken",
+-      refresh: "refreshToken",
+-      id: "idToken",
+-    });
+-  });
+-
+-  it("supports allowed-origins return_to policy", () => {
+-    writeRegistry({
+-      "test-app": {
+-        sessionSecretEnv: "TEST_APP_SECRET",
+-        allowedOrigins: ["http://localhost:9999"],
+-        returnToPolicy: { allowedOrigins: ["http://localhost:9999"] },
+-      },
+-    });
+-    expect(resolveAppConfig("test-app").returnToPolicy).toEqual({
+-      kind: "allowed-origins",
+-      allowedOrigins: ["http://localhost:9999"],
+-    });
+-  });
+-});
+-
+-describe("tryResolveAppConfig", () => {
+-  it("returns null for unknown slug", () => {
+-    expect(tryResolveAppConfig("nope")).toBeNull();
+-  });
+-
+-  it("returns config for known slug", () => {
+-    expect(tryResolveAppConfig("test-app")).not.toBeNull();
+-  });
+-});
+-
+-describe("listAppSlugs", () => {
+-  it("lists slugs from AUTH_APPS", () => {
+-    writeRegistry({
+-      "test-app": { sessionSecretEnv: "TEST_APP_SECRET", allowedOrigins: [] },
+-      "other-app": { sessionSecret: "z".repeat(40), allowedOrigins: [] },
+-    });
+-    expect(listAppSlugs().sort()).toEqual(["other-app", "test-app"]);
+-  });
+-
+-  it("returns empty when AUTH_APPS is unset", () => {
+-    delete process.env.AUTH_APPS;
+-    expect(listAppSlugs()).toEqual([]);
+-  });
+-});
+-
+-describe("getAppRegistryDebugInfo", () => {
+-  it("describes an unknown requested slug without exposing secrets", () => {
+-    const info = getAppRegistryDebugInfo("missing");
+-
+-    expect(info).toMatchObject({
+-      authAppsEnvPresent: true,
+-      authAppsEnvParseable: true,
+-      registeredSlugs: ["test-app"],
+-      requestedSlug: "missing",
+-      requestedSlugMatched: false,
+-    });
+-    expect(info.matchedEntry).toBeUndefined();
+-  });
+-
+-  it("includes redacted matched app configuration diagnostics", () => {
+-    const info = getAppRegistryDebugInfo("test-app");
+-
+-    expect(info.matchedEntry).toMatchObject({
+-      allowedOrigins: ["http://localhost:9999"],
++}
++
++function testApp() {
++  return {
++    cookieDomain: "",
++    cookieNames: { auth: "authToken", refresh: "refreshToken", id: "idToken" },
++    sessionSecret: TEST_SECRET,
++  };
++}
++
++describe("getAppConfig", () => {
++  it("returns the generic app cookie contract", () => {
++    process.env.AUTH_SESSION_SECRET = TEST_SECRET;
++    process.env.NODE_ENV = "test";
++    delete process.env.AUTH_COOKIE_DOMAIN;
++
++    expect(getAppConfig()).toEqual({
+       cookieDomain: "",
+       cookieNames: {
+         auth: "authToken",
+         refresh: "refreshToken",
+         id: "idToken",
+       },
+-      hasInlineSessionSecret: false,
+-      sessionSecretEnv: {
+-        length: TEST_APP_SECRET.length,
+-        name: "TEST_APP_SECRET",
+-        present: true,
+-      },
+-    });
+-    expect(JSON.stringify(info)).not.toContain(TEST_APP_SECRET);
+-  });
+-
+-  it("reports invalid AUTH_APPS JSON as present but not parseable", () => {
+-    process.env.AUTH_APPS = "{not-json";
+-
+-    expect(getAppRegistryDebugInfo("test-app")).toMatchObject({
+-      authAppsEnvPresent: true,
+-      authAppsEnvParseable: false,
+-      registeredSlugs: [],
+-      requestedSlugMatched: false,
++      sessionSecret: TEST_SECRET,
+     });
+   });
+-});
+-
+-describe("isAllowedReturnTo (relative-only)", () => {
+-  const app = () => resolveAppConfig("test-app");
+-
+-  it("accepts simple relative paths", () => {
+-    expect(isAllowedReturnTo(app(), "/")).toBe(true);
+-    expect(isAllowedReturnTo(app(), "/home")).toBe(true);
+-    expect(isAllowedReturnTo(app(), "/path/with?query=1")).toBe(true);
+-  });
+-
+-  it("rejects protocol-relative URLs", () => {
+-    expect(isAllowedReturnTo(app(), "//evil.com/path")).toBe(false);
+-  });
+ 
+-  it("rejects backslashes anywhere", () => {
+-    expect(isAllowedReturnTo(app(), "/\\evil")).toBe(false);
+-    expect(isAllowedReturnTo(app(), "/path\\to")).toBe(false);
+-  });
+-
+-  it("rejects paths that do not start with /", () => {
+-    expect(isAllowedReturnTo(app(), "home")).toBe(false);
+-    expect(isAllowedReturnTo(app(), "https://example.com/home")).toBe(false);
+-  });
++  it("uses the auth cookie domain as the global app cookie domain", () => {
++    process.env.AUTH_SESSION_SECRET = TEST_SECRET;
++    process.env.AUTH_COOKIE_DOMAIN = ".anedot.com";
+ 
+-  it("rejects empty values", () => {
+-    expect(isAllowedReturnTo(app(), "")).toBe(false);
++    expect(getAppConfig().cookieDomain).toBe(".anedot.com");
+   });
+ });
+ 
+-describe("isAllowedReturnTo (allowed-origins)", () => {
+-  beforeEach(() => {
+-    writeRegistry({
+-      "test-app": {
+-        sessionSecretEnv: "TEST_APP_SECRET",
+-        allowedOrigins: ["http://localhost:9999"],
+-        returnToPolicy: { allowedOrigins: ["http://localhost:9999"] },
+-      },
+-    });
+-  });
+-
+-  it("accepts URLs whose origin is allowed", () => {
+-    expect(
+-      isAllowedReturnTo(
+-        resolveAppConfig("test-app"),
+-        "http://localhost:9999/path",
+-      ),
+-    ).toBe(true);
++describe("isAllowedReturnTo", () => {
++  it("accepts absolute http and https return URLs", () => {
++    expect(isAllowedReturnTo("http://localhost:3210/dashboard")).toBe(true);
++    expect(isAllowedReturnTo("https://org.anedot.com/dashboard")).toBe(true);
+   });
+ 
+-  it("rejects other origins", () => {
+-    expect(
+-      isAllowedReturnTo(resolveAppConfig("test-app"), "https://evil.com/"),
+-    ).toBe(false);
+-  });
+-
+-  it("rejects malformed URLs", () => {
+-    expect(isAllowedReturnTo(resolveAppConfig("test-app"), "not-a-url")).toBe(
+-      false,
+-    );
++  it("rejects relative, protocol-relative, and non-web return URLs", () => {
++    expect(isAllowedReturnTo("/dashboard")).toBe(false);
++    expect(isAllowedReturnTo("//evil.com/dashboard")).toBe(false);
++    expect(isAllowedReturnTo("javascript:alert(1)")).toBe(false);
++    expect(isAllowedReturnTo("not-a-url")).toBe(false);
+   });
+ });
+ 
+ describe("pickReturnToTarget", () => {
+-  it("prepends first allowed origin for relative-only policy", () => {
+-    expect(pickReturnToTarget(resolveAppConfig("test-app"), "/dashboard")).toBe(
+-      "http://localhost:9999/dashboard",
++  it("returns valid absolute URLs as-is", () => {
++    expect(pickReturnToTarget("http://localhost:3210/dashboard")).toBe(
++      "http://localhost:3210/dashboard",
+     );
+   });
+ 
+-  it("returns absolute URL as-is for allowed-origins policy", () => {
+-    writeRegistry({
+-      "test-app": {
+-        sessionSecretEnv: "TEST_APP_SECRET",
+-        allowedOrigins: ["http://localhost:9999"],
+-        returnToPolicy: { allowedOrigins: ["http://localhost:9999"] },
+-      },
+-    });
+-    expect(
+-      pickReturnToTarget(
+-        resolveAppConfig("test-app"),
+-        "http://localhost:9999/x",
+-      ),
+-    ).toBe("http://localhost:9999/x");
+-  });
+-
+   it("returns null when return_to is invalid", () => {
+-    expect(
+-      pickReturnToTarget(resolveAppConfig("test-app"), "//bad"),
+-    ).toBeNull();
++    expect(pickReturnToTarget("/dashboard")).toBeNull();
+   });
+ });
+ 
+ describe("signAuthState / verifyAuthState", () => {
+-  it("round-trips a valid token", () => {
+-    const app = resolveAppConfig("test-app");
+-    const token = signAuthState(app, { slug: app.slug, returnTo: "/home" });
+-    const result = verifyAuthState(app, token);
++  it("round-trips a valid authorize token", () => {
++    const app = testApp();
++    const returnTo = "http://localhost:3210/home";
++    const token = signAuthState(app, { purpose: "authorize", returnTo });
++    const result = verifyAuthState(app, token, {
++      expectedPurpose: "authorize",
++      expectedReturnTo: returnTo,
++    });
++
+     expect(result.ok).toBe(true);
+     if (result.ok) {
+-      expect(result.payload.slug).toBe("test-app");
+-      expect(result.payload.returnTo).toBe("/home");
++      expect(result.payload.purpose).toBe("authorize");
++      expect(result.payload.returnTo).toBe(returnTo);
+       expect(result.payload.nonce).toMatch(/[0-9a-f-]+/);
+     }
+   });
+ 
++  it("round-trips a valid logout token", () => {
++    const app = testApp();
++    const returnTo = "http://localhost:3210/login?logged_out=1";
++    const token = signAuthState(app, { purpose: "logout", returnTo });
++    const result = verifyAuthState(app, token, {
++      expectedPurpose: "logout",
++      expectedReturnTo: returnTo,
++    });
++
++    expect(result.ok).toBe(true);
++  });
++
+   it("rejects tampered tokens", () => {
+-    const app = resolveAppConfig("test-app");
+-    const token = signAuthState(app, { slug: app.slug, returnTo: "/home" });
++    const app = testApp();
++    const token = signAuthState(app, {
++      purpose: "authorize",
++      returnTo: "http://localhost:3210/home",
++    });
+     const [body, sig] = token.split(".");
+-    const tampered = `${body}A.${sig}`;
+-    const result = verifyAuthState(app, tampered);
++    const result = verifyAuthState(app, `${body}A.${sig}`);
++
+     expect(result.ok).toBe(false);
+     if (!result.ok) expect(result.reason).toBe("bad_signature");
+   });
+ 
+   it("rejects wrong-secret signatures", () => {
+-    const app = resolveAppConfig("test-app");
+-    const token = signAuthState(app, { slug: app.slug, returnTo: "/home" });
+-    const otherApp = { ...app, sessionSecret: "q".repeat(40) };
+-    const result = verifyAuthState(otherApp, token);
++    const app = testApp();
++    const token = signAuthState(app, {
++      purpose: "authorize",
++      returnTo: "http://localhost:3210/home",
++    });
++    const result = verifyAuthState(
++      { ...app, sessionSecret: "q".repeat(40) },
++      token,
++    );
++
+     expect(result.ok).toBe(false);
+     if (!result.ok) expect(result.reason).toBe("bad_signature");
+   });
+ 
+-  it("rejects mismatched slugs (same secret, different slug)", () => {
+-    const app = resolveAppConfig("test-app");
+-    const token = signAuthState(app, { slug: app.slug, returnTo: "/home" });
+-    const otherApp = { ...app, slug: "other" };
+-    const result = verifyAuthState(otherApp, token);
++  it("rejects purpose mismatches", () => {
++    const app = testApp();
++    const token = signAuthState(app, {
++      purpose: "authorize",
++      returnTo: "http://localhost:3210/home",
++    });
++    const result = verifyAuthState(app, token, { expectedPurpose: "logout" });
++
++    expect(result.ok).toBe(false);
++    if (!result.ok) expect(result.reason).toBe("purpose_mismatch");
++  });
++
++  it("rejects return_to mismatches", () => {
++    const app = testApp();
++    const token = signAuthState(app, {
++      purpose: "authorize",
++      returnTo: "http://localhost:3210/home",
++    });
++    const result = verifyAuthState(app, token, {
++      expectedReturnTo: "http://localhost:3210/other",
++    });
++
+     expect(result.ok).toBe(false);
+-    if (!result.ok) expect(result.reason).toBe("slug_mismatch");
++    if (!result.ok) expect(result.reason).toBe("invalid_payload");
+   });
+ 
+   it("rejects expired tokens", () => {
+-    const app = resolveAppConfig("test-app");
++    const app = testApp();
+     const past = Math.floor(Date.now() / 1000) - 999_999;
+     const token = signAuthState(app, {
+-      slug: app.slug,
+-      returnTo: "/home",
++      purpose: "authorize",
++      returnTo: "http://localhost:3210/home",
+       iat: past,
+     });
+     const result = verifyAuthState(app, token);
++
+     expect(result.ok).toBe(false);
+     if (!result.ok) expect(result.reason).toBe("expired");
+   });
+-
+-  it("rejects malformed tokens", () => {
+-    const app = resolveAppConfig("test-app");
+-    expect(verifyAuthState(app, "not-a-token").ok).toBe(false);
+-    expect(verifyAuthState(app, "").ok).toBe(false);
+-  });
+ });
+diff --git a/apps/auth/src/lib/app-integration.ts b/apps/auth/src/lib/app-integration.ts
+index b2ae25a..84e6aee 100644
+--- a/apps/auth/src/lib/app-integration.ts
++++ b/apps/auth/src/lib/app-integration.ts
+@@ -1,8 +1,5 @@
+ import { createHmac, randomUUID, timingSafeEqual } from "node:crypto";
+-
+-export type ReturnToPolicy =
+-  | { kind: "relative-only" }
+-  | { kind: "allowed-origins"; allowedOrigins: string[] };
++import { getAuthCookieDomain, getSessionSecret } from "./env";
+ 
+ export type AppCookieNames = {
+   auth: string;
+@@ -11,46 +8,12 @@ export type AppCookieNames = {
+ };
+ 
+ export type AppConfig = {
+-  slug: string;
+-  allowedOrigins: string[];
+-  returnToPolicy: ReturnToPolicy;
+   cookieNames: AppCookieNames;
+   cookieDomain: string;
+   sessionSecret: string;
+-  cognitoClientId?: string;
+-};
+-
+-type RawAppEntry = {
+-  allowedOrigins?: unknown;
+-  returnToPolicy?: unknown;
+-  cookieNames?: unknown;
+-  cookieDomain?: unknown;
+-  sessionSecret?: unknown;
+-  sessionSecretEnv?: unknown;
+-  cognitoClientId?: unknown;
+ };
+ 
+-export type AppRegistryDebugInfo = {
+-  authAppsEnvLength: number;
+-  authAppsEnvPresent: boolean;
+-  authAppsEnvParseable: boolean;
+-  matchedEntry?: {
+-    allowedOrigins: string[];
+-    cognitoClientIdPresent: boolean;
+-    cookieDomain: string | null;
+-    cookieNames: AppCookieNames;
+-    hasInlineSessionSecret: boolean;
+-    returnToPolicy: ReturnToPolicy;
+-    sessionSecretEnv?: {
+-      length: number;
+-      name: string;
+-      present: boolean;
+-    };
+-  };
+-  registeredSlugs: string[];
+-  requestedSlug: string;
+-  requestedSlugMatched: boolean;
+-};
++export type AppAuthStatePurpose = "authorize" | "logout";
+ 
+ const DEFAULT_COOKIE_NAMES: AppCookieNames = {
+   auth: "authToken",
+@@ -60,288 +23,32 @@ const DEFAULT_COOKIE_NAMES: AppCookieNames = {
+ 
+ const AUTH_STATE_TTL_SECONDS = 600;
+ 
+-export class AppRegistryError extends Error {
+-  readonly reason:
+-    | "missing_env"
+-    | "invalid_json"
+-    | "unknown_app"
+-    | "missing_secret";
+-
+-  constructor(reason: AppRegistryError["reason"], message: string) {
+-    super(message);
+-    this.name = "AppRegistryError";
+-    this.reason = reason;
+-  }
+-}
+-
+-function parseRegistryEnv(): Record<string, RawAppEntry> | null {
+-  const raw = process.env.AUTH_APPS?.trim();
+-  if (!raw) return null;
+-
+-  const tryParse = (value: string): unknown => {
+-    try {
+-      return JSON.parse(value);
+-    } catch {
+-      return undefined;
+-    }
+-  };
+-
+-  let parsed = tryParse(raw);
+-  if (typeof parsed === "string") {
+-    parsed = tryParse(parsed);
+-  }
+-  if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+-    return parsed as Record<string, RawAppEntry>;
+-  }
+-
+-  const trimmed = raw.trim();
+-  if (trimmed.startsWith("'") && trimmed.endsWith("'")) {
+-    const unwrapped = tryParse(trimmed.slice(1, -1));
+-    if (
+-      unwrapped &&
+-      typeof unwrapped === "object" &&
+-      !Array.isArray(unwrapped)
+-    ) {
+-      return unwrapped as Record<string, RawAppEntry>;
+-    }
+-  }
+-
+-  const escaped = tryParse(raw.replace(/\\"/g, '"'));
+-  if (escaped && typeof escaped === "object" && !Array.isArray(escaped)) {
+-    return escaped as Record<string, RawAppEntry>;
+-  }
+-
+-  return null;
+-}
+-
+-function asStringArray(value: unknown): string[] {
+-  if (!Array.isArray(value)) return [];
+-  return value.filter((item): item is string => typeof item === "string");
+-}
+-
+-function normalizeOrigin(origin: string): string | null {
+-  try {
+-    const url = new URL(origin);
+-    return url.origin;
+-  } catch {
+-    return null;
+-  }
+-}
+-
+-function parseReturnToPolicy(raw: unknown): ReturnToPolicy {
+-  if (raw === undefined || raw === null || raw === "relative-only") {
+-    return { kind: "relative-only" };
+-  }
+-  if (typeof raw === "object" && raw !== null) {
+-    const candidate = raw as { allowedOrigins?: unknown };
+-    const origins = asStringArray(candidate.allowedOrigins)
+-      .map(normalizeOrigin)
+-      .filter((origin): origin is string => origin !== null);
+-    if (origins.length > 0) {
+-      return { kind: "allowed-origins", allowedOrigins: origins };
+-    }
+-  }
+-  return { kind: "relative-only" };
+-}
+-
+-function parseCookieNames(raw: unknown): AppCookieNames {
+-  if (typeof raw !== "object" || raw === null) {
+-    return { ...DEFAULT_COOKIE_NAMES };
+-  }
+-  const candidate = raw as Partial<AppCookieNames>;
++export function getAppConfig(): AppConfig {
+   return {
+-    auth:
+-      typeof candidate.auth === "string" && candidate.auth
+-        ? candidate.auth
+-        : DEFAULT_COOKIE_NAMES.auth,
+-    refresh:
+-      typeof candidate.refresh === "string" && candidate.refresh
+-        ? candidate.refresh
+-        : DEFAULT_COOKIE_NAMES.refresh,
+-    id:
+-      typeof candidate.id === "string" && candidate.id
+-        ? candidate.id
+-        : DEFAULT_COOKIE_NAMES.id,
++    cookieDomain: getAuthCookieDomain() ?? "",
++    cookieNames: { ...DEFAULT_COOKIE_NAMES },
++    sessionSecret: getSessionSecret(),
+   };
+ }
+ 
+-function resolveSessionSecret(entry: RawAppEntry, slug: string): string {
+-  if (typeof entry.sessionSecret === "string" && entry.sessionSecret.trim()) {
+-    return entry.sessionSecret.trim();
+-  }
+-  if (
+-    typeof entry.sessionSecretEnv === "string" &&
+-    entry.sessionSecretEnv.trim()
+-  ) {
+-    const envName = entry.sessionSecretEnv.trim();
+-    const value = process.env[envName]?.trim();
+-    if (!value) {
+-      throw new AppRegistryError(
+-        "missing_secret",
+-        `Missing env var ${envName} referenced by AUTH_APPS["${slug}"].sessionSecretEnv.`,
+-      );
+-    }
+-    if (value.length < 32) {
+-      throw new AppRegistryError(
+-        "missing_secret",
+-        `Env var ${envName} must be at least 32 characters long.`,
+-      );
+-    }
+-    return value;
+-  }
+-  throw new AppRegistryError(
+-    "missing_secret",
+-    `AUTH_APPS["${slug}"] must specify either sessionSecret or sessionSecretEnv.`,
+-  );
+-}
+-
+-function buildAppConfig(slug: string, entry: RawAppEntry): AppConfig {
+-  const allowedOrigins = asStringArray(entry.allowedOrigins)
+-    .map(normalizeOrigin)
+-    .filter((origin): origin is string => origin !== null);
+-
+-  const returnToPolicy = parseReturnToPolicy(entry.returnToPolicy);
+-  const cookieNames = parseCookieNames(entry.cookieNames);
+-  const cookieDomain =
+-    typeof entry.cookieDomain === "string" ? entry.cookieDomain : "";
+-  const sessionSecret = resolveSessionSecret(entry, slug);
+-  const cognitoClientId =
+-    typeof entry.cognitoClientId === "string" && entry.cognitoClientId
+-      ? entry.cognitoClientId
+-      : undefined;
+-
+-  return {
+-    slug,
+-    allowedOrigins,
+-    returnToPolicy,
+-    cookieNames,
+-    cookieDomain,
+-    sessionSecret,
+-    cognitoClientId,
+-  };
+-}
+-
+-export function listAppSlugs(): string[] {
+-  const registry = parseRegistryEnv();
+-  if (!registry) return [];
+-  return Object.keys(registry);
+-}
+-
+-export function getAppRegistryDebugInfo(slug: string): AppRegistryDebugInfo {
+-  const raw = process.env.AUTH_APPS?.trim();
+-  const registry = parseRegistryEnv();
+-  const entry =
+-    registry && typeof registry[slug] === "object" && registry[slug] !== null
+-      ? registry[slug]
+-      : null;
+-
+-  const sessionSecretEnv =
+-    typeof entry?.sessionSecretEnv === "string" && entry.sessionSecretEnv.trim()
+-      ? entry.sessionSecretEnv.trim()
+-      : null;
+-  const matchedEntry = entry
+-    ? {
+-        allowedOrigins: asStringArray(entry.allowedOrigins)
+-          .map(normalizeOrigin)
+-          .filter((origin): origin is string => origin !== null),
+-        cognitoClientIdPresent:
+-          typeof entry.cognitoClientId === "string" &&
+-          entry.cognitoClientId.length > 0,
+-        cookieDomain:
+-          typeof entry.cookieDomain === "string" ? entry.cookieDomain : null,
+-        cookieNames: parseCookieNames(entry.cookieNames),
+-        hasInlineSessionSecret:
+-          typeof entry.sessionSecret === "string" &&
+-          entry.sessionSecret.length > 0,
+-        returnToPolicy: parseReturnToPolicy(entry.returnToPolicy),
+-        ...(sessionSecretEnv
+-          ? {
+-              sessionSecretEnv: {
+-                length: process.env[sessionSecretEnv]?.length ?? 0,
+-                name: sessionSecretEnv,
+-                present: Boolean(process.env[sessionSecretEnv]),
+-              },
+-            }
+-          : {}),
+-      }
+-    : undefined;
+-
+-  return {
+-    authAppsEnvLength: raw?.length ?? 0,
+-    authAppsEnvPresent: Boolean(raw),
+-    authAppsEnvParseable: registry !== null,
+-    matchedEntry,
+-    registeredSlugs: registry ? Object.keys(registry) : [],
+-    requestedSlug: slug,
+-    requestedSlugMatched: Boolean(entry),
+-  };
+-}
+-
+-export function resolveAppConfig(slug: string): AppConfig {
+-  const registry = parseRegistryEnv();
+-  if (!registry) {
+-    throw new AppRegistryError(
+-      "missing_env",
+-      "AUTH_APPS env var is not set; no app integrations are configured.",
+-    );
+-  }
+-  const entry = registry[slug];
+-  if (!entry || typeof entry !== "object") {
+-    throw new AppRegistryError(
+-      "unknown_app",
+-      `Unknown app slug "${slug}" — not present in AUTH_APPS.`,
+-    );
+-  }
+-  return buildAppConfig(slug, entry);
+-}
+-
+-export function tryResolveAppConfig(slug: string): AppConfig | null {
+-  try {
+-    return resolveAppConfig(slug);
+-  } catch (err) {
+-    if (err instanceof AppRegistryError) {
+-      return null;
+-    }
+-    throw err;
+-  }
+-}
+-
+-export function isAllowedReturnTo(app: AppConfig, value: string): boolean {
++export function isAllowedReturnTo(value: string): boolean {
+   if (typeof value !== "string" || value.length === 0) return false;
+ 
+-  if (app.returnToPolicy.kind === "relative-only") {
+-    if (!value.startsWith("/")) return false;
+-    if (value.startsWith("//")) return false;
+-    if (value.startsWith("/\\")) return false;
+-    if (value.includes("\\")) return false;
+-    return true;
+-  }
+-
+   try {
+     const url = new URL(value);
+-    return app.returnToPolicy.allowedOrigins.includes(url.origin);
++    return url.protocol === "http:" || url.protocol === "https:";
+   } catch {
+     return false;
+   }
+ }
+ 
+-export function pickReturnToTarget(
+-  app: AppConfig,
+-  returnTo: string,
+-): string | null {
+-  if (!isAllowedReturnTo(app, returnTo)) return null;
+-
+-  if (app.returnToPolicy.kind === "allowed-origins") {
+-    return returnTo;
+-  }
+-
+-  const origin = app.allowedOrigins[0];
+-  if (!origin) return null;
+-  return `${origin}${returnTo}`;
++export function pickReturnToTarget(returnTo: string): string | null {
++  if (!isAllowedReturnTo(returnTo)) return null;
++  return returnTo;
+ }
+ 
+ export type AuthStatePayload = {
+-  slug: string;
++  purpose: AppAuthStatePurpose;
+   returnTo: string;
+   nonce: string;
+   iat: number;
+@@ -361,16 +68,13 @@ function hmacSign(secret: string, data: string): string {
+ 
+ export function signAuthState(
+   app: AppConfig,
+-  payload: Omit<AuthStatePayload, "iat" | "nonce"> & {
++  payload: Pick<AuthStatePayload, "purpose" | "returnTo"> & {
+     nonce?: string;
+     iat?: number;
+   },
+ ): string {
+-  if (payload.slug !== app.slug) {
+-    throw new Error("auth_state slug does not match app slug.");
+-  }
+   const fullPayload: AuthStatePayload = {
+-    slug: payload.slug,
++    purpose: payload.purpose,
+     returnTo: payload.returnTo,
+     nonce: payload.nonce ?? randomUUID(),
+     iat: payload.iat ?? Math.floor(Date.now() / 1000),
+@@ -387,7 +91,7 @@ export type VerifyAuthStateResult =
+       reason:
+         | "malformed"
+         | "bad_signature"
+-        | "slug_mismatch"
++        | "purpose_mismatch"
+         | "expired"
+         | "invalid_payload";
+     };
+@@ -395,7 +99,12 @@ export type VerifyAuthStateResult =
+ export function verifyAuthState(
+   app: AppConfig,
+   token: string,
+-  options: { nowSeconds?: number; maxAgeSeconds?: number } = {},
++  options: {
++    expectedPurpose?: AppAuthStatePurpose;
++    expectedReturnTo?: string;
++    nowSeconds?: number;
++    maxAgeSeconds?: number;
++  } = {},
+ ): VerifyAuthStateResult {
+   if (typeof token !== "string" || token.length === 0) {
+     return { ok: false, reason: "malformed" };
+@@ -418,7 +127,7 @@ export function verifyAuthState(
+     if (
+       !decoded ||
+       typeof decoded !== "object" ||
+-      typeof decoded.slug !== "string" ||
++      (decoded.purpose !== "authorize" && decoded.purpose !== "logout") ||
+       typeof decoded.returnTo !== "string" ||
+       typeof decoded.nonce !== "string" ||
+       typeof decoded.iat !== "number"
+@@ -430,8 +139,14 @@ export function verifyAuthState(
+     return { ok: false, reason: "invalid_payload" };
+   }
+ 
+-  if (payload.slug !== app.slug) {
+-    return { ok: false, reason: "slug_mismatch" };
++  if (options.expectedPurpose && payload.purpose !== options.expectedPurpose) {
++    return { ok: false, reason: "purpose_mismatch" };
++  }
++  if (
++    options.expectedReturnTo !== undefined &&
++    payload.returnTo !== options.expectedReturnTo
++  ) {
++    return { ok: false, reason: "invalid_payload" };
+   }
+   const now = options.nowSeconds ?? Math.floor(Date.now() / 1000);
+   const maxAge = options.maxAgeSeconds ?? AUTH_STATE_TTL_SECONDS;
+diff --git a/apps/auth/src/lib/app-integration.virtual-terminal.test.ts b/apps/auth/src/lib/app-integration.virtual-terminal.test.ts
+deleted file mode 100644
+index 69e9d38..0000000
+--- a/apps/auth/src/lib/app-integration.virtual-terminal.test.ts
++++ /dev/null
+@@ -1,66 +0,0 @@
+-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+-import { resolveAppConfig } from "./app-integration";
+-import { appSessionConfig } from "./app-token-cookies";
+-
+-const ORIGINAL_AUTH_APPS = process.env.AUTH_APPS;
+-const ORIGINAL_VIRTUAL_TERMINAL_SECRET =
+-  process.env.VIRTUAL_TERMINAL_SESSION_SECRET;
+-
+-const VIRTUAL_TERMINAL_SECRET =
+-  "virtual-terminal-test-secret-32-chars-min-padding";
+-
+-beforeEach(() => {
+-  process.env.VIRTUAL_TERMINAL_SESSION_SECRET = VIRTUAL_TERMINAL_SECRET;
+-  process.env.AUTH_APPS = JSON.stringify({
+-    "virtual-terminal": {
+-      sessionSecretEnv: "VIRTUAL_TERMINAL_SESSION_SECRET",
+-      allowedOrigins: ["http://localhost:3211"],
+-      cookieNames: {
+-        auth: "authToken",
+-        refresh: "refreshToken",
+-        id: "idToken",
+-      },
+-      cookieDomain: "",
+-    },
+-  });
+-});
+-
+-afterEach(() => {
+-  if (ORIGINAL_AUTH_APPS === undefined) {
+-    delete process.env.AUTH_APPS;
+-  } else {
+-    process.env.AUTH_APPS = ORIGINAL_AUTH_APPS;
+-  }
+-  if (ORIGINAL_VIRTUAL_TERMINAL_SECRET === undefined) {
+-    delete process.env.VIRTUAL_TERMINAL_SESSION_SECRET;
+-  } else {
+-    process.env.VIRTUAL_TERMINAL_SESSION_SECRET =
+-      ORIGINAL_VIRTUAL_TERMINAL_SECRET;
+-  }
+-});
+-
+-describe("virtual-terminal AUTH_APPS entry", () => {
+-  it("resolves to a valid AppConfig with the expected virtual-terminal defaults", () => {
+-    const app = resolveAppConfig("virtual-terminal");
+-    expect(app.slug).toBe("virtual-terminal");
+-    expect(app.allowedOrigins).toContain("http://localhost:3211");
+-    expect(app.cookieNames).toEqual({
+-      auth: "authToken",
+-      refresh: "refreshToken",
+-      id: "idToken",
+-    });
+-    expect(app.sessionSecret).toBe(VIRTUAL_TERMINAL_SECRET);
+-    expect(app.returnToPolicy.kind).toBe("relative-only");
+-  });
+-
+-  it("produces TanStack session configs that match what virtual-terminal reads", () => {
+-    const app = resolveAppConfig("virtual-terminal");
+-
+-    expect(appSessionConfig(app, "auth").name).toBe("authToken");
+-    expect(appSessionConfig(app, "refresh").name).toBe("refreshToken");
+-    expect(appSessionConfig(app, "id").name).toBe("idToken");
+-    expect(appSessionConfig(app, "auth").password).toBe(
+-      VIRTUAL_TERMINAL_SECRET,
+-    );
+-  });
+-});
+diff --git a/apps/auth/src/lib/app-token-cookies.test.ts b/apps/auth/src/lib/app-token-cookies.test.ts
+index 50c15e5..e9ec46e 100644
+--- a/apps/auth/src/lib/app-token-cookies.test.ts
++++ b/apps/auth/src/lib/app-token-cookies.test.ts
+@@ -19,9 +19,6 @@ afterEach(() => {
+ });
+ 
+ const baseApp: AppConfig = {
+-  slug: "test-app",
+-  allowedOrigins: ["http://localhost:9999"],
+-  returnToPolicy: { kind: "relative-only" },
+   cookieNames: { auth: "authToken", refresh: "refreshToken", id: "idToken" },
+   cookieDomain: "",
+   sessionSecret: "x".repeat(48),
+diff --git a/apps/auth/src/lib/session.ts b/apps/auth/src/lib/session.ts
+index f0953dc..f77b20b 100644
+--- a/apps/auth/src/lib/session.ts
++++ b/apps/auth/src/lib/session.ts
+@@ -19,7 +19,6 @@ export type OauthRequestState = {
+ };
+ 
+ export type AppRequestState = {
+-  slug: string;
+   returnTo: string;
+   state?: string;
+   debug?: boolean;
+diff --git a/apps/auth/src/routes/apps.refresh.tsx b/apps/auth/src/routes/apps.refresh.tsx
+index 4e31c43..19ba0a7 100644
+--- a/apps/auth/src/routes/apps.refresh.tsx
++++ b/apps/auth/src/routes/apps.refresh.tsx
+@@ -1,19 +1,9 @@
+ import { refreshAppTokensFn } from "@/features/auth/server-functions";
+ import { createFileRoute } from "@tanstack/react-router";
+-import { z } from "zod";
+-
+-const searchSchema = z.object({
+-  app: z.string().min(1),
+-});
+ 
+ export const Route = createFileRoute("/apps/refresh")({
+   component: AppsRefreshRoute,
+-  validateSearch: (search: Record<string, unknown>) =>
+-    searchSchema.parse(search),
+-  loader: async ({ location }) => {
+-    const parsed = searchSchema.parse(location.search);
+-    return refreshAppTokensFn({ data: { app: parsed.app } });
+-  },
++  loader: async () => refreshAppTokensFn({ data: {} }),
+ });
+ 
+ function AppsRefreshRoute() {
+diff --git a/apps/auth/tests/integration/app-mode.spec.ts b/apps/auth/tests/integration/app-mode.spec.ts
+index d315a3a..12777a2 100644
+--- a/apps/auth/tests/integration/app-mode.spec.ts
++++ b/apps/auth/tests/integration/app-mode.spec.ts
+@@ -5,7 +5,6 @@ import {
+   signTestAppAuthState,
+   submitSignIn,
+   testAppOrigin,
+-  testAppSlug,
+ } from "./helpers";
+ 
+ test.describe("app-mode authorize", () => {
+@@ -15,14 +14,14 @@ test.describe("app-mode authorize", () => {
+     await expect(page.getByLabel("Email")).toBeVisible();
+   });
+ 
+-  test("rejects unknown app slug", async ({ page }) => {
++  test("rejects unsigned return_to values", async ({ page }) => {
++    const returnTo = `${testAppOrigin}/dashboard`;
+     const search = new URLSearchParams({
+-      app: "not-registered",
+-      return_to: "/dashboard",
+-      auth_state: signTestAppAuthState("/dashboard"),
++      return_to: returnTo,
++      auth_state: signTestAppAuthState(`${testAppOrigin}/other`),
+     });
+     await page.goto(`/authorize?${search.toString()}`);
+-    await expect(page).toHaveURL(/\/error.*reason=unknown_app/);
++    await expect(page).toHaveURL(/\/error.*reason=invalid_auth_state/);
+   });
+ 
+   test("rejects tampered auth_state", async ({ page }) => {
+@@ -30,8 +29,7 @@ test.describe("app-mode authorize", () => {
+     const [body, sig] = valid.split(".");
+     const tampered = `${body}A.${sig}`;
+     const search = new URLSearchParams({
+-      app: testAppSlug,
+-      return_to: "/dashboard",
++      return_to: `${testAppOrigin}/dashboard`,
+       auth_state: tampered,
+     });
+     await page.goto(`/authorize?${search.toString()}`);
+@@ -40,7 +38,6 @@ test.describe("app-mode authorize", () => {
+ 
+   test("rejects protocol-relative return_to", async ({ page }) => {
+     const search = new URLSearchParams({
+-      app: testAppSlug,
+       return_to: "//evil.com/path",
+       auth_state: signTestAppAuthState("//evil.com/path"),
+     });
+@@ -61,9 +58,10 @@ test.describe("app-mode authorize", () => {
+   test("logout in app mode redirects to validated return_to", async ({
+     request,
+   }) => {
++    const returnTo = `${testAppOrigin}/login?logged_out=1`;
+     const search = new URLSearchParams({
+-      app: testAppSlug,
+-      return_to: "/login?logged_out=1",
++      return_to: returnTo,
++      auth_state: signTestAppAuthState(returnTo, { purpose: "logout" }),
+     });
+     const response = await request.get(`/logout?${search.toString()}`, {
+       maxRedirects: 0,
+diff --git a/apps/auth/tests/integration/helpers.ts b/apps/auth/tests/integration/helpers.ts
+index deeba46..4a31f2f 100644
+--- a/apps/auth/tests/integration/helpers.ts
++++ b/apps/auth/tests/integration/helpers.ts
+@@ -124,7 +124,6 @@ export async function mockClientRedirect(page: Page) {
+   }
+ }
+ 
+-const TEST_APP_SLUG = "test-app";
+ const TEST_APP_ALLOWED_ORIGIN = "http://localhost:3210";
+ 
+ function base64url(value: string | Buffer): string {
+@@ -132,20 +131,19 @@ function base64url(value: string | Buffer): string {
+ }
+ 
+ function getTestAppSecret(): string {
+-  const secret = process.env.TEST_APP_SECRET;
++  const secret = process.env.AUTH_SESSION_SECRET;
+   if (!secret || secret.length < 32) {
+-    throw new Error("TEST_APP_SECRET is not set or too short for tests.");
++    throw new Error("AUTH_SESSION_SECRET is not set or too short for tests.");
+   }
+   return secret;
+ }
+ 
+ export function signTestAppAuthState(
+   returnTo: string,
+-  options: { slug?: string; iat?: number } = {},
++  options: { iat?: number; purpose?: "authorize" | "logout" } = {},
+ ): string {
+-  const slug = options.slug ?? TEST_APP_SLUG;
+   const payload = {
+-    slug,
++    purpose: options.purpose ?? "authorize",
+     returnTo,
+     nonce: randomUUID(),
+     iat: options.iat ?? Math.floor(Date.now() / 1000),
+@@ -161,10 +159,13 @@ export function buildAppAuthorizeUrl(
+   returnTo = "/dashboard",
+   authState?: string,
+ ) {
++  const absoluteReturnTo = new URL(
++    returnTo,
++    TEST_APP_ALLOWED_ORIGIN,
++  ).toString();
+   const search = new URLSearchParams({
+-    app: TEST_APP_SLUG,
+-    return_to: returnTo,
+-    auth_state: authState ?? signTestAppAuthState(returnTo),
++    return_to: absoluteReturnTo,
++    auth_state: authState ?? signTestAppAuthState(absoluteReturnTo),
+   });
+   return `/authorize?${search.toString()}`;
+ }
+@@ -176,4 +177,3 @@ export async function mockTestAppOrigin(page: Page) {
+ }
+ 
+ export const testAppOrigin = TEST_APP_ALLOWED_ORIGIN;
+-export const testAppSlug = TEST_APP_SLUG;
+diff --git a/apps/org-next/.env.e2e b/apps/org-next/.env.e2e
+index 131b262..3f4c6df 100644
+--- a/apps/org-next/.env.e2e
++++ b/apps/org-next/.env.e2e
+@@ -1,8 +1,8 @@
+ # SERVER
+ # anedot_next backend server
+ ANEDOT_API_URL_BASE=http://localhost:3000
+-# At least 32 characters; must match AUTH_APPS["org-next"].sessionSecretEnv on auth.
+-SESSION_SECRET=3a76a3c0-5cc3-41a9-9258-5c9a82b94159
++# At least 32 characters; must match the auth app's APPS_SESSION_SECRET.
++AUTH_SESSION_SECRET=3a76a3c0-5cc3-41a9-9258-5c9a82b94159
+ # Enables /test-seed/auth route used by Playwright fixtures to set signed
+ # authToken/idToken/refreshToken cookies. NEVER set this in production.
+ E2E_TEST_SEED=true
+diff --git a/apps/org-next/.env.template b/apps/org-next/.env.template
+index 71eeb36..af696ac 100644
+--- a/apps/org-next/.env.template
++++ b/apps/org-next/.env.template
+@@ -1,9 +1,8 @@
+ # SERVER
+ # anedot_next backend server
+-API_HOSTNAME=http://localhost:3000
+-# At least 32 characters; must equal the value the auth app reads as
+-# AUTH_APPS["org-next"].sessionSecretEnv (e.g. ORG_NEXT_SESSION_SECRET).
+-SESSION_SECRET=3a76a3c0-5cc3-41a9-9258-5c9a82b94159
++ANEDOT_API_URL_BASE=https://qa1-next.anedot.com
++# At least 32 characters; must match the auth app's APPS_SESSION_SECRET.
++AUTH_SESSION_SECRET=3a76a3c0-5cc3-41a9-9258-5c9a82b94159
+ 
+ # CLIENT
+ VITE_ENABLE_RMP=false
+diff --git a/apps/org-next/docs/README.md b/apps/org-next/docs/README.md
+index c4ae37e..b74013f 100644
+--- a/apps/org-next/docs/README.md
++++ b/apps/org-next/docs/README.md
+@@ -31,18 +31,18 @@ live in the separate auth app at `VITE_AUTH_APP_URL`; that app writes the
+ three signed `httpOnly` token cookies (`authToken`, `refreshToken`,
+ `idToken`) and org-next reads them.
+ 
+-The full contract (registry shape, cookie envelope, return_to /
+-auth_state semantics, refresh endpoint, logout) is documented at
++The full contract (cookie envelope, signed absolute `return_to` /
++`auth_state` semantics, refresh endpoint, logout) is documented at
+ [`apps/auth/docs/app-integration.md`](../../auth/docs/app-integration.md).
+ This section only covers org-next-specific wiring.
+ 
+ - **Login route** — `src/routes/login.tsx` calls `initiateLogin` in
+   `src/routes/-auth.ts`, which constructs an authorize URL of the form
+-  `${VITE_AUTH_APP_URL}/authorize?app=org-next&return_to=<relative>&auth_state=<signed>`
++  `${VITE_AUTH_APP_URL}/authorize?return_to=<absolute>&auth_state=<signed>`
+   via `buildAuthAppLoginUrl` in `src/server/auth-app-url.server.ts`. The
+-  signature uses `SESSION_SECRET` so org-next can verify the round-trip.
+-  The pure URL-building logic lives in `src/server/auth-state.ts` and is
+-  unit-tested in `auth-state.test.ts`.
++  signature uses `AUTH_SESSION_SECRET`, which must match the auth app's
++  `AUTH_SESSION_SECRET`. The pure URL-building logic lives in
++  `src/server/auth-state.ts` and is unit-tested in `auth-state.test.ts`.
+ - **Unauthenticated redirects** — three layers send unauthenticated
+   requests to `/login`:
+   1. `redirectIfAuthenticated` / authenticated loaders via
+@@ -57,16 +57,17 @@ This section only covers org-next-specific wiring.
+   3. Individual route loaders that call server functions inherit (2).
+ - **Session cookies** — `useAuthTokenSession`, `useRefreshTokenSession`,
+   and `useIdTokenSession` in `src/server/session.server.ts` read the three
+-  `httpOnly` cookies. **The cookie names and `SESSION_SECRET` must match
+-  the corresponding `AUTH_APPS["org-next"]` entry on the auth side.**
++  `httpOnly` cookies. **The cookie names and `AUTH_SESSION_SECRET` must match
++  the auth app's generic app-mode cookie contract.**
+   `src/server/org-api.server.ts` pulls the access token from
+   `useAuthTokenSession`; missing → 401 → `/login`. There is no mock
+   fallback.
+ - **Logout** — `performLogout` in `src/routes/-auth.ts` returns the URL
+-  built by `buildAuthAppLogoutUrl` (`/logout?app=org-next&return_to=/login?logged_out=1`)
+-  and `initiateLogout` browser-redirects to it. The auth app clears the
+-  three cookies and redirects back. Org-next does not clear cookies
+-  itself.
++  built by `buildAuthAppLogoutUrl`
++  (`/logout?return_to=<absolute>&auth_state=<signed>`) and `initiateLogout`
++  browser-redirects to it. The auth app verifies the signed logout target,
++  clears the three cookies, and redirects back. Org-next does not clear
++  cookies itself.
+ - **Dev / E2E** — There is no production bypass mechanism. For Playwright,
+   `tests/test-fixture.ts` calls `/test-seed/auth` (the route in
+   `src/routes/test-seed.auth.ts`, mounted only when `E2E_TEST_SEED=true`)
+diff --git a/apps/org-next/src/env.ts b/apps/org-next/src/env.ts
+index 0f62c5e..ef30d31 100644
+--- a/apps/org-next/src/env.ts
++++ b/apps/org-next/src/env.ts
+@@ -4,8 +4,7 @@ import { z } from "zod";
+ export const env = createEnv({
+   server: {
+     ANEDOT_API_URL_BASE: z.url(),
+-    SESSION_SECRET: z.string(),
+-    ANEDOT_LOCAL_DEV: z.stringbool().optional().default(false),
++    AUTH_SESSION_SECRET: z.string(),
+   },
+   clientPrefix: "VITE_",
+   client: {
+diff --git a/apps/org-next/src/routes/-auth.ts b/apps/org-next/src/routes/-auth.ts
+index e75d3ee..f64df23 100644
+--- a/apps/org-next/src/routes/-auth.ts
++++ b/apps/org-next/src/routes/-auth.ts
+@@ -6,8 +6,6 @@ import { useAuthTokenSession } from "@/server/session.server";
+ import { redirect } from "@tanstack/react-router";
+ import { createServerFn } from "@tanstack/react-start";
+ 
+-export const ORG_NEXT_APP_SLUG = "org-next";
+-
+ export const redirectIfAuthenticated = createServerFn().handler(async () => {
+   const session = await useAuthTokenSession();
+   if (session.data.authToken) {
+diff --git a/apps/org-next/src/server/auth-app-url.server.ts b/apps/org-next/src/server/auth-app-url.server.ts
+index c2cf25c..52261c4 100644
+--- a/apps/org-next/src/server/auth-app-url.server.ts
++++ b/apps/org-next/src/server/auth-app-url.server.ts
+@@ -1,5 +1,6 @@
+ import { env } from "@/env";
+ import { createServerOnlyFn } from "@tanstack/react-start";
++import { getRequestUrl } from "@tanstack/react-start/server";
+ import {
+   buildLoginUrl,
+   buildLogoutUrl,
+@@ -9,13 +10,23 @@ import {
+ 
+ export const buildAuthAppLoginUrl = createServerOnlyFn(
+   (returnTo: string): string => {
+-    return buildLoginUrl(env.VITE_AUTH_APP_URL, env.SESSION_SECRET, returnTo);
++    return buildLoginUrl(
++      env.VITE_AUTH_APP_URL,
++      getRequestUrl({ xForwardedHost: true }).origin,
++      env.AUTH_SESSION_SECRET,
++      returnTo,
++    );
+   },
+ );
+ 
+ export const buildAuthAppLogoutUrl = createServerOnlyFn(
+   (returnTo: string): string => {
+-    return buildLogoutUrl(env.VITE_AUTH_APP_URL, returnTo);
++    return buildLogoutUrl(
++      env.VITE_AUTH_APP_URL,
++      getRequestUrl({ xForwardedHost: true }).origin,
++      env.AUTH_SESSION_SECRET,
++      returnTo,
++    );
+   },
+ );
+ 
+@@ -24,6 +35,6 @@ export const verifyAuthAppState = createServerOnlyFn(
+     token: string,
+     options: { nowSeconds?: number; maxAgeSeconds?: number } = {},
+   ): VerifyAuthStateResult => {
+-    return verifyAuthStateImpl(env.SESSION_SECRET, token, options);
++    return verifyAuthStateImpl(env.AUTH_SESSION_SECRET, token, options);
+   },
+ );
+diff --git a/apps/org-next/src/server/auth-state.test.ts b/apps/org-next/src/server/auth-state.test.ts
+index 50b1dc8..902d711 100644
+--- a/apps/org-next/src/server/auth-state.test.ts
++++ b/apps/org-next/src/server/auth-state.test.ts
+@@ -1,14 +1,15 @@
++import { createHmac } from "node:crypto";
+ import { describe, expect, it } from "vitest";
+ import {
+   buildLoginUrl,
+   buildLogoutUrl,
+   isRelativePath,
+-  ORG_NEXT_APP_SLUG,
+   verifyAuthState,
+ } from "./auth-state";
+ 
+ const SECRET = "3a76a3c0-5cc3-41a9-9258-5c9a82b94159";
+ const AUTH_APP = "http://localhost:3208";
++const ORG_NEXT_APP = "http://localhost:3210";
+ 
+ describe("isRelativePath", () => {
+   it("accepts simple relative paths", () => {
+@@ -33,47 +34,81 @@ describe("isRelativePath", () => {
+ });
+ 
+ describe("buildLoginUrl", () => {
+-  it("includes app=org-next, signed auth_state, and the relative return_to", () => {
+-    const url = new URL(buildLoginUrl(AUTH_APP, SECRET, "/dashboard?tab=1"));
++  it("includes signed absolute return_to without app", () => {
++    const url = new URL(
++      buildLoginUrl(AUTH_APP, ORG_NEXT_APP, SECRET, "/dashboard?tab=1"),
++    );
++    const returnTo = `${ORG_NEXT_APP}/dashboard?tab=1`;
++
+     expect(url.origin).toBe(AUTH_APP);
+     expect(url.pathname).toBe("/authorize");
+-    expect(url.searchParams.get("app")).toBe(ORG_NEXT_APP_SLUG);
+-    expect(url.searchParams.get("return_to")).toBe("/dashboard?tab=1");
+-
+-    const authState = url.searchParams.get("auth_state");
+-    expect(authState).toBeTruthy();
+-    const parts = (authState ?? "").split(".");
+-    expect(parts).toHaveLength(2);
++    expect(url.searchParams.has("app")).toBe(false);
++    expect(url.searchParams.get("return_to")).toBe(returnTo);
++    expect((url.searchParams.get("auth_state") ?? "").split(".")).toHaveLength(
++      2,
++    );
+   });
+ 
+   it("falls back to / when return_to is unsafe", () => {
+-    const url = new URL(buildLoginUrl(AUTH_APP, SECRET, "//evil.com/x"));
+-    expect(url.searchParams.get("return_to")).toBe("/");
++    const url = new URL(
++      buildLoginUrl(AUTH_APP, ORG_NEXT_APP, SECRET, "//evil.com/x"),
++    );
++    expect(url.searchParams.get("return_to")).toBe(`${ORG_NEXT_APP}/`);
+   });
+ 
+-  it("creates a verifiable round-trip signature", () => {
+-    const url = new URL(buildLoginUrl(AUTH_APP, SECRET, "/dashboard"));
++  it("creates a verifiable authorize signature", () => {
++    const url = new URL(
++      buildLoginUrl(AUTH_APP, ORG_NEXT_APP, SECRET, "/dashboard"),
++    );
++    const returnTo = `${ORG_NEXT_APP}/dashboard`;
+     const token = url.searchParams.get("auth_state") as string;
+-    const result = verifyAuthState(SECRET, token);
++    const result = verifyAuthState(SECRET, token, {
++      expectedPurpose: "authorize",
++      expectedReturnTo: returnTo,
++    });
++
+     expect(result.ok).toBe(true);
+     if (result.ok) {
+-      expect(result.payload.slug).toBe(ORG_NEXT_APP_SLUG);
+-      expect(result.payload.returnTo).toBe("/dashboard");
++      expect(result.payload.purpose).toBe("authorize");
++      expect(result.payload.returnTo).toBe(returnTo);
+     }
+   });
+ });
+ 
+ describe("buildLogoutUrl", () => {
+-  it("includes app=org-next and the return_to", () => {
+-    const url = new URL(buildLogoutUrl(AUTH_APP, "/login?logged_out=1"));
++  it("includes signed absolute return_to without app", () => {
++    const url = new URL(
++      buildLogoutUrl(AUTH_APP, ORG_NEXT_APP, SECRET, "/login?logged_out=1"),
++    );
++    const returnTo = `${ORG_NEXT_APP}/login?logged_out=1`;
++
+     expect(url.pathname).toBe("/logout");
+-    expect(url.searchParams.get("app")).toBe(ORG_NEXT_APP_SLUG);
+-    expect(url.searchParams.get("return_to")).toBe("/login?logged_out=1");
++    expect(url.searchParams.has("app")).toBe(false);
++    expect(url.searchParams.get("return_to")).toBe(returnTo);
++    expect((url.searchParams.get("auth_state") ?? "").split(".")).toHaveLength(
++      2,
++    );
+   });
+ 
+   it("falls back to /login when return_to is unsafe", () => {
+-    const url = new URL(buildLogoutUrl(AUTH_APP, "https://evil.com/x"));
+-    expect(url.searchParams.get("return_to")).toBe("/login");
++    const url = new URL(
++      buildLogoutUrl(AUTH_APP, ORG_NEXT_APP, SECRET, "https://evil.com/x"),
++    );
++    expect(url.searchParams.get("return_to")).toBe(`${ORG_NEXT_APP}/login`);
++  });
++
++  it("creates a verifiable logout signature", () => {
++    const url = new URL(
++      buildLogoutUrl(AUTH_APP, ORG_NEXT_APP, SECRET, "/login?logged_out=1"),
++    );
++    const returnTo = `${ORG_NEXT_APP}/login?logged_out=1`;
++    const token = url.searchParams.get("auth_state") as string;
++    const result = verifyAuthState(SECRET, token, {
++      expectedPurpose: "logout",
++      expectedReturnTo: returnTo,
++    });
++
++    expect(result.ok).toBe(true);
+   });
+ });
+ 
+@@ -85,43 +120,56 @@ describe("verifyAuthState", () => {
+   });
+ 
+   it("rejects tokens signed with a different secret", () => {
+-    const url = new URL(buildLoginUrl(AUTH_APP, SECRET, "/x"));
++    const url = new URL(buildLoginUrl(AUTH_APP, ORG_NEXT_APP, SECRET, "/x"));
+     const token = url.searchParams.get("auth_state") as string;
+     const otherSecret = "11111111-1111-1111-1111-111111111111";
+     const result = verifyAuthState(otherSecret, token);
++
+     expect(result.ok).toBe(false);
+     if (!result.ok) expect(result.reason).toBe("bad_signature");
+   });
+ 
+   it("rejects expired tokens", () => {
+-    const url = new URL(buildLoginUrl(AUTH_APP, SECRET, "/x"));
++    const url = new URL(buildLoginUrl(AUTH_APP, ORG_NEXT_APP, SECRET, "/x"));
+     const token = url.searchParams.get("auth_state") as string;
+     const result = verifyAuthState(SECRET, token, {
+       maxAgeSeconds: 0,
+       nowSeconds: Math.floor(Date.now() / 1000) + 5,
+     });
++
+     expect(result.ok).toBe(false);
+     if (!result.ok) expect(result.reason).toBe("expired");
+   });
+ 
+-  it("rejects mismatched slug payloads", () => {
+-    const url = new URL(buildLoginUrl(AUTH_APP, SECRET, "/x"));
++  it("rejects mismatched purpose payloads", () => {
++    const url = new URL(buildLoginUrl(AUTH_APP, ORG_NEXT_APP, SECRET, "/x"));
++    const token = url.searchParams.get("auth_state") as string;
++    const result = verifyAuthState(SECRET, token, {
++      expectedPurpose: "logout",
++    });
++
++    expect(result.ok).toBe(false);
++    if (!result.ok) expect(result.reason).toBe("purpose_mismatch");
++  });
++
++  it("rejects mismatched return_to payloads", () => {
++    const url = new URL(buildLoginUrl(AUTH_APP, ORG_NEXT_APP, SECRET, "/x"));
+     const token = url.searchParams.get("auth_state") as string;
+-    const [body, sig] = token.split(".");
++    const [body] = token.split(".");
+     const decoded = JSON.parse(Buffer.from(body, "base64url").toString("utf8"));
+-    decoded.slug = "another-app";
++    decoded.returnTo = `${ORG_NEXT_APP}/other`;
+     const tamperedBody = Buffer.from(JSON.stringify(decoded)).toString(
+       "base64url",
+     );
+-    // Sign with the same secret so the signature passes; only slug differs.
+-    const newSig = require("node:crypto")
+-      .createHmac("sha256", SECRET)
++    const newSig = createHmac("sha256", SECRET)
+       .update(tamperedBody)
+       .digest("base64url");
+     const tampered = `${tamperedBody}.${newSig}`;
+-    const result = verifyAuthState(SECRET, tampered);
++    const result = verifyAuthState(SECRET, tampered, {
++      expectedReturnTo: `${ORG_NEXT_APP}/x`,
++    });
++
+     expect(result.ok).toBe(false);
+-    if (!result.ok) expect(result.reason).toBe("slug_mismatch");
+-    expect(sig).toBeTruthy();
++    if (!result.ok) expect(result.reason).toBe("invalid_payload");
+   });
+ });
+diff --git a/apps/org-next/src/server/auth-state.ts b/apps/org-next/src/server/auth-state.ts
+index 20d7b9b..672137c 100644
+--- a/apps/org-next/src/server/auth-state.ts
++++ b/apps/org-next/src/server/auth-state.ts
+@@ -1,10 +1,10 @@
+ import { createHmac, randomUUID, timingSafeEqual } from "node:crypto";
+ 
+-const APP_SLUG = "org-next";
+ const AUTH_STATE_TTL_SECONDS = 600;
++type AuthStatePurpose = "authorize" | "logout";
+ 
+ export type AuthStatePayload = {
+-  slug: string;
++  purpose: AuthStatePurpose;
+   returnTo: string;
+   nonce: string;
+   iat: number;
+@@ -32,12 +32,13 @@ export function isRelativePath(value: string): boolean {
+ 
+ export function buildLoginUrl(
+   authAppOrigin: string,
++  appOrigin: string,
+   sessionSecret: string,
+   returnTo: string,
+ ): string {
+-  const safeReturnTo = isRelativePath(returnTo) ? returnTo : "/";
++  const safeReturnTo = absoluteReturnTo(appOrigin, returnTo, "/");
+   const payload: AuthStatePayload = {
+-    slug: APP_SLUG,
++    purpose: "authorize",
+     returnTo: safeReturnTo,
+     nonce: randomUUID(),
+     iat: Math.floor(Date.now() / 1000),
+@@ -47,7 +48,6 @@ export function buildLoginUrl(
+   const authState = `${body}.${sig}`;
+ 
+   const url = new URL("/authorize", authAppOrigin);
+-  url.searchParams.set("app", APP_SLUG);
+   url.searchParams.set("return_to", safeReturnTo);
+   url.searchParams.set("auth_state", authState);
+   return url.toString();
+@@ -55,12 +55,23 @@ export function buildLoginUrl(
+ 
+ export function buildLogoutUrl(
+   authAppOrigin: string,
++  appOrigin: string,
++  sessionSecret: string,
+   returnTo: string,
+ ): string {
+-  const safeReturnTo = isRelativePath(returnTo) ? returnTo : "/login";
++  const safeReturnTo = absoluteReturnTo(appOrigin, returnTo, "/login");
++  const payload: AuthStatePayload = {
++    purpose: "logout",
++    returnTo: safeReturnTo,
++    nonce: randomUUID(),
++    iat: Math.floor(Date.now() / 1000),
++  };
++  const body = base64url(JSON.stringify(payload));
++  const authState = `${body}.${hmacSign(sessionSecret, body)}`;
++
+   const url = new URL("/logout", authAppOrigin);
+-  url.searchParams.set("app", APP_SLUG);
+   url.searchParams.set("return_to", safeReturnTo);
++  url.searchParams.set("auth_state", authState);
+   return url.toString();
+ }
+ 
+@@ -71,7 +82,7 @@ export type VerifyAuthStateResult =
+       reason:
+         | "malformed"
+         | "bad_signature"
+-        | "slug_mismatch"
++        | "purpose_mismatch"
+         | "expired"
+         | "invalid_payload";
+     };
+@@ -79,7 +90,12 @@ export type VerifyAuthStateResult =
+ export function verifyAuthState(
+   sessionSecret: string,
+   token: string,
+-  options: { nowSeconds?: number; maxAgeSeconds?: number } = {},
++  options: {
++    expectedPurpose?: AuthStatePurpose;
++    expectedReturnTo?: string;
++    nowSeconds?: number;
++    maxAgeSeconds?: number;
++  } = {},
+ ): VerifyAuthStateResult {
+   if (typeof token !== "string" || token.length === 0) {
+     return { ok: false, reason: "malformed" };
+@@ -102,7 +118,7 @@ export function verifyAuthState(
+     if (
+       !decoded ||
+       typeof decoded !== "object" ||
+-      typeof decoded.slug !== "string" ||
++      (decoded.purpose !== "authorize" && decoded.purpose !== "logout") ||
+       typeof decoded.returnTo !== "string" ||
+       typeof decoded.nonce !== "string" ||
+       typeof decoded.iat !== "number"
+@@ -114,8 +130,14 @@ export function verifyAuthState(
+     return { ok: false, reason: "invalid_payload" };
+   }
+ 
+-  if (payload.slug !== APP_SLUG) {
+-    return { ok: false, reason: "slug_mismatch" };
++  if (options.expectedPurpose && payload.purpose !== options.expectedPurpose) {
++    return { ok: false, reason: "purpose_mismatch" };
++  }
++  if (
++    options.expectedReturnTo !== undefined &&
++    payload.returnTo !== options.expectedReturnTo
++  ) {
++    return { ok: false, reason: "invalid_payload" };
+   }
+   const now = options.nowSeconds ?? Math.floor(Date.now() / 1000);
+   const maxAge = options.maxAgeSeconds ?? AUTH_STATE_TTL_SECONDS;
+@@ -125,4 +147,11 @@ export function verifyAuthState(
+   return { ok: true, payload };
+ }
+ 
+-export const ORG_NEXT_APP_SLUG = APP_SLUG;
++function absoluteReturnTo(
++  appOrigin: string,
++  returnTo: string,
++  fallback: string,
++): string {
++  const safeReturnTo = isRelativePath(returnTo) ? returnTo : fallback;
++  return new URL(safeReturnTo, appOrigin).toString();
++}
+diff --git a/apps/org-next/src/server/session.server.ts b/apps/org-next/src/server/session.server.ts
+index fa4ec7e..198b7a8 100644
+--- a/apps/org-next/src/server/session.server.ts
++++ b/apps/org-next/src/server/session.server.ts
+@@ -6,7 +6,7 @@ const isSecure = import.meta.env.MODE === "production";
+ 
+ export const useAuthTokenSession = createServerOnlyFn(() => {
+   return useSession<{ authToken?: string }>({
+-    password: env.SESSION_SECRET,
++    password: env.AUTH_SESSION_SECRET,
+     name: "authToken",
+     cookie: {
+       httpOnly: true,
+@@ -20,7 +20,7 @@ export const useAuthTokenSession = createServerOnlyFn(() => {
+ 
+ export const useRefreshTokenSession = createServerOnlyFn(() => {
+   return useSession<{ refreshToken?: string }>({
+-    password: env.SESSION_SECRET,
++    password: env.AUTH_SESSION_SECRET,
+     name: "refreshToken",
+     cookie: {
+       httpOnly: true,
+@@ -34,7 +34,7 @@ export const useRefreshTokenSession = createServerOnlyFn(() => {
+ 
+ export const useIdTokenSession = createServerOnlyFn(() => {
+   return useSession<{ idToken?: string }>({
+-    password: env.SESSION_SECRET,
++    password: env.AUTH_SESSION_SECRET,
+     name: "idToken",
+     cookie: {
+       httpOnly: true,
+diff --git a/apps/org-next/src/server/session.test.ts b/apps/org-next/src/server/session.test.ts
+index e65cf22..7a9c747 100644
+--- a/apps/org-next/src/server/session.test.ts
++++ b/apps/org-next/src/server/session.test.ts
+@@ -16,7 +16,7 @@ describe("session.server module shape", () => {
+ 
+   it("documents the three names as the cookie envelope contract", () => {
+     // This is a guard: if you rename any of these, you break the integration
+-    // contract with the auth app's AUTH_APPS["org-next"] entry.
++    // contract with the auth app's generic app-mode cookies.
+     expect(ORG_NEXT_SESSION_NAMES).toEqual([
+       "authToken",
+       "refreshToken",
+diff --git a/apps/org-next/src/server/user-session.server.ts b/apps/org-next/src/server/user-session.server.ts
+index 93ce6e9..e33cff6 100644
+--- a/apps/org-next/src/server/user-session.server.ts
++++ b/apps/org-next/src/server/user-session.server.ts
+@@ -18,7 +18,7 @@ export const USER_SESSION_DEFAULTS: UserSession = {
+ 
+ export const useUserSessionStore = createServerOnlyFn(() => {
+   return useSession<Partial<UserSession>>({
+-    password: env.SESSION_SECRET,
++    password: env.AUTH_SESSION_SECRET,
+     name: "userSession",
+     cookie: {
+       httpOnly: true,
+diff --git a/apps/org-next/tests/auth-flow.spec.ts b/apps/org-next/tests/auth-flow.spec.ts
+index 7a7f709..4ee5d70 100644
+--- a/apps/org-next/tests/auth-flow.spec.ts
++++ b/apps/org-next/tests/auth-flow.spec.ts
+@@ -9,7 +9,7 @@ test.describe("auth flow with the auth app", () => {
+     await expect(page).toHaveURL(/\/login/);
+   });
+ 
+-  test("login button navigates to authorize?app=org-next on the auth app", async ({
++  test("login button navigates to generic authorize on the auth app", async ({
+     page,
+     context,
+   }) => {
+@@ -34,8 +34,10 @@ test.describe("auth flow with the auth app", () => {
+     const url = new URL(interceptedUrl as unknown as string);
+     expect(url.origin).toBe("http://localhost:3208");
+     expect(url.pathname).toBe("/authorize");
+-    expect(url.searchParams.get("app")).toBe("org-next");
++    expect(url.searchParams.has("app")).toBe(false);
+     expect(url.searchParams.get("auth_state")).toBeTruthy();
+-    expect(url.searchParams.get("return_to")).toBeTruthy();
++    expect(url.searchParams.get("return_to")).toMatch(
++      /^http:\/\/localhost:3210\//,
++    );
+   });
+ });
+diff --git a/apps/ui-next-catalog/package.json b/apps/ui-next-catalog/package.json
+index 4df7a36..63db2fb 100644
+--- a/apps/ui-next-catalog/package.json
++++ b/apps/ui-next-catalog/package.json
+@@ -4,7 +4,7 @@
+   "version": "0.0.0",
+   "type": "module",
+   "scripts": {
+-    "dev": "vite --port 3210",
++    "dev": "vite --port 3212",
+     "build": "tsc -b && vite build",
+     "typecheck": "tsc --noEmit",
+     "clean": "rm -rf .turbo && rm -rf node_modules dist"
+diff --git a/apps/ui-next-catalog/vite.config.ts b/apps/ui-next-catalog/vite.config.ts
+index ef4062b..2b78df3 100644
+--- a/apps/ui-next-catalog/vite.config.ts
++++ b/apps/ui-next-catalog/vite.config.ts
+@@ -5,7 +5,7 @@ import { defineConfig } from "vite";
+ export default defineConfig({
+   plugins: [react(), tailwindcss()],
+   server: {
+-    port: 3210,
++    port: 3212,
+     strictPort: true,
+   },
+ });
+diff --git a/apps/virtual-terminal/.env.e2e b/apps/virtual-terminal/.env.e2e
+index 05a30d9..be29db8 100644
+--- a/apps/virtual-terminal/.env.e2e
++++ b/apps/virtual-terminal/.env.e2e
+@@ -1,6 +1,6 @@
+ # SERVER
+-# At least 32 characters; must match AUTH_APPS["virtual-terminal"].sessionSecretEnv on auth.
+-SESSION_SECRET=3a76a3c0-5cc3-41a9-9258-5c9a82b94159
++# At least 32 characters; must match the auth app's APPS_SESSION_SECRET.
++AUTH_SESSION_SECRET=3a76a3c0-5cc3-41a9-9258-5c9a82b94159
+ 
+ # CLIENT
+ # Auth app URL used for app-mode authorize/logout redirects.
+diff --git a/apps/virtual-terminal/.env.template b/apps/virtual-terminal/.env.template
+index 85bb6e0..6d241db 100644
+--- a/apps/virtual-terminal/.env.template
++++ b/apps/virtual-terminal/.env.template
+@@ -1,9 +1,21 @@
+-# SERVER
+-# At least 32 characters; must equal the value the auth app reads as
+-# AUTH_APPS["virtual-terminal"].sessionSecretEnv
+-# (for example, VIRTUAL_TERMINAL_SESSION_SECRET).
+-SESSION_SECRET=3a76a3c0-5cc3-41a9-9258-5c9a82b94159
++# BE server public api endpoint anedot_next
++# Local dev
++# ANEDOT_API_URL_BASE=http://localhost:3000
++# QA
++ANEDOT_API_URL_BASE=https://qa1-next.anedot.com
++
++# SUB
++SUB_API_KEY=
++SUB_ACCOUNT_ID=
++# access key from sandbox app
++SUB_API_URL_BASE="https://pay-sandbox.subfi.com"
++# At least 32 characters; must match the auth app's APPS_SESSION_SECRET.
++AUTH_SESSION_SECRET=
+ 
+ # CLIENT
++VITE_ENABLE_RMP=false
++VITE_ROLLBAR_ACCESS_TOKEN=
+ # Auth app URL used for app-mode authorize/logout redirects.
+ VITE_AUTH_APP_URL=http://localhost:3208
++# cognito client id
++VITE_AUTH_CLIENT_ID=
+diff --git a/apps/virtual-terminal/docs/README.md b/apps/virtual-terminal/docs/README.md
+index 2f2c18a..39861e5 100644
+--- a/apps/virtual-terminal/docs/README.md
++++ b/apps/virtual-terminal/docs/README.md
+@@ -8,26 +8,25 @@ this sparse and point at source files instead of restating implementation.
+ Virtual Terminal uses the auth app's app-mode integration contract, documented
+ in [`apps/auth/docs/app-integration.md`](../../auth/docs/app-integration.md).
+ 
+-- **App slug** — `virtual-terminal`, defined in
+-  `src/server/auth-state.ts` and mirrored in `src/routes/-auth.ts`.
+ - **Login route** — `src/routes/login.tsx` calls `initiateLogin` in
+   `src/routes/-auth.ts`, which builds
+-  `${VITE_AUTH_APP_URL}/authorize?app=virtual-terminal&return_to=<relative>&auth_state=<signed>`
+-  through `src/server/auth-app-url.server.ts`.
++  `${VITE_AUTH_APP_URL}/authorize?return_to=<absolute>&auth_state=<signed>`
++  through `src/server/auth-app-url.server.ts`. The signed state uses
++  `AUTH_SESSION_SECRET`, which must match the auth app's
++  `APPS_SESSION_SECRET`.
+ - **Protected app route** — `src/routes/_authed.tsx` reads the signed
+   `authToken` cookie via `src/server/session.server.ts`; missing tokens
+   redirect to `/login`.
+ - **Session cookies** — `authToken`, `refreshToken`, and `idToken` must match
+-  the corresponding `AUTH_APPS["virtual-terminal"].cookieNames` entry on the
+-  auth side. `SESSION_SECRET` must match the auth app's
+-  `VIRTUAL_TERMINAL_SESSION_SECRET` value.
++  the auth app's generic app-mode cookie contract.
+ - **Logout** — `initiateLogout` redirects to
+-  `${VITE_AUTH_APP_URL}/logout?app=virtual-terminal&return_to=/login?logged_out=1`.
+-  The auth app clears the cookies; Virtual Terminal does not clear them itself.
++  `${VITE_AUTH_APP_URL}/logout?return_to=<absolute>&auth_state=<signed>`.
++  The auth app verifies the signed logout target and clears the cookies;
++  Virtual Terminal does not clear them itself.
+ 
+ ## Environment
+ 
+ Environment variables are validated through `src/env.ts` using `@t3-oss/env-core`.
+ 
+-- `SESSION_SECRET` — server-only, at least 32 characters.
++- `AUTH_SESSION_SECRET` — server-only, at least 32 characters; must match auth's `AUTH_SESSION_SECRET`.
+ - `VITE_AUTH_APP_URL` — client-prefixed URL for app-mode authorize/logout.
+diff --git a/apps/virtual-terminal/src/env.ts b/apps/virtual-terminal/src/env.ts
+index 7bfd9c9..ef30d31 100644
+--- a/apps/virtual-terminal/src/env.ts
++++ b/apps/virtual-terminal/src/env.ts
+@@ -3,10 +3,13 @@ import { z } from "zod";
+ 
+ export const env = createEnv({
+   server: {
+-    SESSION_SECRET: z.string().min(32),
++    ANEDOT_API_URL_BASE: z.url(),
++    AUTH_SESSION_SECRET: z.string(),
+   },
+   clientPrefix: "VITE_",
+   client: {
++    VITE_ENABLE_RMP: z.stringbool(),
++    VITE_ROLLBAR_ACCESS_TOKEN: z.string(),
+     VITE_AUTH_APP_URL: z.url(),
+   },
+   runtimeEnv: process.env,
+diff --git a/apps/virtual-terminal/src/routes/-auth.ts b/apps/virtual-terminal/src/routes/-auth.ts
+index 4285dbb..e17f26a 100644
+--- a/apps/virtual-terminal/src/routes/-auth.ts
++++ b/apps/virtual-terminal/src/routes/-auth.ts
+@@ -6,8 +6,6 @@ import { useAuthTokenSession } from "@/server/session.server";
+ import { redirect } from "@tanstack/react-router";
+ import { createServerFn } from "@tanstack/react-start";
+ 
+-export const VIRTUAL_TERMINAL_APP_SLUG = "virtual-terminal";
+-
+ export const redirectIfAuthenticated = createServerFn().handler(async () => {
+   const session = await useAuthTokenSession();
+   if (session.data.authToken) {
+diff --git a/apps/virtual-terminal/src/server/auth-app-url.server.ts b/apps/virtual-terminal/src/server/auth-app-url.server.ts
+index c2cf25c..52261c4 100644
+--- a/apps/virtual-terminal/src/server/auth-app-url.server.ts
++++ b/apps/virtual-terminal/src/server/auth-app-url.server.ts
+@@ -1,5 +1,6 @@
+ import { env } from "@/env";
+ import { createServerOnlyFn } from "@tanstack/react-start";
++import { getRequestUrl } from "@tanstack/react-start/server";
+ import {
+   buildLoginUrl,
+   buildLogoutUrl,
+@@ -9,13 +10,23 @@ import {
+ 
+ export const buildAuthAppLoginUrl = createServerOnlyFn(
+   (returnTo: string): string => {
+-    return buildLoginUrl(env.VITE_AUTH_APP_URL, env.SESSION_SECRET, returnTo);
++    return buildLoginUrl(
++      env.VITE_AUTH_APP_URL,
++      getRequestUrl({ xForwardedHost: true }).origin,
++      env.AUTH_SESSION_SECRET,
++      returnTo,
++    );
+   },
+ );
+ 
+ export const buildAuthAppLogoutUrl = createServerOnlyFn(
+   (returnTo: string): string => {
+-    return buildLogoutUrl(env.VITE_AUTH_APP_URL, returnTo);
++    return buildLogoutUrl(
++      env.VITE_AUTH_APP_URL,
++      getRequestUrl({ xForwardedHost: true }).origin,
++      env.AUTH_SESSION_SECRET,
++      returnTo,
++    );
+   },
+ );
+ 
+@@ -24,6 +35,6 @@ export const verifyAuthAppState = createServerOnlyFn(
+     token: string,
+     options: { nowSeconds?: number; maxAgeSeconds?: number } = {},
+   ): VerifyAuthStateResult => {
+-    return verifyAuthStateImpl(env.SESSION_SECRET, token, options);
++    return verifyAuthStateImpl(env.AUTH_SESSION_SECRET, token, options);
+   },
+ );
+diff --git a/apps/virtual-terminal/src/server/auth-state.test.ts b/apps/virtual-terminal/src/server/auth-state.test.ts
+index f081af6..eeec7a8 100644
+--- a/apps/virtual-terminal/src/server/auth-state.test.ts
++++ b/apps/virtual-terminal/src/server/auth-state.test.ts
+@@ -4,12 +4,12 @@ import {
+   buildLoginUrl,
+   buildLogoutUrl,
+   isRelativePath,
+-  VIRTUAL_TERMINAL_APP_SLUG,
+   verifyAuthState,
+ } from "./auth-state";
+ 
+ const SECRET = "3a76a3c0-5cc3-41a9-9258-5c9a82b94159";
+ const AUTH_APP = "http://localhost:3208";
++const VIRTUAL_TERMINAL_APP = "http://localhost:3211";
+ 
+ describe("isRelativePath", () => {
+   it("accepts simple relative paths", () => {
+@@ -28,45 +28,98 @@ describe("isRelativePath", () => {
+ });
+ 
+ describe("buildLoginUrl", () => {
+-  it("includes app=virtual-terminal, signed auth_state, and the relative return_to", () => {
+-    const url = new URL(buildLoginUrl(AUTH_APP, SECRET, "/dashboard?tab=1"));
++  it("includes signed absolute return_to without app", () => {
++    const url = new URL(
++      buildLoginUrl(AUTH_APP, VIRTUAL_TERMINAL_APP, SECRET, "/dashboard?tab=1"),
++    );
++    const returnTo = `${VIRTUAL_TERMINAL_APP}/dashboard?tab=1`;
++
+     expect(url.origin).toBe(AUTH_APP);
+     expect(url.pathname).toBe("/authorize");
+-    expect(url.searchParams.get("app")).toBe(VIRTUAL_TERMINAL_APP_SLUG);
+-    expect(url.searchParams.get("return_to")).toBe("/dashboard?tab=1");
++    expect(url.searchParams.has("app")).toBe(false);
++    expect(url.searchParams.get("return_to")).toBe(returnTo);
+     expect((url.searchParams.get("auth_state") ?? "").split(".")).toHaveLength(
+       2,
+     );
+   });
+ 
+   it("falls back to / when return_to is unsafe", () => {
+-    const url = new URL(buildLoginUrl(AUTH_APP, SECRET, "//evil.com/x"));
+-    expect(url.searchParams.get("return_to")).toBe("/");
++    const url = new URL(
++      buildLoginUrl(AUTH_APP, VIRTUAL_TERMINAL_APP, SECRET, "//evil.com/x"),
++    );
++    expect(url.searchParams.get("return_to")).toBe(`${VIRTUAL_TERMINAL_APP}/`);
+   });
+ 
+-  it("creates a verifiable round-trip signature", () => {
+-    const url = new URL(buildLoginUrl(AUTH_APP, SECRET, "/dashboard"));
++  it("creates a verifiable authorize signature", () => {
++    const url = new URL(
++      buildLoginUrl(AUTH_APP, VIRTUAL_TERMINAL_APP, SECRET, "/dashboard"),
++    );
++    const returnTo = `${VIRTUAL_TERMINAL_APP}/dashboard`;
+     const token = url.searchParams.get("auth_state") as string;
+-    const result = verifyAuthState(SECRET, token);
++    const result = verifyAuthState(SECRET, token, {
++      expectedPurpose: "authorize",
++      expectedReturnTo: returnTo,
++    });
++
+     expect(result.ok).toBe(true);
+     if (result.ok) {
+-      expect(result.payload.slug).toBe(VIRTUAL_TERMINAL_APP_SLUG);
+-      expect(result.payload.returnTo).toBe("/dashboard");
++      expect(result.payload.purpose).toBe("authorize");
++      expect(result.payload.returnTo).toBe(returnTo);
+     }
+   });
+ });
+ 
+ describe("buildLogoutUrl", () => {
+-  it("includes app=virtual-terminal and the return_to", () => {
+-    const url = new URL(buildLogoutUrl(AUTH_APP, "/login?logged_out=1"));
++  it("includes signed absolute return_to without app", () => {
++    const url = new URL(
++      buildLogoutUrl(
++        AUTH_APP,
++        VIRTUAL_TERMINAL_APP,
++        SECRET,
++        "/login?logged_out=1",
++      ),
++    );
++    const returnTo = `${VIRTUAL_TERMINAL_APP}/login?logged_out=1`;
++
+     expect(url.pathname).toBe("/logout");
+-    expect(url.searchParams.get("app")).toBe(VIRTUAL_TERMINAL_APP_SLUG);
+-    expect(url.searchParams.get("return_to")).toBe("/login?logged_out=1");
++    expect(url.searchParams.has("app")).toBe(false);
++    expect(url.searchParams.get("return_to")).toBe(returnTo);
++    expect((url.searchParams.get("auth_state") ?? "").split(".")).toHaveLength(
++      2,
++    );
+   });
+ 
+   it("falls back to /login when return_to is unsafe", () => {
+-    const url = new URL(buildLogoutUrl(AUTH_APP, "https://evil.com/x"));
+-    expect(url.searchParams.get("return_to")).toBe("/login");
++    const url = new URL(
++      buildLogoutUrl(
++        AUTH_APP,
++        VIRTUAL_TERMINAL_APP,
++        SECRET,
++        "https://evil.com/x",
++      ),
++    );
++    expect(url.searchParams.get("return_to")).toBe(
++      `${VIRTUAL_TERMINAL_APP}/login`,
++    );
++  });
++
++  it("creates a verifiable logout signature", () => {
++    const url = new URL(
++      buildLogoutUrl(
++        AUTH_APP,
++        VIRTUAL_TERMINAL_APP,
++        SECRET,
++        "/login?logged_out=1",
++      ),
++    );
++    const returnTo = `${VIRTUAL_TERMINAL_APP}/login?logged_out=1`;
++    const token = url.searchParams.get("auth_state") as string;
++    const result = verifyAuthState(SECRET, token, {
++      expectedPurpose: "logout",
++      expectedReturnTo: returnTo,
++    });
++
++    expect(result.ok).toBe(true);
+   });
+ });
+ 
+@@ -78,31 +131,52 @@ describe("verifyAuthState", () => {
+   });
+ 
+   it("rejects tokens signed with a different secret", () => {
+-    const url = new URL(buildLoginUrl(AUTH_APP, SECRET, "/x"));
++    const url = new URL(
++      buildLoginUrl(AUTH_APP, VIRTUAL_TERMINAL_APP, SECRET, "/x"),
++    );
+     const token = url.searchParams.get("auth_state") as string;
+     const otherSecret = "11111111-1111-1111-1111-111111111111";
+     const result = verifyAuthState(otherSecret, token);
++
+     expect(result.ok).toBe(false);
+     if (!result.ok) expect(result.reason).toBe("bad_signature");
+   });
+ 
+   it("rejects expired tokens", () => {
+-    const url = new URL(buildLoginUrl(AUTH_APP, SECRET, "/x"));
++    const url = new URL(
++      buildLoginUrl(AUTH_APP, VIRTUAL_TERMINAL_APP, SECRET, "/x"),
++    );
+     const token = url.searchParams.get("auth_state") as string;
+     const result = verifyAuthState(SECRET, token, {
+       maxAgeSeconds: 0,
+       nowSeconds: Math.floor(Date.now() / 1000) + 5,
+     });
++
+     expect(result.ok).toBe(false);
+     if (!result.ok) expect(result.reason).toBe("expired");
+   });
+ 
+-  it("rejects mismatched slug payloads", () => {
+-    const url = new URL(buildLoginUrl(AUTH_APP, SECRET, "/x"));
++  it("rejects mismatched purpose payloads", () => {
++    const url = new URL(
++      buildLoginUrl(AUTH_APP, VIRTUAL_TERMINAL_APP, SECRET, "/x"),
++    );
++    const token = url.searchParams.get("auth_state") as string;
++    const result = verifyAuthState(SECRET, token, {
++      expectedPurpose: "logout",
++    });
++
++    expect(result.ok).toBe(false);
++    if (!result.ok) expect(result.reason).toBe("purpose_mismatch");
++  });
++
++  it("rejects mismatched return_to payloads", () => {
++    const url = new URL(
++      buildLoginUrl(AUTH_APP, VIRTUAL_TERMINAL_APP, SECRET, "/x"),
++    );
+     const token = url.searchParams.get("auth_state") as string;
+     const [body] = token.split(".");
+     const decoded = JSON.parse(Buffer.from(body, "base64url").toString("utf8"));
+-    decoded.slug = "another-app";
++    decoded.returnTo = `${VIRTUAL_TERMINAL_APP}/other`;
+     const tamperedBody = Buffer.from(JSON.stringify(decoded)).toString(
+       "base64url",
+     );
+@@ -110,8 +184,11 @@ describe("verifyAuthState", () => {
+       .update(tamperedBody)
+       .digest("base64url");
+     const tampered = `${tamperedBody}.${newSig}`;
+-    const result = verifyAuthState(SECRET, tampered);
++    const result = verifyAuthState(SECRET, tampered, {
++      expectedReturnTo: `${VIRTUAL_TERMINAL_APP}/x`,
++    });
++
+     expect(result.ok).toBe(false);
+-    if (!result.ok) expect(result.reason).toBe("slug_mismatch");
++    if (!result.ok) expect(result.reason).toBe("invalid_payload");
+   });
+ });
+diff --git a/apps/virtual-terminal/src/server/auth-state.ts b/apps/virtual-terminal/src/server/auth-state.ts
+index d1f8c53..672137c 100644
+--- a/apps/virtual-terminal/src/server/auth-state.ts
++++ b/apps/virtual-terminal/src/server/auth-state.ts
+@@ -1,10 +1,10 @@
+ import { createHmac, randomUUID, timingSafeEqual } from "node:crypto";
+ 
+-const APP_SLUG = "virtual-terminal";
+ const AUTH_STATE_TTL_SECONDS = 600;
++type AuthStatePurpose = "authorize" | "logout";
+ 
+ export type AuthStatePayload = {
+-  slug: string;
++  purpose: AuthStatePurpose;
+   returnTo: string;
+   nonce: string;
+   iat: number;
+@@ -32,12 +32,13 @@ export function isRelativePath(value: string): boolean {
+ 
+ export function buildLoginUrl(
+   authAppOrigin: string,
++  appOrigin: string,
+   sessionSecret: string,
+   returnTo: string,
+ ): string {
+-  const safeReturnTo = isRelativePath(returnTo) ? returnTo : "/";
++  const safeReturnTo = absoluteReturnTo(appOrigin, returnTo, "/");
+   const payload: AuthStatePayload = {
+-    slug: APP_SLUG,
++    purpose: "authorize",
+     returnTo: safeReturnTo,
+     nonce: randomUUID(),
+     iat: Math.floor(Date.now() / 1000),
+@@ -47,7 +48,6 @@ export function buildLoginUrl(
+   const authState = `${body}.${sig}`;
+ 
+   const url = new URL("/authorize", authAppOrigin);
+-  url.searchParams.set("app", APP_SLUG);
+   url.searchParams.set("return_to", safeReturnTo);
+   url.searchParams.set("auth_state", authState);
+   return url.toString();
+@@ -55,12 +55,23 @@ export function buildLoginUrl(
+ 
+ export function buildLogoutUrl(
+   authAppOrigin: string,
++  appOrigin: string,
++  sessionSecret: string,
+   returnTo: string,
+ ): string {
+-  const safeReturnTo = isRelativePath(returnTo) ? returnTo : "/login";
++  const safeReturnTo = absoluteReturnTo(appOrigin, returnTo, "/login");
++  const payload: AuthStatePayload = {
++    purpose: "logout",
++    returnTo: safeReturnTo,
++    nonce: randomUUID(),
++    iat: Math.floor(Date.now() / 1000),
++  };
++  const body = base64url(JSON.stringify(payload));
++  const authState = `${body}.${hmacSign(sessionSecret, body)}`;
++
+   const url = new URL("/logout", authAppOrigin);
+-  url.searchParams.set("app", APP_SLUG);
+   url.searchParams.set("return_to", safeReturnTo);
++  url.searchParams.set("auth_state", authState);
+   return url.toString();
+ }
+ 
+@@ -71,7 +82,7 @@ export type VerifyAuthStateResult =
+       reason:
+         | "malformed"
+         | "bad_signature"
+-        | "slug_mismatch"
++        | "purpose_mismatch"
+         | "expired"
+         | "invalid_payload";
+     };
+@@ -79,7 +90,12 @@ export type VerifyAuthStateResult =
+ export function verifyAuthState(
+   sessionSecret: string,
+   token: string,
+-  options: { nowSeconds?: number; maxAgeSeconds?: number } = {},
++  options: {
++    expectedPurpose?: AuthStatePurpose;
++    expectedReturnTo?: string;
++    nowSeconds?: number;
++    maxAgeSeconds?: number;
++  } = {},
+ ): VerifyAuthStateResult {
+   if (typeof token !== "string" || token.length === 0) {
+     return { ok: false, reason: "malformed" };
+@@ -102,7 +118,7 @@ export function verifyAuthState(
+     if (
+       !decoded ||
+       typeof decoded !== "object" ||
+-      typeof decoded.slug !== "string" ||
++      (decoded.purpose !== "authorize" && decoded.purpose !== "logout") ||
+       typeof decoded.returnTo !== "string" ||
+       typeof decoded.nonce !== "string" ||
+       typeof decoded.iat !== "number"
+@@ -114,8 +130,14 @@ export function verifyAuthState(
+     return { ok: false, reason: "invalid_payload" };
+   }
+ 
+-  if (payload.slug !== APP_SLUG) {
+-    return { ok: false, reason: "slug_mismatch" };
++  if (options.expectedPurpose && payload.purpose !== options.expectedPurpose) {
++    return { ok: false, reason: "purpose_mismatch" };
++  }
++  if (
++    options.expectedReturnTo !== undefined &&
++    payload.returnTo !== options.expectedReturnTo
++  ) {
++    return { ok: false, reason: "invalid_payload" };
+   }
+   const now = options.nowSeconds ?? Math.floor(Date.now() / 1000);
+   const maxAge = options.maxAgeSeconds ?? AUTH_STATE_TTL_SECONDS;
+@@ -125,4 +147,11 @@ export function verifyAuthState(
+   return { ok: true, payload };
+ }
+ 
+-export const VIRTUAL_TERMINAL_APP_SLUG = APP_SLUG;
++function absoluteReturnTo(
++  appOrigin: string,
++  returnTo: string,
++  fallback: string,
++): string {
++  const safeReturnTo = isRelativePath(returnTo) ? returnTo : fallback;
++  return new URL(safeReturnTo, appOrigin).toString();
++}
+diff --git a/apps/virtual-terminal/src/server/session.server.ts b/apps/virtual-terminal/src/server/session.server.ts
+index fa4ec7e..198b7a8 100644
+--- a/apps/virtual-terminal/src/server/session.server.ts
++++ b/apps/virtual-terminal/src/server/session.server.ts
+@@ -6,7 +6,7 @@ const isSecure = import.meta.env.MODE === "production";
+ 
+ export const useAuthTokenSession = createServerOnlyFn(() => {
+   return useSession<{ authToken?: string }>({
+-    password: env.SESSION_SECRET,
++    password: env.AUTH_SESSION_SECRET,
+     name: "authToken",
+     cookie: {
+       httpOnly: true,
+@@ -20,7 +20,7 @@ export const useAuthTokenSession = createServerOnlyFn(() => {
+ 
+ export const useRefreshTokenSession = createServerOnlyFn(() => {
+   return useSession<{ refreshToken?: string }>({
+-    password: env.SESSION_SECRET,
++    password: env.AUTH_SESSION_SECRET,
+     name: "refreshToken",
+     cookie: {
+       httpOnly: true,
+@@ -34,7 +34,7 @@ export const useRefreshTokenSession = createServerOnlyFn(() => {
+ 
+ export const useIdTokenSession = createServerOnlyFn(() => {
+   return useSession<{ idToken?: string }>({
+-    password: env.SESSION_SECRET,
++    password: env.AUTH_SESSION_SECRET,
+     name: "idToken",
+     cookie: {
+       httpOnly: true,
+diff --git a/apps/virtual-terminal/src/server/session.test.ts b/apps/virtual-terminal/src/server/session.test.ts
+deleted file mode 100644
+index 15f911e..0000000
+--- a/apps/virtual-terminal/src/server/session.test.ts
++++ /dev/null
+@@ -1,24 +0,0 @@
+-import { describe, expect, it } from "vitest";
+-
+-const VIRTUAL_TERMINAL_SESSION_NAMES = [
+-  "authToken",
+-  "refreshToken",
+-  "idToken",
+-] as const;
+-
+-describe("session.server module shape", () => {
+-  it("exports the three cookie sessions used by the auth app", async () => {
+-    const mod = await import("./session.server");
+-    expect(typeof mod.useAuthTokenSession).toBe("function");
+-    expect(typeof mod.useRefreshTokenSession).toBe("function");
+-    expect(typeof mod.useIdTokenSession).toBe("function");
+-  });
+-
+-  it("documents the three names as the cookie envelope contract", () => {
+-    expect(VIRTUAL_TERMINAL_SESSION_NAMES).toEqual([
+-      "authToken",
+-      "refreshToken",
+-      "idToken",
+-    ]);
+-  });
+-});
+diff --git a/scripts/dev.sh b/scripts/dev.sh
+index ec8a506..a07fb51 100755
+--- a/scripts/dev.sh
++++ b/scripts/dev.sh
+@@ -14,5 +14,5 @@ done
+ turbo dev --filter="auth" \
+   --filter="org-next" \
+   --filter="virtual-terminal" \
+-  --filter="ui-next-catalog" \
+-  --filter="prototype-org-next"
++  --filter="prototype-org-next" \
++  --filter="ui-next-catalog" 

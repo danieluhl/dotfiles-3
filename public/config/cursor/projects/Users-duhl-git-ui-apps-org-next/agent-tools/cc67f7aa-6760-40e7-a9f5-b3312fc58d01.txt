@@ -1,0 +1,756 @@
+# SubFi Pay JavaScript SDK
+
+This repo contains:
+
+- A **React** SDK (`@subfico/pay-js-sdk/react`) for components that embed SubFi payment methods (card, bank, Google Pay) and helpers to communicate with iframes.
+- A **typed REST client** (`@subfico/pay-js-sdk/api`) generated with [`openapi-typescript`](https://openapi-ts.dev/) and powered by [`openapi-fetch`](https://openapi-ts.dev/openapi-fetch). Call `createPayApiClient(...)` to get a `client.GET("/path", ...) / client.POST("/path", ...)` interface that is fully typed against the SubFi Pay OpenAPI spec, plus shared model types for every Pay API endpoint.
+
+> **Note:** Both client-side and server-side SDKs must be used together for secure payment processing.
+
+## Installation
+
+```bash
+npm install github:subfico/pay-js-sdk
+```
+
+## Requirements
+
+```
+1. Render token (created on dashboard.subfi.com, safe to expose to clients)
+2. SubFi API key (created on dashboard.subfi.com, do not expose this to clients)
+3. SubFi account ID (provided once your application has been approved)
+
+The render token configures the iframe's allowed origin(s), allowed payment methods, and the range of valid payment amounts. If the render token does not allow an origin, the iframe will not render. Similarly, components corresponding to different payment method types will not render if not allowed by the render token.
+
+> **Note**: The render token also determines the environment (`production` or `sandbox`). Render tokens created on `dashboard.subfi.com` have a `production` environment. Render tokens created on `dashboard-sandbox.subfi.com` have a `sandbox` environment. Similarly, API keys can only access the environment that they were created in.
+```
+
+## Understanding the flow for creating and confirming payment intents
+
+### Credit Card & Bank Account
+
+The following flow is for credit card and bank account payment method types only.
+
+1. Set up prerequisites
+
+Create a `renderToken` (safe for client), and keep `apiKey` and `accountId` server-side only.
+
+2. Render your checkout UI with your SubFi payment method iframe(s)
+
+In your form, render the payment method components as needed (e.g. `SubFiCreditCardPaymentMethodForm`) along with the required props (e.g. `onConfirmationFailed`) and optional callbacks (`onPaymentIntentConfirmationSucceeded`, `onSetupIntentConfirmationSucceeded`).
+
+The iframe height is auto-managed by the SDK.
+
+3. User clicks "Pay now" button
+
+Call validateForm({ iframeRef }), which returns `Promise ` if the embedded form is valid, and `Promise ` otherwise.
+
+4. Create payment intent on your server
+
+On your server, use `createPayApiClient(...)` from `@subfico/pay-js-sdk/api` and call `client.POST("/payment_intents", ...)` to create the payment intent. You may also associate this payment intent with a new or existing customer via `client.POST("/customers", ...)`.
+This must be server-side because it uses your private API key.
+
+5. Return the payment intent token to the browser
+
+Your backend responds with the token needed for confirmation.
+
+6. Confirm the payment intent from the client iframe
+
+Call `confirmPaymentIntent({ iframeRef, token })` in the browser to continue the payment flow.
+
+7. Handle UX
+
+Show the user a "processing" state when the "Pay now" button is clicked, and show a success or error message via `onPaymentIntentConfirmationSucceeded` and `onConfirmationFailed`.
+
+### Google Pay
+
+The following flow is for Google Pay (and soon, Apple Pay) only.
+
+Google Pay/Apple Pay is a form of express checkout. The Google Pay/Apple Pay button is an alternative to the "Pay now" button in your payment forms. Users could make a payment with either flow.
+
+The key differences between the express and non-express payment flows are:
+
+- The express payment method components accept a prop called `onInitiatePaymentIntentRequest` which will be called when you should create the payment intent on your server
+- You do not call `validateForm` in an express flow
+- You do not call `confirmPaymentIntent` in an express flow (as this is done after `onInitiatePaymentIntentRequest` returns a token)
+
+Below is the full flow.
+
+1. Set up prerequisites
+
+Create a `renderToken` (safe for client), and keep `apiKey` and `accountId` server-side only.
+
+2. Render your checkout UI with your SubFi payment method iframe(s)
+
+In your form, render the payment method components as needed (e.g. `SubFiGooglePayButton`) along with the required props (e.g. `onPaymentIntentConfirmationSucceeded` and `onConfirmationFailed`).
+
+The iframe height is auto-managed by the SDK.
+
+3. User clicks express checkout button
+
+The user clicks e.g. the Google Pay button.
+
+4. Implement `onInitiatePaymentIntentRequest`
+
+Now, the `onInitiatePaymentIntentRequest` is called. This function should return a promise that resolves with the token you receive after creating a payment intent.
+
+On your server, use `createPayApiClient(...)` from `@subfico/pay-js-sdk/api` and call `client.POST("/payment_intents", ...)`. You may also associate this payment intent with a new or existing customer via `client.POST("/customers", ...)`.
+This must be server-side because it uses your private API key.
+
+5. Handle UX
+
+Show the user a "processing" state when the "Pay now" button is clicked, and show a success or error message via `onPaymentIntentConfirmationSucceeded` and `onConfirmationFailed`.
+
+## Understanding the flow for creating and confirming setup intents
+
+Setup intents are used to save payment methods for future use (e.g., recurring payments, subscriptions) without charging the customer immediately.
+
+### Credit Card & Bank Account
+
+The following flow is for saving a credit card or bank account as a payment method.
+
+1. Set up prerequisites
+
+Create a `renderToken` (safe for client), and keep `apiKey` and `accountId` server-side only.
+
+2. Render your UI with your SubFi payment method iframe(s)
+
+In your form, render the payment method components as needed (e.g. `SubFiCreditCardPaymentMethodForm` or `SubFiBankAccountPaymentMethodForm`) along with the required props (`onConfirmationFailed`) and optional callbacks (`onPaymentIntentConfirmationSucceeded`, `onSetupIntentConfirmationSucceeded`).
+
+The iframe height is auto-managed by the SDK.
+
+3. User clicks "Save" button
+
+Call `validateForm({ iframeRef })`, which returns `Promise ` if the embedded form is valid, and `Promise ` otherwise.
+
+4. Create setup intent on your server
+
+On your server, use `createPayApiClient(...)` from `@subfico/pay-js-sdk/api` and call `client.POST("/setup_intents", ...)` to create the setup intent. You may also associate this setup intent with a new or existing customer via `client.POST("/customers", ...)`. This must be server-side because it uses your private API key.
+
+5. Return the setup intent token to the browser
+
+Your backend responds with the token needed for confirmation.
+
+6. Confirm the setup intent from the client iframe
+
+Call `confirmSetupIntent({ iframeRef, token })` in the browser to continue the setup flow.
+
+7. Handle UX
+
+Show the user a "processing" state when the "Save" button is clicked, and show a success or error message via `onSetupIntentConfirmationSucceeded` and `onConfirmationFailed`.
+
+## Understanding PCI DSS compliance requirements
+
+The flows above are designed so your systems and any third-party servers you control do not handle card or bank account data in either raw or encrypted form.
+
+Why this matters:
+
+- The payment method UI is rendered inside SubFi-hosted iframes, so sensitive input fields are not part of your DOM.
+- Raw payment details are submitted from the iframe directly to SubFi-controlled infrastructure.
+- Your backend only creates payment intents (or setup intents) and returns a short-lived token used to continue the iframe flow.
+- `confirmPaymentIntent` / `confirmSetupIntent` sends the token back to the iframe to complete confirmation; it does not pass full payment method payloads through your app server.
+- In express flows (e.g. Google Pay), the iframe component handles payment data exchange and only asks your server to create a payment intent token.
+
+In short, your app orchestrates the payment flow, while sensitive payment data stays within SubFi-controlled components and APIs.
+
+## Appearance
+
+Every component accepts an optional `appearance` prop that controls the look of the iframe UI. It contains a `themeVariables` object whose keys are CSS custom-property names and whose values are strings. You can update this prop after page load to update the iframe appearance.
+
+```tsx
+<SubFiCreditCardPaymentMethodForm
+  renderToken="..."
+  appearance={{
+    themeVariables: {
+      "--primary": "oklch(0.5 0.2 240)",
+      "--radius": "0.25rem",
+    },
+  }}
+  onConfirmationFailed={(msg) => setError(msg)}
+/>
+```
+
+Only the variables you provide are sent; omitted variables keep their defaults.
+
+### Available theme variables
+
+| Variable | Purpose | Default |
+| ------------------------ | ---------------------------------------------- | --------------------------- |
+| `--background` | Page body and base surface color | `oklch(1 0 0)` |
+| `--foreground` | Default text color | `oklch(0.145 0 0)` |
+| `--primary` | Button fill and input text-selection highlight | `oklch(0.205 0 0)` |
+| `--primary-foreground` | Text on primary-colored surfaces | `oklch(0.985 0 0)` |
+| `--secondary` | Secondary button fill | `oklch(0.97 0 0)` |
+| `--secondary-foreground` | Text on secondary-colored surfaces | `oklch(0.205 0 0)` |
+| `--muted-foreground` | Placeholder text, helper labels, muted icons | `oklch(0.556 0 0)` |
+| `--accent` | Hover/focus highlight for interactive items | `oklch(0.97 0 0)` |
+| `--accent-foreground` | Text on accent-highlighted items | `oklch(0.205 0 0)` |
+| `--destructive` | Error/invalid state borders and icons | `oklch(0.577 0.245 27.325)` |
+| `--border` | General border color | `oklch(0.922 0 0)` |
+| `--input` | Input field border color | `oklch(0.922 0 0)` |
+| `--ring` | Focus ring and outline color | `oklch(0.708 0 0)` |
+| `--radius` | Base border-radius (derived into sm/md/lg/xl) | `0.625rem` |
+
+## Client-Side Usage (React)
+
+### Example rendering the credit card inputs within your custom form
+
+```tsx
+import { useRef, useState } from "react";
+import {
+  SubFiCreditCardPaymentMethodForm,
+  confirmPaymentIntent,
+  validateForm,
+} from "@subfico/pay-js-sdk/react";
+import type { CreatePaymentIntentInput } from "@subfico/pay-js-sdk/react";
+
+function CheckoutForm() {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    setIsProcessing(true);
+    setError(null);
+
+    try {
+      const isValid = await validateForm({ iframeRef });
+
+      if (!isValid) {
+        setError("Please complete the card form before continuing.");
+        return;
+      }
+
+      const paymentIntentCreateAttributes: CreatePaymentIntentInput = {
+        amount: 5000, // $50.00 in cents
+        capture_method: "automatic",
+      };
+
+      const response = await fetch("/api/payment-intents", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customer: { email: "customer@example.com" },
+          paymentIntent: paymentIntentCreateAttributes,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create payment intent.");
+      }
+
+      const { token } = await response.json();
+      confirmPaymentIntent({ iframeRef, token });
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Unknown error");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <SubFiCreditCardPaymentMethodForm
+        ref={iframeRef}
+        renderToken="the-render-token-that-you-created-on-dashboard.subfi.com"
+        additionalFields={{ cardholderName: true }}
+        onPaymentIntentConfirmationSucceeded={(paymentIntent) => {
+          console.log("Payment succeeded:", paymentIntent.id);
+        }}
+        onSetupIntentConfirmationSucceeded={() => {}}
+        onConfirmationFailed={(errorMessage) => {
+          setError(errorMessage);
+        }}
+      />
+      {error ? <p>{error}</p> : null}
+      <button type="submit" disabled={isProcessing}>
+        {isProcessing ? "Processing..." : "Pay Now"}
+      </button>
+    </form>
+  );
+}
+```
+
+### Example rendering Google Pay within your checkout flow
+
+```tsx
+import { useState } from "react";
+import { SubFiGooglePayButton } from "@subfico/pay-js-sdk/react";
+
+function CheckoutGooglePay() {
+  const [error, setError] = useState<string | null>(null);
+
+  return (
+    <>
+      <SubFiGooglePayButton
+        renderToken="the-render-token-that-you-created-on-dashboard.subfi.com"
+        amount="5000" // $50.00 in cents, as a string
+        merchantName="your-user-facing-merchant-name"
+        onInitiatePaymentIntentRequest={async ({
+          paymentIntentCreateAttributes,
+          customerCreateAttributes,
+        }) => {
+          const response = await fetch("/api/payment-intents", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              customer: customerCreateAttributes,
+              paymentIntent: paymentIntentCreateAttributes,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error("Failed to create payment intent.");
+          }
+
+          const { token } = await response.json();
+          return token;
+        }}
+        onPaymentIntentConfirmationSucceeded={(paymentIntent) => {
+          console.log("Google Pay payment succeeded:", paymentIntent.id);
+        }}
+        onConfirmationFailed={(errorMessage) => {
+          setError(errorMessage);
+        }}
+      />
+      {error ? <p>{error}</p> : null}
+    </>
+  );
+}
+```
+
+### Example saving a payment method with setup intent (credit card)
+
+```tsx
+import { useRef, useState } from "react";
+import {
+  SubFiCreditCardPaymentMethodForm,
+  confirmSetupIntent,
+  validateForm,
+} from "@subfico/pay-js-sdk/react";
+
+function SavePaymentMethodForm() {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    setIsProcessing(true);
+    setError(null);
+
+    try {
+      const isValid = await validateForm({ iframeRef });
+
+      if (!isValid) {
+        setError("Please complete the card form before continuing.");
+        return;
+      }
+
+      const response = await fetch("/api/setup-intents", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customer: { email: "customer@example.com" },
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create setup intent.");
+      }
+
+      const { token } = await response.json();
+      confirmSetupIntent({ iframeRef, token });
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Unknown error");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <SubFiCreditCardPaymentMethodForm
+        ref={iframeRef}
+        renderToken="the-render-token-that-you-created-on-dashboard.subfi.com"
+        onPaymentIntentConfirmationSucceeded={() => {}}
+        onSetupIntentConfirmationSucceeded={(setupIntent) => {
+          console.log("Payment method saved:", setupIntent.payment_method_id);
+        }}
+        onConfirmationFailed={(errorMessage) => {
+          setError(errorMessage);
+        }}
+      />
+      {error ? <p>{error}</p> : null}
+      <button type="submit" disabled={isProcessing}>
+        {isProcessing ? "Processing..." : "Save payment method"}
+      </button>
+    </form>
+  );
+}
+```
+
+## Server-side usage (`@subfico/pay-js-sdk/api`)
+
+Call **`createPayApiClient`** to get a typed [`openapi-fetch`](https://openapi-ts.dev/openapi-fetch) client whose `GET / POST / PUT / DELETE` methods are checked against the SubFi Pay OpenAPI spec — paths, path/query/header params, request bodies, and response bodies are all type-checked at compile time.
+
+The default `baseUrl` is **`PAY_API_BASE_URL_SANDBOX`** (`https://pay-sandbox.subfi.com`); use **`PAY_API_BASE_URL_PRODUCTION`** (`https://pay.subfi.com`) once you go live. Pass credentials and version headers either as default `headers` on the client or per call via `params.header`. The spec marks **`X-Api-Version`** as required on every operation, so the `params.header["X-Api-Version"]` argument is type-required by the call signatures — pass **`PAY_API_VERSION`** (currently `"1"`).
+
+Use the client's middleware hook (`pay.use(...)`) for cross-cutting concerns such as fresh idempotency keys or request tracing.
+
+### Example: create the client
+
+```typescript
+import {
+  createPayApiClient,
+  PAY_API_BASE_URL_SANDBOX,
+  PAY_API_VERSION,
+} from "@subfico/pay-js-sdk/api";
+
+const pay = createPayApiClient({
+  baseUrl: PAY_API_BASE_URL_SANDBOX,
+  headers: {
+    "X-Api-Key": process.env.SUBFI_API_KEY!,
+    // `X-Render-Token` is required when creating payment intents for the iframe flow.
+    "X-Render-Token": process.env.SUBFI_RENDER_TOKEN!,
+  },
+});
+
+// Inject a fresh idempotency key on every mutating request.
+pay.use({
+  onRequest({ request }) {
+    if (request.method !== "GET" && !request.headers.has("X-Idempotency-Key")) {
+      request.headers.set("X-Idempotency-Key", crypto.randomUUID());
+    }
+    return request;
+  },
+});
+```
+
+### Example: create or resolve a customer, then create a payment intent
+
+The OpenAPI schema is re-exported as `paths` / `components` / `operations` / `webhooks`. Derive any model type you need from `components["schemas"]["..."]` — there are no pre-baked aliases like `Customer` or `CreateCustomerInput`. A common pattern is to introduce a local `Schemas` alias:
+
+```typescript
+import type { components } from "@subfico/pay-js-sdk/api";
+import {
+  createPayApiClient,
+  PAY_API_BASE_URL_SANDBOX,
+  PAY_API_VERSION,
+} from "@subfico/pay-js-sdk/api";
+
+type Schemas = components["schemas"];
+type Customer = Schemas["Customer"];
+type CreateCustomerInput = Schemas["CreateCustomerInput"];
+
+const pay = createPayApiClient({
+  baseUrl: PAY_API_BASE_URL_SANDBOX,
+  headers: {
+    "X-Api-Key": process.env.SUBFI_API_KEY!,
+    "X-Render-Token": process.env.SUBFI_RENDER_TOKEN!,
+  },
+});
+
+async function findOrCreateCustomer(
+  requestBody: CreateCustomerInput,
+): Promise<Customer> {
+  const created = await pay.POST("/customers", {
+    params: { header: { "X-Api-Version": PAY_API_VERSION } },
+    body: { customer: requestBody },
+  });
+
+  if (created.data) {
+    return created.data;
+  }
+
+  if (created.response.status === 422 && requestBody.email) {
+    const list = await pay.GET("/customers", {
+      params: {
+        header: { "X-Api-Version": PAY_API_VERSION },
+        query: { email: requestBody.email },
+      },
+    });
+    const existing = list.data?.data?.[0];
+    if (existing) {
+      return existing;
+    }
+  }
+
+  throw new Error(
+    `Failed to create customer: ${created.response.status} ${created.response.statusText}`,
+  );
+}
+
+async function createPaymentIntentHandler(req, res) {
+  try {
+    const { customer, paymentIntent } = req.body;
+    const accountId = process.env.SUBFI_ACCOUNT_ID!;
+
+    const customerRow: Customer = customer?.id
+      ? customer
+      : await findOrCreateCustomer(customer);
+
+    const { data, error, response } = await pay.POST("/payment_intents", {
+      params: {
+        header: {
+          "X-Api-Version": PAY_API_VERSION,
+          "X-Account-Id": accountId,
+        },
+      },
+      body: {
+        payment_intent: {
+          ...paymentIntent,
+          customer_id: customerRow.id,
+        },
+      },
+    });
+
+    if (error || !data) {
+      throw new Error(
+        `Failed to create payment intent: ${response.status} ${response.statusText}`,
+      );
+    }
+
+    res.json({ token: data.token });
+  } catch (error) {
+    console.error("Payment failed:", error);
+    res.status(500).json({ error: "Failed to create payment intent" });
+  }
+}
+```
+
+### Example: create or resolve a customer, then create a setup intent
+
+`POST /setup_intents` returns an **`EmbedToken`** (minted embed JWT); use **`data.token`** with **`confirmSetupIntent`** in the browser, same as for payment intents.
+
+```typescript
+import type { components } from "@subfico/pay-js-sdk/api";
+import {
+  createPayApiClient,
+  PAY_API_BASE_URL_SANDBOX,
+  PAY_API_VERSION,
+} from "@subfico/pay-js-sdk/api";
+
+type Schemas = components["schemas"];
+type Customer = Schemas["Customer"];
+type CreateCustomerInput = Schemas["CreateCustomerInput"];
+
+const pay = createPayApiClient({
+  baseUrl: PAY_API_BASE_URL_SANDBOX,
+  headers: { "X-Api-Key": process.env.SUBFI_API_KEY! },
+});
+
+async function findOrCreateCustomer(
+  requestBody: CreateCustomerInput,
+): Promise<Customer> {
+  // (Same implementation as in the payment intent example.)
+  // ...
+  throw new Error("not implemented");
+}
+
+async function createSetupIntentHandler(req, res) {
+  try {
+    const { customer } = req.body;
+    const accountId = process.env.SUBFI_ACCOUNT_ID!;
+
+    const customerRow: Customer = customer?.id
+      ? customer
+      : await findOrCreateCustomer(customer);
+
+    const { data, error, response } = await pay.POST("/setup_intents", {
+      params: {
+        header: {
+          "X-Api-Version": PAY_API_VERSION,
+          "X-Account-Id": accountId,
+          "X-Idempotency-Key": crypto.randomUUID(),
+        },
+      },
+      body: { setup_intent: { customer_id: customerRow.id } },
+    });
+
+    if (error || !data) {
+      throw new Error(
+        `Failed to create setup intent: ${response.status} ${response.statusText}`,
+      );
+    }
+
+    res.json({ token: data.token });
+  } catch (error) {
+    console.error("Setup intent failed:", error);
+    res.status(500).json({ error: "Failed to create setup intent" });
+  }
+}
+```
+
+### Reading responses (`data` / `error`)
+
+Every call returns a discriminated union: `{ data, error, response }`. On a `2xx` response, `data` is the typed body and `error` is `undefined`; on a `4xx`/`5xx` response, `error` holds the parsed error body and `data` is `undefined`. `response` is always the underlying `Response`. Network failures throw as usual — wrap in `try/catch` if you also need to handle those.
+
+```typescript
+const { data, error, response } = await pay.GET("/customers/{id}", {
+  params: {
+    header: { "X-Api-Version": PAY_API_VERSION },
+    path: { id: customerId },
+  },
+});
+
+if (error) {
+  console.error(`Pay API ${response.status}:`, error);
+  return;
+}
+
+console.log(data); // typed as `Customer`
+```
+
+### Custom headers and idempotency
+
+Use the client's middleware hook to compute headers per request (fresh **`X-Idempotency-Key`**, tracing IDs, etc.). You can also pass `headers` per call, which are merged on top of the client-level defaults.
+
+### Retries
+
+`openapi-fetch` does **not** retry on 5xx or network errors. Add retry logic in middleware (`pay.use({ async onResponse(...) { ... } })`) or wrap individual calls in your own helper if you need it.
+
+### Other `@subfico/pay-js-sdk/api` exports
+
+Besides **`createPayApiClient`** and the constants **`PAY_API_BASE_URL_SANDBOX`** / **`PAY_API_BASE_URL_PRODUCTION`** / **`PAY_API_VERSION`**, this entry re-exports:
+
+- The full set of [`openapi-typescript`](https://openapi-ts.dev/)-generated schema types: **`paths`**, **`components`**, **`operations`**, and **`webhooks`**. Derive any model type from **`components["schemas"]["..."]`** — for example **`components["schemas"]["Customer"]`**, **`components["schemas"]["PaymentIntent"]`**, or **`components["schemas"]["CreatePaymentIntentInput"]`**. Header / query / path parameters live under **`components["parameters"]`**. The SDK does not ship any pre-baked aliases on top of these; alias whatever you need locally (for example `type Schemas = components["schemas"]`).
+- The [`openapi-fetch`](https://openapi-ts.dev/openapi-fetch) types **`PayApiClient`** (the return type of `createPayApiClient`), **`ClientOptions`**, and **`Middleware`**.
+
+## React SDK API Reference (`@subfico/pay-js-sdk/react`)
+
+### `validateForm({ iframeRef })`
+
+Validates the embedded card/bank iframe form before payment confirmation.
+
+**Parameters:**
+
+- `iframeRef` (`React.Ref | undefined`, required)
+
+**Returns:** `Promise `
+
+### `confirmPaymentIntent({ iframeRef, token })`
+
+Confirms a payment intent in the embedded iframe flow.
+
+**Parameters:**
+
+- `iframeRef` (`React.Ref | undefined`, required)
+- `token` (typed as `Pick ` — the embed JWT string returned by your server)
+
+**Returns:** `void`
+
+### `confirmSetupIntent({ iframeRef, token })`
+
+Confirms a setup intent in the embedded iframe flow. Use this when saving a payment method for future use. Includes automatic retry logic (up to 2 retries with exponential backoff: 500 ms, 1 s).
+
+**Parameters:**
+
+- `iframeRef` (`React.Ref | undefined`, required)
+- `token` (same `Pick ` embed JWT string as for payment confirmation)
+
+**Returns:** `void`
+
+### Automatic retry logic (React SDK)
+
+The `confirmSetupIntent` function and the `onInitiatePaymentIntentRequest` callback (used in the Google Pay express checkout flow) include automatic retry logic with exponential backoff.
+
+**Default behavior:**
+
+- Up to **2 retries** (3 total attempts) per request
+- Exponential backoff starting at **500 ms** (500 ms → 1 s)
+- Retry on 5xx responses and network errors only
+
+No opt-in or configuration is required — retry behavior is built into these functions automatically.
+
+### `SubFiCreditCardPaymentMethodForm`
+
+Renders the secure credit card iframe form.
+
+**Required props:**
+
+- `renderToken` (`string`)
+- `onConfirmationFailed` (`(errorMessage: string) => void`)
+
+**Optional props:**
+
+- `appearance` (`{ themeVariables?: Partial > }`) — appearance overrides for the iframe UI (see [Appearance](#appearance))
+- `onPaymentIntentConfirmationSucceeded` (`(paymentIntent: PaymentIntent) => void`)
+- `onSetupIntentConfirmationSucceeded` (`(setupIntent: SetupIntent) => void`)
+- `additionalFields` (`{ cardholderName: boolean }`) — set `additionalFields={{ cardholderName: true }}` to render the cardholder name field in the iframe (`false` by default)
+
+**Also accepts:** standard iframe props (`React.ComponentProps<"iframe">`)
+
+### `SubFiBankAccountPaymentMethodForm`
+
+Renders the secure bank account iframe form.
+
+**Required props:** same as `SubFiCreditCardPaymentMethodForm` — `renderToken`, `onConfirmationFailed`
+
+**Optional props:** same as `SubFiCreditCardPaymentMethodForm` — `appearance`, `onPaymentIntentConfirmationSucceeded`, `onSetupIntentConfirmationSucceeded`
+
+**Also accepts:** standard iframe props (`React.ComponentProps<"iframe">`)
+
+### `SubFiGooglePayButton`
+
+Renders the secure Google Pay iframe button (express checkout flow).
+
+**Required props:**
+
+- `renderToken` (`string`)
+- `amount` (`string`)
+- `merchantName` (`string`)
+- `onInitiatePaymentIntentRequest` (callback receiving `{ paymentIntentCreateAttributes: CreatePaymentIntentInput; customerCreateAttributes: CreateCustomerInput }`, returns `Promise ` — the embed JWT string for confirmation) — includes automatic retry logic (up to 2 retries with exponential backoff: 500 ms, 1 s)
+- `onPaymentIntentConfirmationSucceeded` (`(paymentIntent: PaymentIntent) => void`)
+- `onConfirmationFailed` (`(errorMessage: string) => void`)
+
+**Optional props:**
+
+- `appearance` (`{ themeVariables?: Partial > }`) — appearance overrides for the iframe UI (see [Appearance](#appearance))
+
+**Also accepts:** standard iframe props (`React.ComponentProps<"iframe">`)
+
+### `formatGooglePayPaymentData({ paymentData })`
+
+Transforms Google Pay payment data into a SubFi-compatible `paymentMethod` payload. Use this when integrating with the raw Google Pay API (e.g., `@google-pay/button-react`) instead of `SubFiGooglePayButton` — `SubFiGooglePayButton` handles payment data internally and does not require this helper.
+
+**Parameters:**
+
+- `paymentData` (`google.payments.api.PaymentData`, required)
+
+**Returns:** `{ paymentMethod: { ... } }`
+
+### `createMessage(message)`
+
+Advanced helper for creating typed iframe postMessage payloads. Used internally by the SDK; most integrators do not need to call this directly.
+
+### Exported React Types
+
+For convenience, `@subfico/pay-js-sdk/react` re-exports the handful of OpenAPI-generated types it uses in its own component / callback signatures. Each one is a thin alias for the corresponding entry under `components["schemas"]` in the bundled `openapi/schema.ts` (also reachable via `@subfico/pay-js-sdk/api`), so feel free to use either spelling.
+
+- `CreateCustomerInput` — alias for `components["schemas"]["CreateCustomerInput"]`.
+- `CreatePaymentIntentInput` — alias for `components["schemas"]["CreatePaymentIntentInput"]`.
+- `CreateSetupIntentInput` — alias for `components["schemas"]["CreateSetupIntentInput"]`.
+- `PaymentIntent` — alias for `components["schemas"]["PaymentIntent"]`.
+- `SetupIntent` — alias for `components["schemas"]["SetupIntent"]`.
+- `EmbedToken` — alias for `components["schemas"]["EmbedToken"]`. API envelope `{ token?, ttl? }` for a minted embed JWT. `POST /payment_intents` and `POST /setup_intents` resolve to this shape. `confirmPaymentIntent`, `confirmSetupIntent`, and the Google Pay `onInitiatePaymentIntentRequest` return type use **`Pick `** (the JWT string returned by your server).
+- `EmbedTokenJwt` — alias for `components["schemas"]["EmbedTokenJwt"]`. Decoded JWT payload for that embed token (`account_id`, `payment_intent_id`, `setup_intent_id`, etc.).
+- `RenderTokenJwt` — alias for `components["schemas"]["RenderTokenJwt"]`. Decoded JWT payload for the dashboard **render** token (`env`, `origins`, `allowed_payment_method_types`, `render_template_id`, etc.).
+- `Message` — typed `postMessage` payloads for the iframe integration (`CONFIRM_PAYMENT_INTENT` / `CONFIRM_SETUP_INTENT` pair resource `id` fields with the embed JWT string from `EmbedToken`). Defined directly inside `@subfico/pay-js-sdk/react`.
+
+The spec also defines **`RenderToken`** (= `components["schemas"]["RenderToken"]`) as `{ token?, ttl? }` for minted render-template JWTs. It is used by the OpenAPI HTTP client and is **not** re-exported from `@subfico/pay-js-sdk/react`; pull it from `@subfico/pay-js-sdk/api` via `components["schemas"]["RenderToken"]` if you need it. Client code typically only needs **`RenderTokenJwt`** when typing a **decoded** render-token payload.
+
+## Notes and potential gotchas
+
+- **`ref` / `iframeRef`**: For card and bank forms, pass `ref={iframeRef}` to the form component. The same `iframeRef` must be used when calling `validateForm`, `confirmPaymentIntent`, or `confirmSetupIntent`. The component forwards the ref to the inner iframe.
+
+- **Same components for payment vs setup intents**: `SubFiCreditCardPaymentMethodForm` and `SubFiBankAccountPaymentMethodForm` support both payment intents and setup intents. The flow differs only by which server call you make (for example `pay.POST("/payment_intents", ...)` vs `pay.POST("/setup_intents", ...)`) and which confirmation function you use (`confirmPaymentIntent` vs `confirmSetupIntent`). You may optionally provide `onPaymentIntentConfirmationSucceeded` and/or `onSetupIntentConfirmationSucceeded`; the appropriate one is invoked based on the flow.
+
+- **Amount format**: For `SubFiGooglePayButton`, `amount` is a string (e.g. `"5000"` for $50.00). For `CreatePaymentIntentInput` on the server, `amount` is a number in cents (e.g. `5000`).
+
+---
+
+**Full product docs:** [docs.subfi.com](https://docs.subfi.com)

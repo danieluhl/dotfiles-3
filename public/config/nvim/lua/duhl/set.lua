@@ -64,14 +64,18 @@ vim.filetype.add({
   extension = {
     conf = "conf",
     env = "sh",
+    vars = "sh",
   },
   filename = {
     [".env"] = "sh",
+    [".dev.vars"] = "sh",
     ["tsconfig.json"] = "jsonc",
     [".yamlfmt"] = "yaml",
+    [".yml"] = "yaml",
   },
   pattern = {
     ["%.env%.[%w_.-]+"] = "sh",
+    ["%.vars%.[%w_.-]+"] = "sh",
   },
 })
 

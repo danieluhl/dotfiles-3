@@ -1,0 +1,62 @@
+{
+  "projectRoot": "/Users/duhl/git/ui/apps/org-next",
+  "generatedAtMs": 1777662909573,
+  "currentSuggestionIds": [
+    "0a959588-1511-4abd-af40-3bade13b724f",
+    "36619c1a-1a1a-44ac-8d87-938504b6dddb"
+  ],
+  "suggestions": [
+    {
+      "id": "67f80f8e-fd71-4a9b-8563-810c67c631ad",
+      "title": "Finish org-next auth callback flow",
+      "description": "`master` picked up the initial auth handoff on Apr 21, but `apps/org-next/docs/README.md` still says the return/callback wiring is not implemented. `apps/auth/docs/client-integration.md` already documents the authorize/code flow, so there is a concrete cross-app contract to wire up now.",
+      "prompt": "Implement the missing auth callback flow in `apps/org-next` against the contract in `apps/auth/docs/client-integration.md`. Add the route/state handling, token or session handoff needed on return, tests for the happy path and bad-state case, and update `apps/org-next/docs/README.md` to match the finished flow.",
+      "threadAction": {
+        "type": "new-thread"
+      },
+      "appIds": [],
+      "status": "pending",
+      "createdAtMs": 1777643130715,
+      "updatedAtMs": 1777643130715
+    },
+    {
+      "id": "eb6a2032-840d-4417-990d-759f371e9b80",
+      "title": "Remove the hard-coded SubFi render token",
+      "description": "Your `an/sub-integration` branch was updated on Apr 29 and adds `src/server/payments.server.ts` plus `src/routes/_authed/campaigns/$campaignId/pages/demo.tsx`, but that demo page currently embeds a literal `VITE_SUB_RENDER_TOKEN` JWT in client code. That is a concrete security and environment-leak issue in the active payments work.",
+      "prompt": "In the `an/sub-integration` work, remove the hard-coded SubFi render token from `apps/org-next/src/routes/_authed/campaigns/$campaignId/pages/demo.tsx` and replace it with an env-backed/server-delivered flow that keeps secrets out of the client bundle. Add the minimal test and docs updates needed so the payments demo route is safe to keep iterating on.",
+      "threadAction": {
+        "type": "new-thread"
+      },
+      "appIds": [],
+      "status": "pending",
+      "createdAtMs": 1777643130715,
+      "updatedAtMs": 1777643130715
+    },
+    {
+      "id": "0a959588-1511-4abd-af40-3bade13b724f",
+      "title": "Unblock Sandcastle planner in this repo",
+      "description": "Your current branch is `dan/sandcastle-integration`, and today’s `.sandcastle/logs/dan-sandcastle-integration-planner.log` shows the planner still dies during setup on `git config --global --add safe.directory` and then `pnpm install`. That is a fresh, user-owned blocker with local repo changes already in flight (`package.json`, `pnpm-lock.yaml`, `pnpm-workspace.yaml`, `.sandcastle/`).",
+      "prompt": "Make the Sandcastle setup on `dan/sandcastle-integration` actually run in this repo. Fix the `.sandcastle` runner/Docker setup so the planner sandbox can get past the `safe.directory` and `pnpm install` failures shown in `.sandcastle/logs/dan-sandcastle-integration-planner.log`, then update any repo docs or setup notes that need to explain the working path.",
+      "threadAction": {
+        "type": "new-thread"
+      },
+      "appIds": [],
+      "status": "pending",
+      "createdAtMs": 1777662909573,
+      "updatedAtMs": 1777662909573
+    },
+    {
+      "id": "36619c1a-1a1a-44ac-8d87-938504b6dddb",
+      "title": "Replace the placeholder campaign page route",
+      "description": "The active `an/sub-integration` branch added payment-page work on Apr 28-29, but `src/routes/_authed/campaigns/$campaignId/pages/$pageId.tsx` still renders only `Donation Page`, while the campaign detail page hard-links to `/pages/demo`. That leaves the new campaign-page surface half-wired even after the recent payments branch work.",
+      "prompt": "Finish the campaign page routing in `apps/org-next` on top of the recent payments work. Replace the placeholder `src/routes/_authed/campaigns/$campaignId/pages/$pageId.tsx` route with a real loader/component flow, stop hard-coding the detail page link to `/pages/demo` where appropriate, and add the minimal tests and docs updates so the campaign page path is a real product surface instead of a stub.",
+      "threadAction": {
+        "type": "new-thread"
+      },
+      "appIds": [],
+      "status": "pending",
+      "createdAtMs": 1777662909573,
+      "updatedAtMs": 1777662909573
+    }
+  ]
+}

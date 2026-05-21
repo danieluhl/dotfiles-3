@@ -1,0 +1,7 @@
+---
+pid: 9499
+cwd: /Users/duhl
+last_command: Agent pid 9537
+---
+Agent pid 9537
+➜  ~ 

@@ -27,6 +27,11 @@ return {
         graphql = { "prettier", stop_after_first = true },
         gleam = { "gleam", stop_after_first = true },
       },
+      formatters = {
+        yamlfmt = {
+          prepend_args = { "-formatter", "retain_line_breaks=true" },
+        },
+      },
       format_on_save = {
         lsp_fallback = true,
         async = false,

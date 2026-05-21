@@ -1,0 +1,18 @@
+{
+  "claude-plugins-official": {
+    "source": {
+      "source": "github",
+      "repo": "anthropics/claude-plugins-official"
+    },
+    "installLocation": "/Users/duhl/.claude/plugins/marketplaces/claude-plugins-official",
+    "lastUpdated": "2026-04-13T14:41:02.181Z"
+  },
+  "addy-agent-skills": {
+    "source": {
+      "source": "github",
+      "repo": "addyosmani/agent-skills"
+    },
+    "installLocation": "/Users/duhl/.claude/plugins/marketplaces/addy-agent-skills",
+    "lastUpdated": "2026-04-13T14:32:03.813Z"
+  }
+}

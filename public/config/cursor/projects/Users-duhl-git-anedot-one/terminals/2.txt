@@ -1,0 +1,7 @@
+---
+pid: 51294
+cwd: /Users/duhl/git/anedot-one
+last_command: Agent pid 51335
+---
+Agent pid 51335
+➜  anedot-one git:(dan/api-neon-setup) ✗ 

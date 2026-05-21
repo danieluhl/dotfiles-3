@@ -1,0 +1,644 @@
+# Pull Request: cloudflare/workers-sdk #11632
+
+- Repository: cloudflare/workers-sdk | ⛅️ Home to Wrangler, the CLI for Cloudflare Workers® | 4K stars | TypeScript
+
+## Support Vitest 4 in `@cloudflare/vitest-pool-workers`
+
+- Author: [@penalosa](https://github.com/penalosa)
+- Association: CONTRIBUTOR
+- State: merged
+- Source branch: penalosa/vitest-v4-support
+- Target branch: main
+- Mergeable: unknown
+- Commits: 74
+- Additions: 4491
+- Deletions: 5582
+- Changed files: 193
+- Created: 2025-12-12T23:20:26Z
+- Updated: 2026-03-20T05:15:13Z
+- Closed: 2026-03-10T21:26:48Z
+- Merged: 2026-03-10T21:26:47Z
+- Merged by: [@penalosa](https://github.com/penalosa)
+
+Fixes https://github.com/cloudflare/workers-sdk/issues/11064
+Fixes https://github.com/cloudflare/workers-sdk/issues/10260 (tests added to verify the mentioned libraries can be imported)
+Fixes https://github.com/cloudflare/workers-sdk/issues/9957 (`provide` data moved from HTTP headers to WebSocket messages, removing the ~8 KB size limit)
+Fixes https://github.com/cloudflare/workers-sdk/issues/8369 (`defineWorkersConfig` is removed)
+Fixes https://github.com/cloudflare/workers-sdk/issues/7795 (everything is now encapsulated in a plugin, and so this type of configuration problem is impossible)
+Fixes https://github.com/cloudflare/workers-sdk/issues/7717 (leaked FSWatcher from Pages ASSETS binding is now closed via AbortSignal on pool worker stop)
+Fixes https://github.com/cloudflare/workers-sdk/issues/7339 (we no longer recommend importing `env` from `cloudflare:test`. Instead, import `env` from `cloudflare:workers` and use `withEnv` to override the value: https://developers.cloudflare.com/workers/runtime-apis/bindings/#overriding-env-values)
+Fixes https://github.com/cloudflare/workers-sdk/issues/7324 (`nodejs_compat_v2` and Node module flags are now forcibly enabled during tests)
+Fixes https://github.com/cloudflare/workers-sdk/issues/7288 (new `WorkersSnapshotEnvironment` proxies snapshot file operations over a service binding)
+Fixes https://github.com/cloudflare/workers-sdk/issues/6465 (`workerd` resolve condition is explicitly included, `node` condition is removed)
+Fixes https://github.com/cloudflare/workers-sdk/issues/6214 (bare Node.js specifiers like `"url"` are resolved by prepending `node:` in the module fallback)
+Fixes https://github.com/cloudflare/workers-sdk/issues/5592 (SSR optimizer replaced with `server.deps.inline = true`, so Stripe resolves to its worker build)
+Fixes https://github.com/cloudflare/workers-sdk/issues/5396 (module graph is now populated via standard Vitest `PoolWorker` RPC — the UI should work)
+Fixes #11690, fixes #11031, fixes #7707, fixes #5524 (Per-test isolated storage is completely removed, and so the entire mechanism that caused this is gone)
+Fixes #6391 (fetch mock is now removed entirely)
+
+This a breaking change to the `@cloudflare/vitest-pool-workers` integration in order to support Vitest v4. Along with supporting Vitest v4 (and dropping support for Vitest v2 and v3), we've made a number of changes that may require changes to your tests. Our aim has been to improve stability & the foundations of `@cloudflare/vitest-pool-workers` as we move towards a v1 release of the package.
+
+We've made a codemod to make the migration easier: `wrangler codemod vitest-pool-v3-to-v4`, which will make the required changes to your config file.
+
+- **`isolatedStorage` & `singleWorker`:** These have been removed in favour of a simpler isolation model that more closely matches Vitest. Storage isolation is now on a per test file basis, and you can make your test files share the same storage by using the Vitest flags `--max-workers=1 --no-isolate`
+- **`import { env, SELF } from "cloudflare:test"`:** These have been deprecated in favour of `import { env, exports } from "cloudflare:workers"`. `exports.default.fetch()` has the same behaviour as `SELF.fetch()`, except that it doesn't expose Assets. To test your assets, use the `env.ASSETS` bindings or write an integration test using [`startDevWorker()` (recommended)](https://developers.cloudflare.com/workers/testing/unstable_startworker/)
+- **`import { fetchMock } from "cloudflare:test"`:** This has been removed. Instead, [mock `globalThis.fetch`](https://github.com/cloudflare/workers-sdk/blob/main/fixtures/vitest-pool-workers-examples/request-mocking/test/imperative.test.ts) or use ecosystem libraries like [MSW (recommended)](https://mswjs.io/).
+
+---
+
+- Tests
+
+- [x] Tests included/updated
+ - [ ] Tests not necessary because:
+
+- Public documentation
+
+- [x] Cloudflare docs PR(s): https://github.com/cloudflare/cloudflare-docs/pull/28908
+ - [ ] Documentation not necessary because: coming soon
+
+- Wrangler V3 Backport
+
+- [ ] Wrangler PR: 
+ - [x] Not necessary because: not Wrangler
+
+*A picture of a cute animal (not mandatory, but encouraged)*
+[Image: IMG_20170827_223510_169 2 | https://github.com/user-attachments/assets/1efb2cc8-abdb-42a0-a0ee-eecacb3c051e]
+
+---
+
+### Timeline
+
+**@changeset-bot[bot]** commented · Dec 12, 2025 at 11:20pm · edited
+
+> ### 🦋 Changeset detected
+> 
+> Latest commit: 405a19207f14fbe0a9751a5c167a5c150a683854
+> 
+> **The changes in this PR will be included in the next version bump.**
+> 
+> Not sure what this means? [Click here to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+> 
+> [Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/cloudflare/workers-sdk/new/penalosa/vitest-v4-support?filename=.changeset/pretty-suns-sip.md&value=---%0A%22%40fake-scope%2Ffake-pkg%22%3A%20patch%0A---%0A%0ASupport%20Vitest%204%20in%20%60%40cloudflare%2Fvitest-pool-workers%60%0A)
+
+**penalosa** force-pushed the branch · Dec 17, 2025 at 10:15pm
+
+**penalosa** force-pushed the branch · Dec 17, 2025 at 10:16pm
+
+**penalosa** force-pushed the branch · Dec 17, 2025 at 10:17pm
+
+**penalosa** force-pushed the branch · Dec 17, 2025 at 10:22pm
+
+**@pkg-pr-new[bot]** commented · Dec 17, 2025 at 10:27pm · edited
+
+> ** create-cloudflare **
+> 
+> 
+> ```
+> npm i https://pkg.pr.new/create-cloudflare@11632
+> ```
+> 
+> 
+> 
+> ** @cloudflare/kv-asset-handler **
+> 
+> 
+> ```
+> npm i https://pkg.pr.new/@cloudflare/kv-asset-handler@11632
+> ```
+> 
+> 
+> 
+> ** miniflare **
+> 
+> 
+> ```
+> npm i https://pkg.pr.new/miniflare@11632
+> ```
+> 
+> 
+> 
+> ** @cloudflare/pages-shared **
+> 
+> 
+> ```
+> npm i https://pkg.pr.new/@cloudflare/pages-shared@11632
+> ```
+> 
+> 
+> 
+> ** @cloudflare/unenv-preset **
+> 
+> 
+> ```
+> npm i https://pkg.pr.new/@cloudflare/unenv-preset@11632
+> ```
+> 
+> 
+> 
+> ** @cloudflare/vite-plugin **
+> 
+> 
+> ```
+> npm i https://pkg.pr.new/@cloudflare/vite-plugin@11632
+> ```
+> 
+> 
+> 
+> ** @cloudflare/vitest-pool-workers **
+> 
+> 
+> ```
+> npm i https://pkg.pr.new/@cloudflare/vitest-pool-workers@11632
+> ```
+> 
+> 
+> 
+> ** @cloudflare/workers-editor-shared **
+> 
+> 
+> ```
+> npm i https://pkg.pr.new/@cloudflare/workers-editor-shared@11632
+> ```
+> 
+> 
+> 
+> ** wrangler **
+> 
+> 
+> ```
+> npm i https://pkg.pr.new/wrangler@11632
+> ```
+> 
+> 
+> 
+> _commit: e8bf541 _
+
+**penalosa** reviewed: commented · Dec 17, 2025 at 11:11pm
+
+**penalosa** force-pushed the branch · Dec 18, 2025 at 3:10pm
+
+**@claude[bot]** commented · Dec 18, 2025 at 3:10pm · edited
+
+> **Claude encountered an error** —— [View job](https://github.com/cloudflare/workers-sdk/actions/runs/22467810528)
+> 
+> ---
+> 
+> ### Reviewing Changesets [Image: 5ac382c7-e004-429b-8e35-7feb3e8f9c6f | https://github.com/user-attachments/assets/5ac382c7-e004-429b-8e35-7feb3e8f9c6f]
+> 
+> - [ ] Read changeset guidelines
+> - [ ] Review .changeset/many-fishes-raise.md
+> - [ ] Review .changeset/wrangler-codemod-command.md
+> - [ ] Check attached image for cute animals
+
+**penalosa** force-pushed the branch · Dec 18, 2025 at 5:58pm
+
+**Samuel Macleod** pushed commit `f649413`: Support Vitest v4; pushed commit `3afc4f6`: fix build · Dec 18, 2025 at 7:06pm
+
+**Samuel Macleod** pushed commit `964012e`: fix build · Dec 18, 2025 at 7:24pm
+
+**penalosa** force-pushed the branch · Dec 18, 2025 at 7:24pm
+
+**Samuel Macleod** pushed commit `e1f2a8b`: fix build · Dec 18, 2025 at 8:09pm
+
+**Samuel Macleod** pushed commit `cfc5f70`: fix snapshot · Dec 18, 2025 at 8:18pm
+
+**Samuel Macleod** pushed commit `704466b`: fix fixture tests · Dec 18, 2025 at 9:06pm
+
+**penalosa** marked this as ready for review; requested review from team **wrangler**; requested review from team **Workflows**; requested review from team **Pages** · Dec 18, 2025 at 9:47pm
+
+**@ascorbic** commented · Dec 19, 2025 at 2:58pm
+
+> **Review (commented):**
+> Mostly some questions. Otherwise, looking great!
+
+**Samuel Macleod** pushed commit `99a88c9`: env & exports · Dec 19, 2025 at 6:20pm
+
+**Samuel Macleod** pushed commit `3e60beb`: better module runner · Dec 19, 2025 at 8:25pm
+
+**Samuel Macleod** pushed commit `9dec2c5`: Merge remote-tracking branch 'origin/main' into penalosa/vitest-v4-support · Dec 19, 2025 at 8:49pm
+
+**Samuel Macleod** pushed commit `3037a20`: fix tests after merge · Dec 19, 2025 at 8:58pm
+
+**Samuel Macleod** pushed commit `c6af16d`: green · Dec 19, 2025 at 10:40pm
+
+**Samuel Macleod** pushed commit `64982d4`: run with vitest3 · Dec 19, 2025 at 11:10pm
+
+**BarryThePenguin** mentioned this in PR [#1651: chore: upgrade vitest to v4](https://github.com/honojs/middleware/pull/1651) · Dec 23, 2025 at 10:07am
+
+**jamesopstad** reviewed: commented · Dec 23, 2025 at 11:01am
+
+**dangeredwolf** mentioned this in PR [#1601: chore(deps): update dependency vitest to v4 - autoclosed](https://github.com/FxEmbed/FxEmbed/pull/1601) · Dec 29, 2025 at 4:58am
+
+**43081j** reviewed: commented · Jan 5, 2026 at 5:35pm
+
+**43081j** reviewed: commented · Jan 6, 2026 at 10:06am
+
+**43081j** reviewed: commented · Jan 6, 2026 at 2:32pm
+
+**belgattitude** mentioned this in PR [#2664: Reenable cloudflare tests by using upstream PR (pkg.new)](https://github.com/belgattitude/httpx/pull/2664) · Jan 15, 2026 at 11:50am
+
+**malobre** mentioned this in issue [#11064: [vitest-pool-workers] Support Vitest v4](https://github.com/cloudflare/workers-sdk/issues/11064) · Jan 19, 2026 at 1:08pm
+
+**Samuel Macleod** pushed commit `c4ec1a8`: Merge remote-tracking branch 'origin/main' into penalosa/vitest-v4-support · Jan 19, 2026 at 3:08pm
+
+**Samuel Macleod** pushed commit `adc5e54`: address some comments · Jan 19, 2026 at 3:36pm
+
+**Samuel Macleod** pushed commit `1149696`: fix tests · Jan 19, 2026 at 4:35pm
+
+**Samuel Macleod** pushed commit `1625d85`: Merge remote-tracking branch 'origin/main' into penalosa/vitest-v4-support · Jan 19, 2026 at 4:54pm
+
+**Samuel Macleod** pushed commit `e80bd62`: Merge remote-tracking branch 'origin/main' into penalosa/vitest-v4-support · Jan 19, 2026 at 5:22pm
+
+**Samuel Macleod** pushed commit `9f80b75`: lockfile · Jan 19, 2026 at 5:29pm
+
+**@GregBrimble** commented · Jan 20, 2026 at 3:02am
+
+> One question about the move from `SELF` to `exports.default`: if I use on-by-default features ahead of my main entrypoint (e.g. Assets without a binding), does this mean I can't access them from within my tests? I doubt that actually ever worked with `SELF`, but the new `exports.default` pattern makes it quite explicit that this isn't something we're wanting to offer here at this contract. Is there a different API we should be using? If I configure a binding, I can do `env.ASSETS`, but I'm still not getting any router-worker behavior with that. I wonder if `SELF` still does make sense to refer to the application as a whole?
+
+**Somhairle MacLeòid** pushed commit `d317d15`: Merge branch 'main' into penalosa/vitest-v4-support · Jan 20, 2026 at 1:34pm
+
+**@penalosa** commented · Jan 20, 2026 at 1:37pm · Author
+
+> > One question about the move from `SELF` to `exports.default`: if I use on-by-default features ahead of my main entrypoint (e.g. Assets without a binding), does this mean I can't access them from within my tests? I doubt that actually ever worked with `SELF`, but the new `exports.default` pattern makes it quite explicit that this isn't something we're wanting to offer here at this contract. Is there a different API we should be using? If I configure a binding, I can do `env.ASSETS`, but I'm still not getting any router-worker behavior with that. I wonder if `SELF` still does make sense to refer to the application as a whole?
+> 
+> Yes, this is an intentional change. `exports.default` doesn't expose assets in production, and we want to minimise custom testing APIs in Vitest. You should be able to test Assets with a binding if you need to, but if you want a full router-worker integration test the recommendation will be to use [`startDevWorker()`](https://developers.cloudflare.com/workers/testing/unstable_startworker/), which will more closely match the full flow.
+
+**Samuel Macleod** pushed commit `20eb0a6`: fix snapshot · Jan 20, 2026 at 3:52pm
+
+**Samuel Macleod** pushed commit `2f511be`: lock down versions · Jan 20, 2026 at 4:18pm
+
+**Samuel Macleod** pushed commit `7143d5d`: fix? · Jan 20, 2026 at 4:32pm
+
+**@devin-ai-integration[bot]** commented · Jan 21, 2026 at 11:58am
+
+> **Review (commented):**
+> **Devin Review** found 3 potential issues.
+> 
+> View issues and 9 additional flags in Devin Review.
+> 
+> 
+> 
+> 
+> [Image: Open in Devin Review | https://static.devin.ai/assets/gh-open-in-devin-review-light.svg?v=1]
+> 
+> 
+
+**@edmundhung** commented · Jan 21, 2026 at 3:18pm
+
+> **Review (commented):**
+> I am still going through the changes. Just finished the examples parts. Looking great! 💯
+
+**justinvdm** mentioned this in PR [#964: RedwoodSDK Vitest Showcase (with RSC Test-Bridge)](https://github.com/redwoodjs/sdk/pull/964) · Jan 21, 2026 at 4:28pm
+
+**@edmundhung** commented · Jan 21, 2026 at 6:38pm
+
+> **Review (commented):**
+> Such a relief to see how much vitest-pool-workers gets simplified. THANK YOU! 🫶
+> 
+> I will set aside some time to play with it more later this week.
+
+**Samuel Macleod** pushed commit `de5f57f`: Add nunjucks to module-resolution fixture · Jan 22, 2026 at 8:53pm
+
+**Samuel Macleod** pushed commit `7870094`: Add comment re hardcoded event names · Jan 22, 2026 at 8:55pm
+
+**Samuel Macleod** pushed commit `3f6fef8`: delete temp dirs · Jan 22, 2026 at 8:57pm
+
+**@devin-ai-integration[bot]** commented · Jan 22, 2026 at 9:02pm
+
+> **Review (commented):**
+> **Devin Review** found 2 new potential issues.
+> 
+> View issues and 19 additional flags in Devin Review.
+> 
+> 
+> 
+> 
+> [Image: Open in Devin Review | https://static.devin.ai/assets/gh-open-in-devin-review-light.svg?v=1]
+> 
+> 
+
+**Samuel Macleod** pushed commit `131244a`: address more comments · Jan 22, 2026 at 9:05pm
+
+**Samuel Macleod** pushed commit `1c67bfe`: Merge remote-tracking branch 'origin/main' into penalosa/vitest-v4-support · Jan 22, 2026 at 9:18pm
+
+**Samuel Macleod** pushed commit `858ed07`: fix tests after merge · Jan 22, 2026 at 9:42pm
+
+**@devin-ai-integration[bot]** commented · Jan 22, 2026 at 9:48pm
+
+> **Review (commented):**
+> **Devin Review** found 1 new potential issue.
+> 
+> View issue and 26 additional flags in Devin Review.
+> 
+> 
+> 
+> 
+> [Image: Open in Devin Review | https://static.devin.ai/assets/gh-open-in-devin-review-light.svg?v=1]
+> 
+> 
+
+**justinvdm** mentioned this in issue [#619: Support usage with vitest (or communicate that we do not)](https://github.com/redwoodjs/sdk/issues/619) · Jan 22, 2026 at 9:59pm
+
+**Samuel Macleod** pushed commit `79a1932`: Merge remote-tracking branch 'origin/main' into penalosa/vitest-v4-support · Jan 22, 2026 at 11:48pm
+
+**penalosa** mentioned this in issue [#5942: 🐛 BUG: vitest isolated runtimes AssertionError when run from vscode extension](https://github.com/cloudflare/workers-sdk/issues/5942) · Jan 29, 2026 at 4:53pm
+
+**penalosa** mentioned this in issue [#9770: The types for cloudflare:test expose self as a fetcher rather than a Service breaking types when testing rpc workers](https://github.com/cloudflare/workers-sdk/issues/9770) · Jan 29, 2026 at 5:03pm
+
+**henzai** mentioned this in PR [#25: Update dependency vitest to v4](https://github.com/henzai/yangbingyibot/pull/25) · Jan 31, 2026 at 8:12am
+
+**penalosa** mentioned this in issue [#6581: 🐛 BUG vitest-pool-workers loads opentelemetry for Node not the browser](https://github.com/cloudflare/workers-sdk/issues/6581) · Feb 4, 2026 at 9:38pm
+
+**RyoMa99** mentioned this in PR [#43: Bump vitest from 3.2.4 to 4.0.18](https://github.com/RyoMa99/cc-dashboard/pull/43) · Feb 17, 2026 at 4:34pm
+
+**RyoMa99** mentioned this in PR [#44: Dependabot: vitest major 更新を ignore](https://github.com/RyoMa99/cc-dashboard/pull/44) · Feb 17, 2026 at 4:35pm
+
+**Samuel Macleod** pushed commit `d46a09b`: Merge remote-tracking branch 'origin/main' into penalosa/vitest-v4-support · Feb 18, 2026 at 9:08am
+
+**Samuel Macleod** pushed commit `1f1072a`: [vitest-pool-workers] Fix vitest 4.1.0-beta.4 compatibility · Feb 18, 2026 at 9:41am
+
+**@devin-ai-integration[bot]** commented · Feb 18, 2026 at 9:53am
+
+> **Review (commented):**
+> **Devin Review** found 1 new potential issue.
+> 
+> View 33 additional findings in Devin Review.
+> 
+> 
+> 
+> 
+> [Image: Open in Devin Review | https://static.devin.ai/assets/gh-open-in-devin-review-light.svg?v=1]
+> 
+> 
+
+**Samuel Macleod** pushed commit `a925f45`: [vitest-pool-workers] Fix Windows CI failures · Feb 18, 2026 at 10:37am
+
+**Samuel Macleod** pushed commit `36bdd7b`: Merge remote-tracking branch 'origin/main' into penalosa/vitest-v4-support · Feb 18, 2026 at 11:16am
+
+**Samuel Macleod** pushed commit `522b117`: [vitest-pool-workers] Fix lint errors and dep validation · Feb 18, 2026 at 11:57am
+
+**Samuel Macleod** pushed commit `6fdaa56`: [create-cloudflare] Fix vite type conflict with vitest 3 · Feb 18, 2026 at 12:13pm
+
+**Samuel Macleod** pushed commit `177e94c`: [vitest-pool-workers] Add @types/node to fixture tsconfig · Feb 18, 2026 at 3:14pm
+
+**Samuel Macleod** pushed commit `2e76e3c`: [miniflare] Normalize persist paths to forward slashes for Windows · Feb 18, 2026 at 4:04pm
+
+**@devin-ai-integration[bot]** commented · Feb 18, 2026 at 4:14pm
+
+> **Review (commented):**
+> **Devin Review** found 1 potential issue.
+> 
+> View 7 additional findings in Devin Review.
+> 
+> 
+> 
+> 
+> [Image: Open in Devin Review | https://static.devin.ai/assets/gh-open-in-devin-review-light.svg?v=1]
+> 
+> 
+
+**Samuel Macleod** pushed commit `a63af5a`: Merge remote-tracking branch 'origin/main' into penalosa/vitest-v4-support · Feb 18, 2026 at 5:08pm
+
+**@devin-ai-integration[bot]** commented · Feb 18, 2026 at 5:20pm
+
+> **Review (commented):**
+> **Devin Review** found 1 new potential issue.
+> 
+> View 11 additional findings in Devin Review.
+> 
+> 
+> 
+> 
+> [Image: Open in Devin Review | https://static.devin.ai/assets/gh-open-in-devin-review-light.svg?v=1]
+> 
+> 
+
+**Samuel Macleod** pushed commit `ccaf85f`: [edge-preview-authenticated-proxy] Migrate to vitest-pool-workers v4 API · Feb 18, 2026 at 10:21pm
+
+**Samuel Macleod** pushed commit `ebb56c4`: [vitest-pool-workers] Exclude SQLite DO fixture on Windows (workerd bug) · Feb 19, 2026 at 9:28am
+
+**penalosa** mentioned this in PR [#6110: Fix Windows SQLITE_CANTOPEN by using native path format](https://github.com/cloudflare/workerd/pull/6110) · Feb 19, 2026 at 10:29am
+
+**Samuel Macleod** pushed commit `b5561cf`: [vitest-pool-workers] Make runner DO ephemeral · Feb 19, 2026 at 12:04pm
+
+**Samuel Macleod** pushed commit `5764732`: Merge remote-tracking branch 'origin/main' into penalosa/vitest-v4-support · Feb 19, 2026 at 12:34pm
+
+**Samuel Macleod** pushed commit `6324643`: [vitest-pool-workers] Revert ephemeral runner DO · Feb 19, 2026 at 2:10pm
+
+**Samuel Macleod** pushed commit `8791f8b`: [vitest-pool-workers] Use in-memory DO storage on Windows · Feb 19, 2026 at 3:27pm
+
+**Samuel Macleod** pushed commit `4bb7043`: [vitest-pool-workers] Revert in-memory DOs, re-add Windows exclusion · Feb 19, 2026 at 3:37pm
+
+**@devin-ai-integration[bot]** commented · Feb 19, 2026 at 3:49pm
+
+> **Review (commented):**
+> **Devin Review** found 1 new potential issue.
+> 
+> View 23 additional findings in Devin Review.
+> 
+> 
+> 
+> 
+> [Image: Open in Devin Review | https://static.devin.ai/assets/gh-open-in-devin-review-light.svg?v=1]
+> 
+> 
+
+**penalosa** force-pushed the branch · Feb 19, 2026 at 5:01pm
+
+**Samuel Macleod** pushed commit `a8a1a8c`: [vitest-pool-workers] Make runner DO ephemeral to avoid Windows SQLite path bug · Feb 19, 2026 at 5:10pm
+
+**penalosa** force-pushed the branch · Feb 19, 2026 at 5:12pm
+
+**Somhairle MacLeòid** pushed commit `8ca9dad`: Update packages/wrangler/src/codemod.ts · Feb 19, 2026 at 5:43pm
+
+**Samuel Macleod** pushed commit `d3ef674`: [vitest-pool-workers] Fix review findings: bugs, error handling, and dead code · Feb 19, 2026 at 5:54pm
+
+**Samuel Macleod** pushed commit `c4e2a7c`: [vitest-pool-workers] Update Vitest source links to v4.0.18 · Feb 23, 2026 at 2:06pm
+
+**@devin-ai-integration[bot]** commented · Feb 23, 2026 at 2:18pm
+
+> **Review (commented):**
+> **Devin Review** found 1 new potential issue.
+> 
+> View 30 additional findings in Devin Review.
+> 
+> 
+> 
+> 
+> [Image: Open in Devin Review | https://static.devin.ai/assets/gh-open-in-devin-review-light.svg?v=1]
+> 
+> 
+
+**Samuel Macleod** pushed commit `ef2ba23`: [vitest-pool-workers] Fix review findings: bugs, tests, and nits · Feb 23, 2026 at 2:59pm
+
+**Samuel Macleod** pushed commit `ac94357`: [vitest-pool-workers] Fix leaked FSWatcher handles in Pages ASSETS binding (#7717); pushed commit `989f559`: [vitest-pool-workers] Add regression tests for bare specifier resolution and large provide data · Feb 23, 2026 at 10:47pm
+
+**Samuel Macleod** pushed commit `8003a66`: [vitest-pool-workers] Fix review findings in Pages watcher cleanup · Feb 23, 2026 at 11:39pm
+
+**Samuel Macleod** pushed commit `fe26fd9`: Merge remote-tracking branch 'origin/main' into penalosa/vitest-v4-support · Feb 23, 2026 at 11:55pm
+
+**Samuel Macleod** pushed commit `31a64e5`: Merge remote-tracking branch 'origin/main' into penalosa/vitest-v4-support · Feb 24, 2026 at 2:01pm
+
+**petebacondarwin** reviewed: commented · Feb 25, 2026 at 12:46pm
+
+**petebacondarwin** reviewed: commented · Feb 25, 2026 at 12:48pm
+
+**Samuel Macleod** pushed commit `3c40844`: Merge remote-tracking branch 'origin/main' into penalosa/vitest-v4-support · Feb 26, 2026 at 7:33pm
+
+**Samuel Macleod** pushed commit `017ad0c`: Fix lockfile after merge · Feb 26, 2026 at 7:39pm
+
+**Samuel Macleod** pushed commit `755f295`: [vitest-pool-workers] Remove redundant polyfills, use workerd compat flags · Feb 27, 2026 at 12:13am
+
+**Samuel Macleod** pushed commit `6cce159`: [edge-preview-authenticated-proxy] Use return await for async sub-handlers · Feb 27, 2026 at 12:48am
+
+**@edmundhung** commented · Mar 3, 2026 at 5:44pm
+
+> **Review (approved):**
+> LGTM
+
+**@jamesopstad** commented · Mar 4, 2026 at 9:49am
+
+> **Review (approved):**
+> Looks good! Thanks @penalosa.
+
+**Samuel Macleod** pushed commit `9f15f7b`: Address review comments: codemod as jscodeshift transform, fixture updates, path.join fix · Mar 5, 2026 at 10:06pm
+
+**Samuel Macleod** pushed commit `a277e2c`: Add unpkg URL option for running the codemod · Mar 5, 2026 at 10:10pm
+
+**Samuel Macleod** pushed commit `bd3472f`: Remove stale todo file · Mar 5, 2026 at 10:22pm
+
+**@devin-ai-integration[bot]** commented · Mar 5, 2026 at 10:41pm
+
+> **Review (commented):**
+> **Devin Review** found 1 new potential issue.
+> 
+> View 34 additional findings in Devin Review.
+> 
+> 
+> 
+> 
+> [Image: Open in Devin Review | https://static.devin.ai/assets/gh-open-in-devin-review-light.svg?v=1]
+> 
+> 
+
+**@devin-ai-integration[bot]** commented · Mar 5, 2026 at 10:57pm
+
+> **Review (commented):**
+> **Devin Review** found 2 new potential issues.
+> 
+> View 32 additional findings in Devin Review.
+> 
+> 
+> 
+> 
+> [Image: Open in Devin Review | https://static.devin.ai/assets/gh-open-in-devin-review-light.svg?v=1]
+> 
+> 
+
+**workers-devprod** requested review from team **Deploy & Config** · Mar 5, 2026 at 11:01pm
+
+**@workers-devprod** commented · Mar 5, 2026 at 11:01pm · edited
+
+> Codeowners approval required for this PR:
+> 
+> - ✅ @cloudflare/deploy-config
+> - ✅ @cloudflare/workflows
+> - ✅ @cloudflare/wrangler
+> 
+> **Show detailed file reviewers**
+
+**@github-actions[bot]** commented · Mar 5, 2026 at 11:07pm · edited
+
+> ✅ All changesets look good
+
+**Samuel Macleod** pushed commit `343ffb9`: Merge remote-tracking branch 'origin/main' into penalosa/vitest-v4-support · Mar 5, 2026 at 11:55pm
+
+**penalosa** force-pushed the branch · Mar 5, 2026 at 11:55pm
+
+**Somhairle MacLeòid** pushed commit `2eeb830`: Update fixtures/get-platform-proxy/tests/get-platform-proxy.env.test.ts · Mar 5, 2026 at 11:57pm
+
+**@devin-ai-integration[bot]** commented · Mar 6, 2026 at 12:06am
+
+> **Review (commented):**
+> **Devin Review** found 1 new potential issue.
+> 
+> View 32 additional findings in Devin Review.
+> 
+> 
+> 
+> 
+> [Image: Open in Devin Review | https://static.devin.ai/assets/gh-open-in-devin-review-light.svg?v=1]
+> 
+> 
+
+**Samuel Macleod** pushed commit `6de6838`: fix check · Mar 6, 2026 at 12:09am
+
+**taylorlee** reviewed: approved · Mar 6, 2026 at 12:16am
+
+**Samuel Macleod** pushed commit `9a224e4`: fix: resolve CI failures from NodeJS namespace and stale snapshot · Mar 6, 2026 at 12:37am
+
+**pombosilva** reviewed: approved · Mar 6, 2026 at 9:28am
+
+**Samuel Macleod** pushed commit `04f0bf5`: Merge remote-tracking branch 'origin/main' into penalosa/vitest-v4-support · Mar 9, 2026 at 3:49pm
+
+**Samuel Macleod** pushed commit `55a5510`: Fix CI: codemods type mismatch and format-errors mock for vitest v4 · Mar 9, 2026 at 9:45pm
+
+**@devin-ai-integration[bot]** commented · Mar 9, 2026 at 9:52pm
+
+> **Review (commented):**
+> **Devin Review** found 1 new potential issue.
+> 
+> View 35 additional findings in Devin Review.
+> 
+> 
+> 
+> 
+> [Image: Open in Devin Review | https://static.devin.ai/assets/gh-open-in-devin-review-light.svg?v=1]
+> 
+> 
+
+**Samuel Macleod** pushed commit `4b70c1e`: Add config API migration example to changeset · Mar 9, 2026 at 9:56pm
+
+**Samuel Macleod** pushed commit `c7e06d1`: Support withEnv() in entrypoint wrappers, fix workers-assets fixture tsconfig · Mar 10, 2026 at 3:01pm
+
+**Samuel Macleod** pushed commit `1d0e89f`: Merge remote-tracking branch 'origin/main' into penalosa/vitest-v4-support · Mar 10, 2026 at 5:18pm
+
+**Samuel Macleod** pushed commit `ab488a8`: Remove stale singleWorker option from tests, expand compat flag comment · Mar 10, 2026 at 5:32pm
+
+**Samuel Macleod** pushed commit `92707da`: Fix workers-assets withEnv test: use worker.fetch with withEnv · Mar 10, 2026 at 5:59pm
+
+**@devin-ai-integration[bot]** commented · Mar 10, 2026 at 6:09pm
+
+> **Review (commented):**
+> **Devin Review** found 1 new potential issue.
+> 
+> View 41 additional findings in Devin Review.
+> 
+> 
+> 
+> 
+> [Image: Open in Devin Review | https://static.devin.ai/assets/gh-open-in-devin-review-light.svg?v=1]
+> 
+> 
+
+**Somhairle MacLeòid** pushed commit `405a192`: Merge branch 'main' into penalosa/vitest-v4-support · Mar 10, 2026 at 7:33pm
+
+**penalosa** merged this pull request; closed this; deleted the branch · Mar 10, 2026 at 9:26pm
+
+**workers-devprod** mentioned this in PR [#12840: Version Packages](https://github.com/cloudflare/workers-sdk/pull/12840) · Mar 10, 2026 at 9:30pm
+
+**edmundhung** mentioned this in PR [#12867: fix(vitest-pool-workers): update peer dependency for vitest to 4.1](https://github.com/cloudflare/workers-sdk/pull/12867) · Mar 12, 2026 at 2:53pm
+
+**penalosa** mentioned this in issue [#10049: Support for `vitest bench` in `@cloudflare/vitest-pool-workers/config`](https://github.com/cloudflare/workers-sdk/issues/10049) · Mar 19, 2026 at 2:19am
+
+**penalosa** mentioned this in issue [#5382: Ensure wider compatibility with npm ecosystem](https://github.com/cloudflare/workers-sdk/issues/5382) · Mar 19, 2026 at 2:20am
+
+**penalosa** mentioned this in issue [#9029: Vitest significantly slower after fix of #6844](https://github.com/cloudflare/workers-sdk/issues/9029) · Mar 19, 2026 at 2:53am
+
+**fhanau** mentioned this in PR [#12802: Add support for connect handler in vitest and vite tests](https://github.com/cloudflare/workers-sdk/pull/12802) · Mar 24, 2026 at 2:09pm
+
+**penalosa** mentioned this in PR [#13076: [vitest-pool-workers] Add regression tests for `onUnhandledError` callback](https://github.com/cloudflare/workers-sdk/pull/13076) · Mar 26, 2026 at 11:01pm
+
+**dxh9845** mentioned this in issue [#29463: Add documentation on how to migrate from previous versions of `@cloudflare/vitest-pool-workers` to the newest minor version](https://github.com/cloudflare/cloudflare-docs/issues/29463) · Mar 30, 2026 at 6:56pm
+
+**jonnyparris** mentioned this in issue [#13191: vitest-pool-workers: workerd fails to resolve cross-package ESM re-exports from node_modules](https://github.com/cloudflare/workers-sdk/issues/13191) · Apr 1, 2026 at 4:15pm

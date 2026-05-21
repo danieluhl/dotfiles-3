@@ -1,0 +1,8 @@
+VITE_API_HOSTNAME=http://localhost:3210
+VITE_ENABLE_RMP=true
+# E2E: skip OAuth; org API token comes from dev placeholder while RMP mocks JSON.
+VITE_ORG_NEXT_BYPASS_AUTH=true
+VITE_AUTH_APP_URL=http://localhost:3208
+VITE_AUTH_CLIENT_ID=local-client
+VITE_COGNITO_TOKEN_ENDPOINT=https://login-qa.anedot.com/oauth2/token
+SESSION_SECRET=test-session-secret

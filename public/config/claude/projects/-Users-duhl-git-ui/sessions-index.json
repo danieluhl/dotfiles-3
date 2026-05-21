@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "sessionId": "d35230c6-474a-4fe3-9b6c-5407a01c8dac",
+      "fullPath": "/Users/duhl/.claude/projects/-Users-duhl-git-ui/d35230c6-474a-4fe3-9b6c-5407a01c8dac.jsonl",
+      "fileMtime": 1769614370316,
+      "firstPrompt": "[Request interrupted by user for tool use]",
+      "summary": "Codebase Analysis: Creating CLAUDE.md Guide",
+      "messageCount": 3,
+      "created": "2026-01-28T15:31:49.406Z",
+      "modified": "2026-01-28T15:31:58.971Z",
+      "gitBranch": "dan/public_lead_page",
+      "projectPath": "/Users/duhl/git/ui",
+      "isSidechain": false
+    },
+    {
+      "sessionId": "7e45dc75-e646-4ad4-856b-d21f09a0bce0",
+      "fullPath": "/Users/duhl/.claude/projects/-Users-duhl-git-ui/7e45dc75-e646-4ad4-856b-d21f09a0bce0.jsonl",
+      "fileMtime": 1770300238222,
+      "firstPrompt": "how do I run the public-pages app",
+      "summary": "Caddy Setup: Running Public-Pages App",
+      "messageCount": 10,
+      "created": "2026-01-28T15:35:32.877Z",
+      "modified": "2026-01-28T15:58:30.144Z",
+      "gitBranch": "dan/public_lead_page",
+      "projectPath": "/Users/duhl/git/ui",
+      "isSidechain": false
+    }
+  ],
+  "originalPath": "/Users/duhl/git/ui"
+}

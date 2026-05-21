@@ -1,0 +1,4 @@
+{
+  "name": "workers-prompt-full",
+  "description": "Detailed prompt for generating Cloudflare Workers code (and other developer platform products) from https://developers.cloudflare.com/workers/prompt.txt"
+}

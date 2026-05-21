@@ -1,42 +1,30 @@
 return {
   "nvim-treesitter/nvim-treesitter",
+  branch = "main",
   lazy = false,
   build = ":TSUpdate",
-  branch = "main",
   config = function()
-    require("nvim-treesitter").setup({
-      ensure_installed = {
-        "tsx",
-        "typescript",
-        "javascript",
-        "yaml",
-        "markdown",
-        "lua",
-        "rust",
-        "toml",
-        "go",
-        "ocaml",
-        "astro",
-        "gleam",
-        "elixir",
-      },
-      highlight = {
-        enable = {
-          "tsx",
-          "typescript",
-          "javascript",
-          "markdown",
-          "yaml",
-          "lua",
-          "rust",
-          "toml",
-          "go",
-          "ocaml",
-          "astro",
-          "gleam",
-          "elixir",
-        },
-      },
+    local ts = require("nvim-treesitter")
+    ts.install({
+      "tsx",
+      "typescript",
+      "javascript",
+      "yaml",
+      "markdown",
+      "lua",
+      "rust",
+      "toml",
+      "go",
+      "ocaml",
+      "astro",
+      "gleam",
+      "elixir",
     })
+    vim.api.nvim_create_autocmd("FileType", {
+      callback = function(args)
+        pcall(vim.treesitter.start, args.buf)
+      end,
+    })
+    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
   end,
 }
