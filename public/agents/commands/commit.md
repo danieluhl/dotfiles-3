@@ -74,9 +74,8 @@ Compose a message following this format:
 - Convert low-level implementation details into clear engineering outcomes.
 - Emphasize reliability, maintainability, scalability, developer experience, performance, or user impact when supported by the changes.
 - Infer likely intent from filenames, diffs, tests, and architectural changes.
-- Write in a concise but polished professional tone suitable for engineering leadership review.
+- Write in a polished professional tone suitable for engineering leadership review.
 - Avoid vague wording like “stuff”, “fixes”, or “changes”.
-- Avoid fabricated metrics, business impact, customer claims, or performance improvements unless explicitly evidenced.
 - Prefer explaining why the change matters, not just what changed.
 
 Examples of good framing:
