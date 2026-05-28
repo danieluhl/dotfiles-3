@@ -33,6 +33,7 @@ PATH_DIRS=(
   "$GOPATH"
   "$BUN_INSTALL/bin"
   "$HOME/bin"
+  "$HOME/.local/bin"
   "/usr/local/bin"
   "/opt/homebrew/opt/openssl@3/bin"
   "/opt/homebrew/opt/curl/bin"

@@ -381,15 +381,11 @@ alias jst="jj st --no-pager"
 
 # RA.Aid
 alias ra="ra-aid"
-# alias gem="gemini"
-alias oc="opencode"
 
 alias runbe="bundle exec sidekiq & bin/webpack-dev-server & rails s &"
 
 alias present="cd ~/Documents/scratch/presenterm/"
 
-# Codex direct from terminal commands
-alias ex="codex"
 
 # NOTE: replaced these with custom prompts in ~/.codex/prompts
 # Give me a good commit message that I can quickly accept if I like it
@@ -429,7 +425,10 @@ set_default_branch() {
 }
 
 alias gcm='set_default_branch && git checkout $DEFAULT_BRANCH'
-
-
 alias r='rails'
 
+# AI Stuff
+alias ex="codex"
+# alias gemi="gemini"
+alias oc="agent"
+alias occ="opencode"
