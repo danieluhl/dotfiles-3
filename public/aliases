@@ -30,8 +30,8 @@ alias ...='cd -'
 alias brewup='brew update && brew upgrade && brew cleanup && brew doctor'
 
 # Set defualt branch to main vs master $DEFAULT_BRANCH
-alias gdmain="export DEFAULT_BRANCH='main' && echo Switched default: main && reload"
-alias gdmaster="export DEFAULT_BRANCH='master' && echo Switched default: master && reload"
+alias gmain="export DEFAULT_BRANCH='main' && echo Switched default: main && reload"
+alias gmaster="export DEFAULT_BRANCH='master' && echo Switched default: master && reload"
 
 # default branch when starting up is main, set in .aliases.local if different
 # for this computer
@@ -126,7 +126,8 @@ function resetToRemote()
 alias gshove='HUSKY=0 git push --force-with-lease --no-verify'
 alias gpu='pullremote'
 alias gpf='git push --force-with-lease'
-alias gp='pushremote'
+# alias gp='pushremote'
+alias gp='git pull'
 alias gpr='git pull --rebase'
 alias gpp='gpu && gp'
 # rebase is saying, "instead of building my features on that old commit, build them all on this new commit"

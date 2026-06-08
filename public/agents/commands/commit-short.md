@@ -2,7 +2,7 @@
 description: Generate a commit message for the staged changes and commit them
 ---
 
-Use `git diff --name-status --cached` to see my latest staged changes then
+Use `git add -A && git diff --name-status --cached` to see my latest staged changes then
 generate a single-line Git commit message using Conventional Commits format.
 
 Requirements:
