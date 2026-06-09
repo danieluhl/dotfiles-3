@@ -426,10 +426,4 @@ set_default_branch() {
 }
 
 alias gcm='set_default_branch && git checkout $DEFAULT_BRANCH'
-alias r='rails'
 
-# AI Stuff
-alias ex="codex"
-# alias gemi="gemini"
-alias oc="agent"
-alias occ="opencode"
