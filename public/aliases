@@ -52,7 +52,7 @@ function code {
 alias dot='godot && nvim $DOTFILES_PATH'
 alias godot="cd $DOTFILES_PATH"
 alias goskills="cd $DOTFILES_PATH/agents/skills"
-alias go='cd $(find . -maxdepth 3 -type d | fzf)'
+# alias go='cd $(find . -maxdepth 3 -type d | fzf)'
 alias cdd='cd $(find . -maxdepth 1 -type d | fzf)'
 alias gg="cd ~/git"
 alias pulldot="cd $DOTFILES_PATH && git pull && git status && cd -"
@@ -66,7 +66,6 @@ alias dotg='nvim ~/.config/ghostty/config'
 alias wat='alias'
 alias reload='source ~/.aliases && source ~/.zshrc && source ~/.zshrc.local'
 
-alias c='code .'
 
 # alias pubExt='rm -rf $HOME/.vscode/extensions/vs-code-extensions && cp -R ~/git/vs-code-extensions $HOME/.vscode/extensions'
 

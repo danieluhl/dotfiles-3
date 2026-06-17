@@ -84,18 +84,24 @@ Once everything is merged:
 
 ## 5. Push and open the collapsed PR
 
-1. Push the integration branch: `git push -u origin HEAD`.
-2. Upload each screenshot as a release/issue asset or attach via the GitHub web
+1. Create a **Tracked work item** issue summarizing the collapse (apply `cap:
+   maintenance`). You will reference it in the PR body.
+2. Push the integration branch: `git push -u origin HEAD`.
+3. Upload each screenshot as a release/issue asset or attach via the GitHub web
    markdown by committing them to a throwaway `gh` gist, then reference the
    returned URLs in the PR body. If asset upload is not possible, fall back to
    committing the screenshots into a `docs/collapse-screenshots/` folder on the
    branch and reference them with relative repo paths so they render in the PR.
-3. Open the PR with `gh pr create` against the default base, using a HEREDOC body:
+4. Open the PR with `gh pr create` against the default base, using a HEREDOC body.
+   The title must be a **Conventional Commit** (CI blocks merge otherwise), e.g.
+   `chore(collapse): integrate <count> open PRs`:
 
    ```bash
    gh pr create --base <base> --head collapse/open-prs-<YYYYMMDD> \
-     --title "Collapse open PRs (<count> PRs)" \
+     --title "chore(collapse): integrate <count> open PRs" \
      --body "$(cat <<'EOF'
+   Refs #<tracking-issue>
+
    ## Summary
 
    This PR collapses the following open PRs into a single branch.
@@ -107,10 +113,6 @@ Once everything is merged:
    ## Skipped
    - #<n> <title> — <reason: draft / non-base target>
 
-   ## Screenshots
-   ![<feature>](<url>)
-   ...
-
    ## Notes & follow-ups
    - <conflicts resolved, build failures, anything needing review>
 
@@ -121,6 +123,15 @@ Once everything is merged:
    - [ ] Manual UI review of screenshots above
    EOF
    )"
+   ```
+
+   The `Refs #NN` line must use a keyword followed by whitespace then the issue
+   number (not `Closes: #NN`).
+
+5. Label the collapsed PR when the repo supports it:
+
+   ```bash
+   gh pr edit <collapsed-pr-number> --add-label agent-collapsed
    ```
 
 ## 6. Report back

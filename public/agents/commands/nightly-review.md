@@ -23,8 +23,17 @@ You are an autonomous nightly code reviewer for this repo (TanStack Start + Reac
 ## Output: open a PR
 1. Create a branch `nightly-review/<yyyy-mm-dd>`.
 2. Commit the focused fixes.
-3. Open a PR titled `Nightly review: <date>` with a body containing:
+3. All PRs require a linked issue (CI blocks merge otherwise). Create a **Tracked
+   work item** issue describing what this review fixes. Apply exactly one `cap:`
+   label matching the PR title type you will use (`fix` → `cap: bug`, `refactor` →
+   `cap: maintenance`, etc.).
+4. Open a PR with a **Conventional Commits** title so CI can classify it:
+   `type(nightly-review): short description` (e.g.
+   `fix(nightly-review): automated review for 2026-06-16`). Pick the type that
+   reflects the accounting reality of the changes — default to `fix` when the
+   work is mostly correctness/security fixes. Body must include:
    - **Fixed** - bullet list of changes, each tagged with its lens and a one-line why.
    - **Findings not fixed** - issues too risky/large for this PR, with file paths and a suggested follow-up, grouped by severity (high/med/low).
    - **Gates** - confirm `pnpm validate` and `pnpm fallow` passed.
+   - `Refs #NN` (keyword, space, issue number — not `Closes: #NN`, which CI rejects)
 - If no worthwhile fix exists, open no PR and instead output a short findings-only summary.

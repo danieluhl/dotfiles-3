@@ -63,6 +63,7 @@ Draft each issue body as:
 ### Blocked by
 
 - None
+
 ```
 
 ## Create Issues
@@ -78,6 +79,9 @@ gh issue create \
 ```
 
 When one issue depends on another, create the prerequisite issue first. Then include the created issue number or URL in the dependent issue's `Blocked by` section.
+
+After the issue is created, add a comment to the issue with only the text
+"ready-for-agent". This triggers an agent to pickup the work.
 
 ## Final Response
 
