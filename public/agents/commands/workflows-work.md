@@ -257,10 +257,16 @@ This command takes a work document (plan, specification, or todo file) and execu
 
 3. **Create Pull Request**
 
+   Create a tracking issue first if the repo requires one (apply a `cap:` label
+   when present). The PR title must be a **Conventional Commit** — CI in repos
+   with PR Classification blocks merge otherwise:
+
    ```bash
    git push -u origin feature-branch-name
 
-   gh pr create --title "Feature: [Description]" --body "$(cat <<'EOF'
+   gh pr create --title "feat(scope): short description" --body "$(cat <<'EOF'
+   Refs #NN
+
    ## Summary
    - What was built
    - Why it was needed
@@ -284,6 +290,10 @@ This command takes a work document (plan, specification, or todo file) and execu
    EOF
    )"
    ```
+
+   Use `Refs #NN` (keyword, space, issue number). Do not use `Closes: #NN` — some
+   repos reject the colon form. Pick `feat` for new functionality; `fix`, `refactor`,
+   `chore`, etc. for everything else.
 
 4. **Notify User**
    - Summarize what was completed

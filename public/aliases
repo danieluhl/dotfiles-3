@@ -30,8 +30,8 @@ alias ...='cd -'
 alias brewup='brew update && brew upgrade && brew cleanup && brew doctor'
 
 # Set defualt branch to main vs master $DEFAULT_BRANCH
-alias gdmain="export DEFAULT_BRANCH='main' && echo Switched default: main && reload"
-alias gdmaster="export DEFAULT_BRANCH='master' && echo Switched default: master && reload"
+alias gmain="export DEFAULT_BRANCH='main' && echo Switched default: main && reload"
+alias gmaster="export DEFAULT_BRANCH='master' && echo Switched default: master && reload"
 
 # default branch when starting up is main, set in .aliases.local if different
 # for this computer
@@ -52,7 +52,7 @@ function code {
 alias dot='godot && nvim $DOTFILES_PATH'
 alias godot="cd $DOTFILES_PATH"
 alias goskills="cd $DOTFILES_PATH/agents/skills"
-alias go='cd $(find . -maxdepth 3 -type d | fzf)'
+# alias go='cd $(find . -maxdepth 3 -type d | fzf)'
 alias cdd='cd $(find . -maxdepth 1 -type d | fzf)'
 alias gg="cd ~/git"
 alias pulldot="cd $DOTFILES_PATH && git pull && git status && cd -"
@@ -66,7 +66,6 @@ alias dotg='nvim ~/.config/ghostty/config'
 alias wat='alias'
 alias reload='source ~/.aliases && source ~/.zshrc && source ~/.zshrc.local'
 
-alias c='code .'
 
 # alias pubExt='rm -rf $HOME/.vscode/extensions/vs-code-extensions && cp -R ~/git/vs-code-extensions $HOME/.vscode/extensions'
 
@@ -126,7 +125,8 @@ function resetToRemote()
 alias gshove='HUSKY=0 git push --force-with-lease --no-verify'
 alias gpu='pullremote'
 alias gpf='git push --force-with-lease'
-alias gp='pushremote'
+# alias gp='pushremote'
+alias gp='git pull'
 alias gpr='git pull --rebase'
 alias gpp='gpu && gp'
 # rebase is saying, "instead of building my features on that old commit, build them all on this new commit"
@@ -155,7 +155,7 @@ alias gmp='gm && gpr'
 alias gcl='git clean -fdx'
 
 # branches
-alias gbd='git branch -D $(git branch | fzf)'
+alias gbd='git branch -D'
 alias gb='printBranches'
 # rename a branch
 alias gbn='git branch -m'
@@ -381,15 +381,11 @@ alias jst="jj st --no-pager"
 
 # RA.Aid
 alias ra="ra-aid"
-# alias gem="gemini"
-alias oc="opencode"
 
 alias runbe="bundle exec sidekiq & bin/webpack-dev-server & rails s &"
 
 alias present="cd ~/Documents/scratch/presenterm/"
 
-# Codex direct from terminal commands
-alias ex="codex"
 
 # NOTE: replaced these with custom prompts in ~/.codex/prompts
 # Give me a good commit message that I can quickly accept if I like it
@@ -430,7 +426,6 @@ set_default_branch() {
 
 alias gcm='set_default_branch && git checkout $DEFAULT_BRANCH'
 
-
 alias r='rails'
-# alias ssh-anedot='herdr --remote ssh://duhl@192.168.4.30'
-alias ssh-anedot='ssh duhl@192.168.4.30'
+
+

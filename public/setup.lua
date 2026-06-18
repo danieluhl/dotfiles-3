@@ -1,3 +1,5 @@
+-- NOTE: to install syncthing: brew install syncthing && brew services start syncthing
+
 os.execute("sh ./vim-setup.sh")
 
 local home = os.getenv("HOME")
@@ -8,26 +10,22 @@ local olddir = home .. "/dotfiles_old"
 local links = {
 	[home .. "/.aliases"] = "aliases",
 	[home .. "/.aliases.local"] = "aliases.local",
-	-- note that some configs land in /config and others land in the root home
-	-- directory
-	[home .. "/.claude/skills"] = "agents/skills",
-	[home .. "/.config/opencode/skills"] = "agents/skills",
-	[home .. "/.codex/skills"] = "agents/skills",
-	[home .. "/.cursor/skills"] = "agents/skills",
 	[home .. "/.claude/commands"] = "agents/commands",
-	[home .. "/.config/opencode/commands"] = "agents/commands",
+	[home .. "/.claude/skills"] = "agents/skills",
 	[home .. "/.codex/commands"] = "agents/commands",
-	[home .. "/.cursor/commands"] = "agents/commands",
-
+	[home .. "/.codex/skills"] = "agents/skills",
+	[home .. "/.config/fish"] = "config/fish",
 	[home .. "/.config/ghostty"] = "config/ghostty",
 	[home .. "/.config/karabiner"] = "config/karabiner",
 	[home .. "/.config/kitty"] = "config/kitty",
 	[home .. "/.config/nvim"] = "config/nvim",
+	[home .. "/.config/opencode/commands"] = "agents/commands",
+	[home .. "/.config/opencode/skills"] = "agents/skills",
 	[home .. "/.config/presenterm"] = "config/presenterm",
 	[home .. "/.config/raycast"] = "config/raycast",
-	[home .. "/.config/fish"] = "config/fish",
-	[home .. "/.warp"] = "config/warp",
 	[home .. "/.config/zed"] = "config/zed",
+	[home .. "/.cursor/commands"] = "agents/commands",
+	[home .. "/.cursor/skills"] = "agents/skills",
 	[home .. "/.eslintrc"] = "eslintrc",
 	[home .. "/.gitconfig"] = "gitconfig",
 	[home .. "/.gitconfig.local"] = "gitconfig.local",
@@ -37,6 +35,7 @@ local links = {
 	[home .. "/.pnpm-completion.zsh"] = "pnpm-completion.zsh",
 	[home .. "/.profile"] = "profile",
 	[home .. "/.tool-versions"] = "tool-versions",
+	[home .. "/.warp"] = "config/warp",
 	[home .. "/.zshrc"] = "zshrc",
 	[home .. "/.zshrc.local"] = "zshrc.local",
 }
