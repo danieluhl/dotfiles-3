@@ -432,4 +432,5 @@ alias gcm='set_default_branch && git checkout $DEFAULT_BRANCH'
 
 
 alias r='rails'
-
+# alias ssh-anedot='herdr --remote ssh://duhl@192.168.4.30'
+alias ssh-anedot='ssh duhl@192.168.4.30'

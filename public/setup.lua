@@ -6,57 +6,58 @@ local dir = home .. "/git/dotfiles/public"
 local olddir = home .. "/dotfiles_old"
 
 local links = {
-  [home .. "/.aliases"] = "aliases",
-  [home .. "/.aliases.local"] = "aliases.local",
-  -- note that some configs land in /config and others land in the root home
-  -- directory
-  [home .. "/.claude/skills"] = "agents/skills",
-  [home .. "/.config/opencode/skills"] = "agents/skills",
-  [home .. "/.codex/skills"] = "agents/skills",
-  [home .. "/.cursor/skills"] = "agents/skills",
-  [home .. "/.claude/commands"] = "agents/commands",
-  [home .. "/.config/opencode/commands"] = "agents/commands",
-  [home .. "/.codex/commands"] = "agents/commands",
-  [home .. "/.cursor/commands"] = "agents/commands",
+	[home .. "/.aliases"] = "aliases",
+	[home .. "/.aliases.local"] = "aliases.local",
+	-- note that some configs land in /config and others land in the root home
+	-- directory
+	[home .. "/.claude/skills"] = "agents/skills",
+	[home .. "/.config/opencode/skills"] = "agents/skills",
+	[home .. "/.codex/skills"] = "agents/skills",
+	[home .. "/.cursor/skills"] = "agents/skills",
+	[home .. "/.claude/commands"] = "agents/commands",
+	[home .. "/.config/opencode/commands"] = "agents/commands",
+	[home .. "/.codex/commands"] = "agents/commands",
+	[home .. "/.cursor/commands"] = "agents/commands",
 
-  [home .. "/.config/ghostty"] = "config/ghostty",
-  [home .. "/.config/karabiner"] = "config/karabiner",
-  [home .. "/.config/kitty"] = "config/kitty",
-  [home .. "/.config/nvim"] = "config/nvim",
-  [home .. "/.config/presenterm"] = "config/presenterm",
-  [home .. "/.config/raycast"] = "config/raycast",
-  [home .. "/.warp"] = "config/warp",
-  [home .. "/.config/zed"] = "config/zed",
-  [home .. "/.eslintrc"] = "eslintrc",
-  [home .. "/.gitconfig"] = "gitconfig",
-  [home .. "/.gitconfig.local"] = "gitconfig.local",
-  [home .. "/.gitignore"] = "gitignore",
-  [home .. "/.gitmessage"] = "gitmessage",
-  [home .. "/.ohmyzshrc"] = "ohmyzshrc",
-  [home .. "/.pnpm-completion.zsh"] = "pnpm-completion.zsh",
-  [home .. "/.profile"] = "profile",
-  [home .. "/.tool-versions"] = "tool-versions",
-  [home .. "/.zshrc"] = "zshrc",
-  [home .. "/.zshrc.local"] = "zshrc.local",
+	[home .. "/.config/ghostty"] = "config/ghostty",
+	[home .. "/.config/karabiner"] = "config/karabiner",
+	[home .. "/.config/kitty"] = "config/kitty",
+	[home .. "/.config/nvim"] = "config/nvim",
+	[home .. "/.config/presenterm"] = "config/presenterm",
+	[home .. "/.config/raycast"] = "config/raycast",
+	[home .. "/.config/fish"] = "config/fish",
+	[home .. "/.warp"] = "config/warp",
+	[home .. "/.config/zed"] = "config/zed",
+	[home .. "/.eslintrc"] = "eslintrc",
+	[home .. "/.gitconfig"] = "gitconfig",
+	[home .. "/.gitconfig.local"] = "gitconfig.local",
+	[home .. "/.gitignore"] = "gitignore",
+	[home .. "/.gitmessage"] = "gitmessage",
+	[home .. "/.ohmyzshrc"] = "ohmyzshrc",
+	[home .. "/.pnpm-completion.zsh"] = "pnpm-completion.zsh",
+	[home .. "/.profile"] = "profile",
+	[home .. "/.tool-versions"] = "tool-versions",
+	[home .. "/.zshrc"] = "zshrc",
+	[home .. "/.zshrc.local"] = "zshrc.local",
 }
 
 local function shell_quote(s)
-  return "'" .. s:gsub("'", [["'"']]) .. "'"
+	return "'" .. s:gsub("'", [["'"']]) .. "'"
 end
 
 os.execute("mkdir -p " .. shell_quote(olddir))
 
 for dest, src in pairs(links) do
-  local source = dir .. "/" .. src
+	local source = dir .. "/" .. src
 
-  print("Backing up " .. dest)
-  os.execute("mv " .. shell_quote(dest) .. " " .. shell_quote(olddir) .. " 2>/dev/null")
+	print("Backing up " .. dest)
+	os.execute("mv " .. shell_quote(dest) .. " " .. shell_quote(olddir) .. " 2>/dev/null")
 
-  print("Removing existing " .. dest)
-  os.execute("rm -rf " .. shell_quote(dest))
+	print("Removing existing " .. dest)
+	os.execute("rm -rf " .. shell_quote(dest))
 
-  print("Linking " .. dest .. " -> " .. source)
-  os.execute("ln -sfn " .. shell_quote(source) .. " " .. shell_quote(dest))
+	print("Linking " .. dest .. " -> " .. source)
+	os.execute("ln -sfn " .. shell_quote(source) .. " " .. shell_quote(dest))
 end
 
 local dotdir = home .. "/.dotdir"
