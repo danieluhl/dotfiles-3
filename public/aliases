@@ -428,4 +428,4 @@ alias gcm='set_default_branch && git checkout $DEFAULT_BRANCH'
 
 alias r='rails'
 
-
+alias oc='opencode'
