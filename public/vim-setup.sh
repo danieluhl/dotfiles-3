@@ -9,25 +9,25 @@
 # brew list output:
 # ==> Formulae
 
-brew install zsh &&
-brew install tree-sitter &&
-brew install neovim &&
-brew install asdf &&
-brew install lazygit &&
-brew install fmt &&
-brew install mise &&
-brew install coreutils &&
-brew install gnutls &&
-brew install eza &&
-brew install gh &&
-brew install ripgrep &&
+# brew install zsh &&
+# brew install tree-sitter &&
+# brew install neovim &&
+# brew install asdf &&
+# brew install lazygit &&
+# brew install fmt &&
+# brew install mise &&
+# brew install coreutils &&
+# brew install gnutls &&
+# brew install eza &&
+# brew install gh &&
+# brew install ripgrep &&
 # Presentations with markdown files
 # brew install presenterm &&
 # brew install mermaid-cli
 # diffing tool
-brew install dlvhdr/formulae/diffnav
+# brew install dlvhdr/formulae/diffnav
 
-
+# OLD
 # brew install --cask bluesnooze &&
 # brew install flyctl &&
 # brew install libsodium &&
