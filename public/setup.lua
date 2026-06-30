@@ -8,57 +8,62 @@ local dir = home .. "/git/dotfiles/public"
 local olddir = home .. "/dotfiles_old"
 
 local links = {
-	[home .. "/.aliases"] = "aliases",
-	[home .. "/.aliases.local"] = "aliases.local",
-	[home .. "/.claude/commands"] = "agents/commands",
-	[home .. "/.claude/skills"] = "agents/skills",
-	[home .. "/.agents/commands"] = "agents/commands",
-	[home .. "/.agents/skills"] = "agents/skills",
-	[home .. "/.codex/commands"] = "agents/commands",
-	[home .. "/.codex/skills"] = "agents/skills",
-	[home .. "/.config/fish"] = "config/fish",
-	[home .. "/.config/ghostty"] = "config/ghostty",
-	[home .. "/.config/karabiner"] = "config/karabiner",
-	[home .. "/.config/kitty"] = "config/kitty",
-	[home .. "/.config/nvim"] = "config/nvim",
-	[home .. "/.config/opencode/commands"] = "agents/commands",
-	[home .. "/.config/opencode/skills"] = "agents/skills",
-	[home .. "/.config/presenterm"] = "config/presenterm",
-	[home .. "/.config/raycast"] = "config/raycast",
-	[home .. "/.config/zed"] = "config/zed",
-	[home .. "/.cursor/commands"] = "agents/commands",
-	[home .. "/.cursor/skills"] = "agents/skills",
-	[home .. "/.eslintrc"] = "eslintrc",
-	[home .. "/.gitconfig"] = "gitconfig",
-	[home .. "/.gitconfig.local"] = "gitconfig.local",
-	[home .. "/.gitignore"] = "gitignore",
-	[home .. "/.gitmessage"] = "gitmessage",
-	[home .. "/.ohmyzshrc"] = "ohmyzshrc",
-	[home .. "/.pnpm-completion.zsh"] = "pnpm-completion.zsh",
-	[home .. "/.profile"] = "profile",
-	[home .. "/.tool-versions"] = "tool-versions",
-	[home .. "/.warp"] = "config/warp",
-	[home .. "/.zshrc"] = "zshrc",
-	[home .. "/.zshrc.local"] = "zshrc.local",
+  [home .. "/.aliases"] = "aliases",
+  [home .. "/.aliases.local"] = "aliases.local",
+  [home .. "/.claude/commands"] = "agents/commands",
+  [home .. "/.claude/skills"] = "agents/skills",
+  [home .. "/.claude/rules"] = "agents/rules",
+  [home .. "/.agents/commands"] = "agents/commands",
+  [home .. "/.agents/skills"] = "agents/skills",
+  [home .. "/.agents/rules"] = "agents/rules",
+  [home .. "/.codex/commands"] = "agents/commands",
+  [home .. "/.codex/skills"] = "agents/skills",
+  [home .. "/.codex/rules"] = "agents/rules",
+  [home .. "/.config/opencode/commands"] = "agents/commands",
+  [home .. "/.config/opencode/skills"] = "agents/skills",
+  [home .. "/.config/opencode/rules"] = "agents/rules",
+  [home .. "/.cursor/commands"] = "agents/commands",
+  [home .. "/.cursor/skills"] = "agents/skills",
+  [home .. "/.cursor/rules"] = "agents/rules",
+  [home .. "/.config/fish"] = "config/fish",
+  [home .. "/.config/ghostty"] = "config/ghostty",
+  [home .. "/.config/karabiner"] = "config/karabiner",
+  [home .. "/.config/kitty"] = "config/kitty",
+  [home .. "/.config/nvim"] = "config/nvim",
+  [home .. "/.config/presenterm"] = "config/presenterm",
+  [home .. "/.config/raycast"] = "config/raycast",
+  [home .. "/.config/zed"] = "config/zed",
+  [home .. "/.eslintrc"] = "eslintrc",
+  [home .. "/.gitconfig"] = "gitconfig",
+  [home .. "/.gitconfig.local"] = "gitconfig.local",
+  [home .. "/.gitignore"] = "gitignore",
+  [home .. "/.gitmessage"] = "gitmessage",
+  [home .. "/.ohmyzshrc"] = "ohmyzshrc",
+  [home .. "/.pnpm-completion.zsh"] = "pnpm-completion.zsh",
+  [home .. "/.profile"] = "profile",
+  [home .. "/.tool-versions"] = "tool-versions",
+  [home .. "/.warp"] = "config/warp",
+  [home .. "/.zshrc"] = "zshrc",
+  [home .. "/.zshrc.local"] = "zshrc.local",
 }
 
 local function shell_quote(s)
-	return "'" .. s:gsub("'", [["'"']]) .. "'"
+  return "'" .. s:gsub("'", [["'"']]) .. "'"
 end
 
 os.execute("mkdir -p " .. shell_quote(olddir))
 
 for dest, src in pairs(links) do
-	local source = dir .. "/" .. src
+  local source = dir .. "/" .. src
 
-	print("Backing up " .. dest)
-	os.execute("mv " .. shell_quote(dest) .. " " .. shell_quote(olddir) .. " 2>/dev/null")
+  print("Backing up " .. dest)
+  os.execute("mv " .. shell_quote(dest) .. " " .. shell_quote(olddir) .. " 2>/dev/null")
 
-	print("Removing existing " .. dest)
-	os.execute("rm -rf " .. shell_quote(dest))
+  print("Removing existing " .. dest)
+  os.execute("rm -rf " .. shell_quote(dest))
 
-	print("Linking " .. dest .. " -> " .. source)
-	os.execute("ln -sfn " .. shell_quote(source) .. " " .. shell_quote(dest))
+  print("Linking " .. dest .. " -> " .. source)
+  os.execute("ln -sfn " .. shell_quote(source) .. " " .. shell_quote(dest))
 end
 
 local dotdir = home .. "/.dotdir"

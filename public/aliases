@@ -429,3 +429,14 @@ alias gcm='set_default_branch && git checkout $DEFAULT_BRANCH'
 alias r='rails'
 
 alias oc='opencode'
+
+# Recycle bluetooth for when switching computers and reconnecting Glove80
+bb() {
+  local delay_seconds="${1:-2}"
+  echo "Turning Bluetooth off..."
+  blueutil --power 0
+  sleep "$delay_seconds"
+  echo "Turning Bluetooth on..."
+  blueutil --power 1
+  echo "Bluetooth recycled."
+}
