@@ -11,7 +11,8 @@
 
 # brew install zsh &&
 # brew install git-delta &&
-# brew install tree-sitter &&
+# brew install gcc &&
+# brew install tree-sitter-cli &&
 # brew install neovim &&
 # brew install asdf &&
 # brew install lazygit &&
