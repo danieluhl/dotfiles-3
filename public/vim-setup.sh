@@ -10,6 +10,7 @@
 # ==> Formulae
 
 # brew install zsh &&
+# brew install git-delta &&
 # brew install tree-sitter &&
 # brew install neovim &&
 # brew install asdf &&
