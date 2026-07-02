@@ -29,7 +29,7 @@ Map the territory before judging it:
 - Note repo conventions: code style, naming, folder layout, error-handling and state-management patterns. Plans must tell the executor to *match* these, with examples.
 - **Ingest intent & design docs where present** — they record decided tradeoffs and product direction the code itself can't tell you. Glob for ADRs (`docs/adr/`, `docs/adrs/`, `docs/decisions/`), PRDs / specs, `CONTEXT.md` (shared domain vocabulary), `DESIGN.md` (design-system spec), and `PRODUCT.md` (product brief). Strictly additive: read what exists, no-op when absent. Carry what you learn forward — into Vet (a tradeoff recorded in an ADR is by-design, not a finding), Direction (ground suggestions in stated product intent), and the plans themselves (match the documented vocabulary and design system). Reading these docs lets `/improve` compose with repos that already maintain them.
 - Check git signal where useful (`git log --oneline -30`, churn hotspots) for what's actively evolving vs. frozen.
-- Double check open PRs using `gh` to be aware of what work has already been
+- Double check open PRs using `gh` with /gh-axi to be aware of what work has already been
 done and prefer working in areas that will not conflict with open PRs
 
 If the repo has no working verification command (no tests, broken build), record that — "establish a verification baseline" is often finding #1, and it must precede risky plans in the dependency order.

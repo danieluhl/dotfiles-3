@@ -64,3 +64,4 @@ eval "$(mise activate zsh --shims)"
 # echo -ne '\e[2 q'
 
 
+

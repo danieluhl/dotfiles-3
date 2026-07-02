@@ -80,7 +80,7 @@ alias gwho='git shortlog -n -s --no-merges'
 
 alias gc='git checkout'
 alias gcb='git checkout -b'
-alias gcc='git checkout $(git branch | fzf)'
+alias gcf='git checkout $(git branch | fzf)'
 #logging
 alias glm='git log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short --committer="duhl"'
 alias gl="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
@@ -203,7 +203,7 @@ alias gdmn="set_default_branch && git diff $DEFAULT_BRANCH --color --name-only"
 alias nr="npm run"
 alias n="npm"
 alias pr="pnpm run"
-alias p="pnpm"
+alias pn="pnpm"
 alias px="pnpm exec"
 alias br="bun run"
 alias b="bun"
@@ -429,3 +429,14 @@ alias gcm='set_default_branch && git checkout $DEFAULT_BRANCH'
 alias r='rails'
 
 alias oc='opencode'
+
+# Recycle bluetooth for when switching computers and reconnecting Glove80
+bb() {
+  local delay_seconds="${1:-2}"
+  echo "Turning Bluetooth off..."
+  blueutil --power 0
+  sleep "$delay_seconds"
+  echo "Turning Bluetooth on..."
+  blueutil --power 1
+  echo "Bluetooth recycled."
+}
