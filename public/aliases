@@ -78,7 +78,7 @@ alias gprm='git pull --rebase origin $DEFAULT_BRANCH'
 # git
 alias gwho='git shortlog -n -s --no-merges'
 
-alias gc='git checkout'
+alias gc='git fetch && git checkout'
 alias gcb='git checkout -b'
 alias gcf='git checkout $(git branch | fzf)'
 #logging
