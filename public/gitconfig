@@ -23,8 +23,6 @@
   autocrlf = input
   editor = nvim
 	fileMode = false
-[pager]
-  diff = diffnav -u
 [commit]
   template = ~/.gitmessage
 	gpgSign = false
@@ -41,8 +39,6 @@
   tool = opendiff
 [diff]
   tool = default-difftool
-[pager]
-  diff = diffnav -u
 [difftool "default-difftool"]
   cmd = nvim
 [gc]
