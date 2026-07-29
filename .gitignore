@@ -9,6 +9,7 @@ npmrc
 wayfair
 local
 /public/lastLogin.sh
+/public/config/gh
 /public/config/raycast/extensions
 /public/config/exercism
 /public/config/nvim/plugin
