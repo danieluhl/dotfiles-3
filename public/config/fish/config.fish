@@ -86,3 +86,5 @@ end
 
 # Make cursor a block (uncomment if desired)
 # echo -ne '\e[2 q'
+
+string match -q "$TERM_PROGRAM" "kiro" and . (kiro --locate-shell-integration-path fish)

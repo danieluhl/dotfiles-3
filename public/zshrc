@@ -65,3 +65,5 @@ eval "$(mise activate zsh --shims)"
 
 
 
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"

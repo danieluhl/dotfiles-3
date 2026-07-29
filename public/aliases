@@ -441,3 +441,32 @@ bb() {
   blueutil --power 1
   echo "Bluetooth recycled."
 }
+
+# Approve a GitHub PR directly using its URL (works from any directory)
+gha() {
+  if [ -z "$1" ]; then
+    echo "Usage: gha <github-pr-url> [comment]"
+    return 1
+  fi
+
+  local url="$1"
+
+  # Extract "owner/repo" from URLs like https://github.com/owner/repo/pull/123
+  local repo
+  repo=$(echo "$url" | sed -nE 's#.*github\.com/([^/]+/[^/]+)/pull/.*#\1#p')
+
+  # Extract the PR number at the end of the URL
+  local pr_num
+  pr_num=$(echo "$url" | grep -oE '[0-9]+$')
+
+  if [ -z "$repo" ] || [ -z "$pr_num" ]; then
+    echo "Error: Could not parse repository or PR number from URL."
+    return 1
+  fi
+
+  # Use custom comment if provided, otherwise default to "LGTM! 🚀"
+  local comment="${2:-LGTM! 🚀}"
+
+  echo "Approving PR #$pr_num on $repo..."
+  gh pr review "$pr_num" -R "$repo" --approve -b "$comment"
+}
