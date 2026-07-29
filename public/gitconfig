@@ -23,6 +23,7 @@
   autocrlf = input
   editor = nvim
 	fileMode = false
+  pager = delta
 [commit]
   template = ~/.gitmessage
 	gpgSign = false
@@ -37,6 +38,11 @@
 [merge]
   conflictStyle = zdiff3
   tool = opendiff
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true  # use n and N to move between diff sections
+  dark = true      # or light = true, or omit for auto-detection
 [diff]
   tool = default-difftool
 [difftool "default-difftool"]
