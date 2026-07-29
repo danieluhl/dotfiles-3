@@ -9,7 +9,9 @@
 # ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
 # put local aliases here
-[ -f ~/.aliases.local ] && source ~/.aliases.local
+export DOTFILES_PATH="$HOME/git/dotfiles/public"
+[ -f "$DOTFILES_PATH/aliases.local" ] && source "$DOTFILES_PATH/aliases.local" 
+[ -f "$DOTFILES_PATH/alias-utils.sh" ] && source "$DOTFILES_PATH/alias-utils.sh" 
 
 # Setup
 alias runsetup="bash $DOTFILES_PATH/setup.sh"
@@ -431,42 +433,3 @@ alias r='rails'
 
 alias oc='opencode'
 
-# Recycle bluetooth for when switching computers and reconnecting Glove80
-bb() {
-  local delay_seconds="${1:-2}"
-  echo "Turning Bluetooth off..."
-  blueutil --power 0
-  sleep "$delay_seconds"
-  echo "Turning Bluetooth on..."
-  blueutil --power 1
-  echo "Bluetooth recycled."
-}
-
-# Approve a GitHub PR directly using its URL (works from any directory)
-gha() {
-  if [ -z "$1" ]; then
-    echo "Usage: gha <github-pr-url> [comment]"
-    return 1
-  fi
-
-  local url="$1"
-
-  # Extract "owner/repo" from URLs like https://github.com/owner/repo/pull/123
-  local repo
-  repo=$(echo "$url" | sed -nE 's#.*github\.com/([^/]+/[^/]+)/pull/.*#\1#p')
-
-  # Extract the PR number at the end of the URL
-  local pr_num
-  pr_num=$(echo "$url" | grep -oE '[0-9]+$')
-
-  if [ -z "$repo" ] || [ -z "$pr_num" ]; then
-    echo "Error: Could not parse repository or PR number from URL."
-    return 1
-  fi
-
-  # Use custom comment if provided, otherwise default to "LGTM! 🚀"
-  local comment="${2:-LGTM! 🚀}"
-
-  echo "Approving PR #$pr_num on $repo..."
-  gh pr review "$pr_num" -R "$repo" --approve -b "$comment"
-}
