@@ -27,6 +27,7 @@ local links = {
   [home .. "/.cursor/rules"] = "agents/rules",
   [home .. "/.config/fish"] = "config/fish",
   [home .. "/.config/gh"] = "config/gh",
+  [home .. "/.config/gh-dash"] = "config/gh-dash",
   [home .. "/.config/ghostty"] = "config/ghostty",
   [home .. "/.config/karabiner"] = "config/karabiner",
   [home .. "/.config/kitty"] = "config/kitty",
