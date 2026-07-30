@@ -1,10 +1,8 @@
 prSections:
-  - title: My Pull Requests
-    filters: is:open author:@me
-  - title: Needs My Review
-    filters: is:open review-requested:@me
-  - title: Involved
-    filters: is:open involves:@me -author:@me
+  - title: My PRs
+    filters: is:open author:@me author:cursor
+  - title: All PRs
+    filters: is:open
 issuesSections:
   - title: My Issues
     filters: is:open author:@me
@@ -87,6 +85,10 @@ keybindings:
       name: merge & delete branch
       command: >
         gh pr merge --squash --delete-branch --repo {{.RepoName}} {{.PrNumber}}
+    - key: e
+      name: enhance PR
+      command: >
+        gh enhance --repo {{.RepoName}} {{.PrNumber}}
 repoPaths: {}
 theme:
   ui:
