@@ -9,7 +9,9 @@
 # ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
 # put local aliases here
-[ -f ~/.aliases.local ] && source ~/.aliases.local
+export DOTFILES_PATH="$HOME/git/dotfiles/public"
+[ -f "$DOTFILES_PATH/aliases.local" ] && source "$DOTFILES_PATH/aliases.local" 
+[ -f "$DOTFILES_PATH/alias-utils.sh" ] && source "$DOTFILES_PATH/alias-utils.sh" 
 
 # Setup
 alias runsetup="bash $DOTFILES_PATH/setup.sh"
@@ -78,7 +80,7 @@ alias gprm='git pull --rebase origin $DEFAULT_BRANCH'
 # git
 alias gwho='git shortlog -n -s --no-merges'
 
-alias gc='git checkout'
+alias gc='git fetch && git checkout'
 alias gcb='git checkout -b'
 alias gcf='git checkout $(git branch | fzf)'
 #logging
@@ -155,7 +157,7 @@ alias gmp='gm && gpr'
 alias gcl='git clean -fdx'
 
 # branches
-alias gbd='git branch -D'
+alias gbd='git branch -D $(git branch | fzf)'
 alias gb='printBranches'
 # rename a branch
 alias gbn='git branch -m'
@@ -204,6 +206,7 @@ alias nr="npm run"
 alias n="npm"
 alias pr="pnpm run"
 alias pn="pnpm"
+alias p="pnpm"
 alias px="pnpm exec"
 alias br="bun run"
 alias b="bun"
@@ -429,14 +432,4 @@ alias gcm='set_default_branch && git checkout $DEFAULT_BRANCH'
 alias r='rails'
 
 alias oc='opencode'
-
-# Recycle bluetooth for when switching computers and reconnecting Glove80
-bb() {
-  local delay_seconds="${1:-2}"
-  echo "Turning Bluetooth off..."
-  blueutil --power 0
-  sleep "$delay_seconds"
-  echo "Turning Bluetooth on..."
-  blueutil --power 1
-  echo "Bluetooth recycled."
-}
+alias ghd='gh dash'

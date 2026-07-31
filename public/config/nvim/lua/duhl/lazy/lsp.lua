@@ -7,6 +7,13 @@ return {
   },
 
   config = function()
+    -- bash for `.local` files in zsh
+    vim.filetype.add({
+      pattern = {
+        [".*%.local"] = "zsh",
+      },
+    })
+
     local function organize_imports()
       local params = {
         command = "_typescript.organizeImports",

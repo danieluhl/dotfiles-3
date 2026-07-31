@@ -9,6 +9,8 @@ npmrc
 wayfair
 local
 /public/lastLogin.sh
+
+# WARNING this can have security issues
 /public/config/gh
 /public/config/raycast/extensions
 /public/config/exercism
