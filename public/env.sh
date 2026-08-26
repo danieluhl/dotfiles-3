@@ -1,67 +1,54 @@
-#!/bin/zsh
+#!/usr/bin/env fish
+# Compatible with fish's `source`. If you ever need a bash/zsh version,
+# duplicate this file as env.sh for sh-style and keep env.sh as the fish one.
 
 # PRESENTERM
-export PRESENTERM_CONFIG_FILE="$HOME/.config/presenterm/config.yaml"
+set -gx PRESENTERM_CONFIG_FILE "$HOME/.config/presenterm/config.yaml"
 
 # gog-cli
-export GOG_ACCOUNT
+set -gx GOG_ACCOUNT
 
 # package managers
-export PNPM_HOME="$HOME/pnpm"
+set -gx PNPM_HOME "$HOME/pnpm"
 
-# Set editor to vim
-export EDITOR="nvim"
-# Number of directories to show in the window title
-export ZSH_WINDOW_TITLE_DIRECTORY_DEPTH=2
+# Set editor
+set -gx EDITOR "nvim"
+set -gx ZSH_WINDOW_TITLE_DIRECTORY_DEPTH 2
 
-# rust
-export RUSTPATH="$HOME/.cargo"
-# golang
-export GOPATH="$HOME/go"
-# bun
-export BUN_INSTALL="$HOME/.bun"
+# rust / golang / bun
+set -gx RUSTPATH "$HOME/.cargo"
+set -gx GOPATH "$HOME/go"
+set -gx BUN_INSTALL "$HOME/.bun"
 
-PATH_DIRS=(
-  # Homebrew packages
-  # note: use rbenv to manage ruby installs
-  # "/opt/homebrew/opt/ruby/bin:/opt/homebrew/bin"
-  # "/opt/homebrew/lib/ruby/gems/3.4.0/bin"
-  "/opt/homebrew/sbin"
-  "$PNPM_HOME"
-  "$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin",
-  "$RUSTPATH"
-  "$GOPATH"
-  "$BUN_INSTALL/bin"
-  "$HOME/bin"
-  "$HOME/.local/bin"
-  "/usr/local/bin"
-  "/opt/homebrew/opt/openssl@3/bin"
-  "/opt/homebrew/opt/curl/bin"
-  # ruby 
-  # "$HOME/.rbenv/bin"
-  # mise lsp for nvim (when mise is activated in .zshrc we shouldn't need this)
+# Directories to prepend (commented-out options preserved from the original)
+set -l PATH_DIRS \
+  "/opt/homebrew/sbin" \
+  "/opt/homebrew/bin" \
+  "$PNPM_HOME" \
+  "$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin" \
+  "$RUSTPATH" \
+  "$GOPATH" \
+  "$BUN_INSTALL/bin" \
+  "$HOME/bin" \
+  "$HOME/.local/bin" \
+  "/usr/local/bin" \
+  "/opt/homebrew/opt/openssl@3/bin" \
+  "/opt/homebrew/opt/curl/bin" \
+  # "/opt/homebrew/opt/ruby/bin:/opt/homebrew/bin" \
+  # "/opt/homebrew/lib/ruby/gems/3.4.0/bin" \
+  # "$HOME/.rbenv/bin" \
   # "$HOME/.local/share/mise/shims"
-)
 
-# Iterate over each directory in the list
-for dir in "${PATH_DIRS[@]}"; do
-  # Use the same safe check as before to see if the directory is already in the PATH
-  # The ":$PATH:" trick handles edge cases.
-  case ":$PATH:" in
-    *":$dir:"*)
-      # If the directory is found, do nothing.
-      ;;
-    *)
-      # If the directory is not found, prepend it to the PATH.
-      export PATH="$dir:$PATH"
-      ;;
-  esac
-done
+for dir in $PATH_DIRS
+    if not string match -q ":*$dir:*" "':$PATH:'"
+        set -gx PATH "$dir:$PATH"
+    end
+end
 
-# Adds deno env variables to path
-if [ -d "$HOME/.deno" ]; then
-. "$HOME/.deno/env"
-fi
-
-
-
+# Deno env (its env file uses bash `case`; capture PATH via bash subshell)
+if test -d "$HOME/.deno"
+    set -l deno_path (bash -c 'source "$HOME/.deno/env" >/dev/null 2>&1 && echo "$PATH"')
+    if test -n "$deno_path"
+        set -gx PATH $deno_path
+    end
+end

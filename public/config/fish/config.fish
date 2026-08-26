@@ -1,14 +1,13 @@
 # Global variables
 set -gx DOTFILES_PATH "$HOME/git/dotfiles/public"
 
-# Loads all the PATH variables
-# (Note: You may need to update env.sh if it uses heavy Bash/Zsh syntax)
+# Loads all the PATH variables and exported environment in fish-compatible syntax.
 if test -f $DOTFILES_PATH/env.sh
     source $DOTFILES_PATH/env.sh
 end
 
-# NOTE: Oh-My-Zsh (~/.ohmyzshrc) skipped as it is incompatible with Fish.
-# If you need Fish plugins, use a package manager like Fisher.
+# NOTE: Oh-My-Zsh (~/.ohmyzshrc) and other zsh-era files intentionally not loaded.
+# Use a Fish plugin manager like Fisher for shell plugins.
 
 # Load AI secrets
 if test -f ~/.config/secrets/.ai-secrets
@@ -20,57 +19,41 @@ if test -f ~/.config/secrets/.env-secrets
     source ~/.config/secrets/.env-secrets
 end
 
-# Load z (Alternative: Since you use zoxide below, you can safely comment this out)
-if test -f (brew --prefix)/etc/profile.d/z.sh
-    source (brew --prefix)/etc/profile.d/z.sh
-end
+# (z skipped; using zoxide init below for directory jumping.)
 
 # Load aliases
 if test -f ~/.aliases
     source ~/.aliases
 end
 
-# Local config
-if test -f ~/.zshrc_local
-    source ~/.zshrc_local
-end
-
-# Note: Zsh completion system (compinit/bashcompinit) skipped. 
 # Fish handles completions automatically in ~/.config/fish/completions/
+# (legacy zsh-era completions moved to $DOTFILES_PATH/legacy/zsh-era/completions/)
 
-# Source misc completions
-if test -f $DOTFILES_PATH/completions/index.sh
-    source $DOTFILES_PATH/completions/index.sh
-end
-
-# Opam configuration (OCaml)
+# Opam configuration (OCaml) — only source the fish-native init.
 if test -r "$HOME/.opam/opam-init/init.fish"
-    source "$HOME/.opam/opam-init/init.fish" > /dev/null 2>&1
-else if test -r "$HOME/.opam/opam-init/init.zsh"
-    # Fallback if opam hasn't generated a fish init yet
-    source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2>&1
+    source "$HOME/.opam/opam-init/init.fish" >/dev/null 2>&1
 end
 
-# Google Cloud SDK PATH updates
+# Google Cloud SDK — only source the fish SDK scripts (skip zsh fallbacks).
 if test -f "$HOME/google-cloud-sdk/path.fish.inc"
     source "$HOME/google-cloud-sdk/path.fish.inc"
-else if test -f "$HOME/google-cloud-sdk/path.zsh.inc"
-    source "$HOME/google-cloud-sdk/path.zsh.inc"
-end
-
-# Google Cloud SDK shell command completion
-if test -f "$HOME/google-cloud-sdk/completion.fish.inc"
-    source "$HOME/google-cloud-sdk/completion.fish.inc"
 end
 
 # Set up FZF (Fish native integration)
 if test -f ~/.fzf.fish
     source ~/.fzf.fish
 end
-fzf --fish | source
+if command -q fzf
+    fzf --fish | source
+end
 
-# Start SSH Agent
-eval (ssh-agent -c) # Changed from -s to -c for Fish-compatible output
+# SSH agent: bitwarden SSH agent exposes SSH_AUTH_SOCK at
+# ~/.bitwarden-ssh-agent.sock, so we only forward it here. Uncomment the
+# `ssh-agent -c` line if you need to start a fallback agent in fish.
+if test -S "$HOME/.bitwarden-ssh-agent.sock"
+    set -gx SSH_AUTH_SOCK "$HOME/.bitwarden-ssh-agent.sock"
+end
+# eval (ssh-agent -c) # legacy — kept commented for reference
 
 # Initialize Zoxide (Fish native)
 zoxide init fish | source
@@ -79,12 +62,7 @@ zoxide init fish | source
 mise activate fish | source
 mise activate fish --shims | source
 
-# Post-load local config
-if test -f ~/.zshrc.local
-    source ~/.zshrc.local
-end
-
 # Make cursor a block (uncomment if desired)
 # echo -ne '\e[2 q'
 
-string match -q "$TERM_PROGRAM" "kiro" and . (kiro --locate-shell-integration-path fish)
+starship init fish | source

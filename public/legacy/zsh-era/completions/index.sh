@@ -2,7 +2,7 @@
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # Add deno completions to search path
-if [[ ":$FPATH:" != *":$HOME/.zsh/completions:"* ]]; then export FPATH="$HOME/.zsh/completions:$FPATH"; fi
+if [[ ":$FPATH:" != *":$HOME/.zsh/completions:"* ]]; then export FPATH="$HOME/.zsh/completions:$FPATH"; end
 
 # FE shell autocompletions with @bomb.sh
 # These are installed locally now

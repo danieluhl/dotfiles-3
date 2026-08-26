@@ -9,9 +9,13 @@
 # ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
 # put local aliases here
-export DOTFILES_PATH="$HOME/git/dotfiles/public"
-[ -f "$DOTFILES_PATH/aliases.local" ] && source "$DOTFILES_PATH/aliases.local" 
-[ -f "$DOTFILES_PATH/alias-utils.sh" ] && source "$DOTFILES_PATH/alias-utils.sh" 
+set -gx DOTFILES_PATH "$HOME/git/dotfiles/public"
+if test -f "$DOTFILES_PATH/aliases.local"
+    source "$DOTFILES_PATH/aliases.local"
+end
+if test -f "$DOTFILES_PATH/alias-utils.sh"
+    source "$DOTFILES_PATH/alias-utils.sh"
+end
 
 # Setup
 alias runsetup="bash $DOTFILES_PATH/setup.sh"
@@ -21,7 +25,7 @@ alias exjs='exercism submit "$(basename $PWD).js"'
 alias exs='exercism submit'
 
 # Git
-grecent="git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname:short)'"
+alias grecent="git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname:short)'"
 alias lg="lazygit"
 
 # System
@@ -37,19 +41,21 @@ alias gmaster="export DEFAULT_BRANCH='master' && echo Switched default: master &
 
 # default branch when starting up is main, set in .aliases.local if different
 # for this computer
-export DEFAULT_BRANCH=${DEFAULT_BRANCH:="main"}
+set -gx DEFAULT_BRANCH (test -n "$DEFAULT_BRANCH" && echo "$DEFAULT_BRANCH" || echo main)
 
 # vscode wireup
-function code {
-    if [[ $# = 0 ]]
-    then
+function code
+    if test (count $argv) -eq 0
         open -a "Visual Studio Code"
     else
-        local argPath="$1"
-        [[ $1 = /* ]] && argPath="$1" || argPath="$PWD/${1#./}"
-        open -a "Visual Studio Code" "$argPath"
-    fi
-}
+        set -l argPath $argv[1]
+        if string match -q '/*' $argPath
+            open -a "Visual Studio Code" "$argPath"
+        else
+            open -a "Visual Studio Code" "$PWD/$argPath"
+        end
+    end
+end
 
 alias dot='godot && nvim $DOTFILES_PATH'
 alias godot="cd $DOTFILES_PATH"
@@ -66,7 +72,7 @@ alias sess='nvim ~/.config/kitty/startup_session'
 alias dotn='nvim ~/.config/nvim/lua/duhl'
 alias dotg='nvim ~/.config/ghostty/config'
 alias wat='alias'
-alias reload='source ~/.aliases && source ~/.zshrc && source ~/.zshrc.local'
+alias reload='source ~/.aliases'
 
 
 # alias pubExt='rm -rf $HOME/.vscode/extensions/vs-code-extensions && cp -R ~/git/vs-code-extensions $HOME/.vscode/extensions'
@@ -115,13 +121,11 @@ alias gkilleverything='git reset --hard origin/$DEFAULT_BRANCH'
 alias resetBranch='git fetch && git reset --hard origin/$DEFAULT_BRANCH'
 # get latest on the current branch and reset to what is on the remote
 alias resetToRemote='resetToRemote'
-function resetToRemote()
-{
-  currentBranch="$(git symbolic-ref HEAD 2>/dev/null)";
-  currentBranch=${currentBranch##refs/heads/}
-  repo=${PWD##*/}
-  eval "git fetch && git reset --hard origin/$currentBranch";
-}
+function resetToRemote
+  set -l currentBranch (git symbolic-ref HEAD 2>/dev/null | string replace -r '^refs/heads/' '')
+  git fetch
+  git reset --hard origin/$currentBranch
+end
 
 # pushing and pulling
 alias gshove='HUSKY=0 git push --force-with-lease --no-verify'
@@ -222,111 +226,101 @@ alias deps="traceDependenciesByLeaf"
 alias bs="browser-sync start --directory --server"
 
 # traces all dependencies to see if they're there
-function traceDependenciesByLeaf()
-{
-  eval "grunt deps --depth 1 --leaf $1"
-}
+function traceDependenciesByLeaf
+  grunt deps --depth 1 --leaf $argv[1]
+end
 
-function printBranches()
-{
-  eval 'for k in `git branch | sed s/^..//`; do echo -e `git log -1 --pretty=format:"%Cgreen%ci %Cred%cr%Creset" $k --`\\t"$k";done | sort'
-}
+function printBranches
+  for k in (git branch | string replace -r '^..' '')
+    set -l meta (git log -1 --pretty=format:'%Cgreen%ci %Cred%cr%Creset' $k --)
+    echo -e "$meta\t$k"
+  end | sort
+end
 
 # pushes the current branch to the same named remote
-function pushRemoteBranch()
-{
-  currentBranch="$(git symbolic-ref HEAD 2>/dev/null)";
-  currentBranch=${currentBranch##refs/heads/}
-  eval "git push -u origin $currentBranch";
-}
+function pushRemoteBranch
+  set -l currentBranch (git symbolic-ref HEAD 2>/dev/null | string replace -r '^refs/heads/' '')
+  git push -u origin $currentBranch
+end
 
-function setUpstreamBranch()
-{
-  currentBranch="$(git symbolic-ref HEAD 2>/dev/null)";
-  currentBranch=${currentBranch##refs/heads/}
-  eval "git branch --set-upstream-to=origin/$currentBranch $currentBranch"
-}
+function setUpstreamBranch
+  set -l currentBranch (git symbolic-ref HEAD 2>/dev/null | string replace -r '^refs/heads/' '')
+  git branch --set-upstream-to=origin/$currentBranch $currentBranch
+end
 
-function pullRemoteBranch()
-{
-  currentBranch="$(git symbolic-ref HEAD 2>/dev/null)";
-  currentBranch=${currentBranch##refs/heads/}
-  eval "git pull origin $currentBranch";
-}
+function pullRemoteBranch
+  set -l currentBranch (git symbolic-ref HEAD 2>/dev/null | string replace -r '^refs/heads/' '')
+  git pull origin $currentBranch
+end
 
-function diffRemoteBranch()
-{
-  currentBranch="$(git symbolic-ref HEAD 2>/dev/null)";
-  currentBranch=${currentBranch##refs/heads/}
-  repo=${PWD##*/}
-  eval "git diff --full-index origin/$currentBranch"
-}
+function diffRemoteBranch
+  set -l currentBranch (git symbolic-ref HEAD 2>/dev/null | string replace -r '^refs/heads/' '')
+  git diff --full-index origin/$currentBranch
+end
 
 
 alias gbm='getBranch'
-function getBranch()
-{
-  eval "git fetch --prune origin $1:$1";
-  eval "git merge $1 --no-edit";
-}
+function getBranch
+  git fetch --prune origin $argv[1]:$argv[1]
+  git merge $argv[1] --no-edit
+end
 
 # create a remote branch and set upstream
-function createRemoteBranch()
-{
-  eval "git push -u origin $1:$1";
-}
+function createRemoteBranch
+  git push -u origin $argv[1]:$argv[1]
+end
 
 # delete a remote branch
-function deleteRemoteBranch()
-{
-  eval "git push origin :$1";
-}
+function deleteRemoteBranch
+  git push origin :$argv[1]
+end
 
-function killBranch()
-{
-  eval "git branch -D $1";
-  eval "git push origin :$1";
-}
+function killBranch
+  git branch -D $argv[1]
+  git push origin :$argv[1]
+end
 
-function deleteBranch()
-{
-  eval "git branch -D $1";
-  eval "gb";
-}
+function deleteBranch
+  git branch -D $argv[1]
+  gb
+end
 
 
 
 alias gcbm='createBranchFromMain'
-function createBranchFromMain() 
-{
-  eval "set_default_branch && git fetch origin $DEFAULT_BRANCH:$1";
-}
+function createBranchFromMain
+  set_default_branch
+  git fetch origin $DEFAULT_BRANCH:$argv[1]
+end
 
 # requires "brew install fzf"
 alias fbr="fuzzy_branch_search"
-function fuzzy_branch_search() {
-    local branches branch
-    branches=$(git branch -a) &&
-    branch=$(echo "$branches" | fzf +s +m -e) &&
-    git checkout $(echo "$branch" | sed "s:.* remotes/origin/::" | sed "s:.* ::")
-}
+function fuzzy_branch_search
+  set -l branch (git branch -a | fzf +s +m -e)
+  set -l branchName (echo $branch | string replace -r '.* remotes/origin/' '' | string replace -r '.* ' '')
+  git checkout $branchName
+end
 
 alias garo="addRemoteOrigin"
-function addRemoteOrigin()
-{
-  repo=${PWD##*/}
-  eval "git remote add origin git@github.com:danieluhl/$repo.git";
-}
+function addRemoteOrigin
+  set -l repo (basename $PWD)
+  git remote add origin git@github.com:danieluhl/$repo.git
+end
 
 alias nginx-serve='cp . /usr/local/var/www/'
 
 # Include custom aliases
-[[ -f ~/.aliases.local ]] && source ~/.aliases.local
+if test -f ~/.aliases.local
+    source ~/.aliases.local
+end
 
 # opam (ocaml package manager) init
-alias opamConfig='eval `opam config env`'
+alias opamConfig='opam config env | source'
 
-mkcd () { mkdir "$1" && cd $_ }
+function mkcd
+  mkdir $argv[1]
+  and cd $argv[1]
+end
 
 # debug node
 alias ndebug="node --inspect --debug-brk"
@@ -415,17 +409,17 @@ alias present="cd ~/Documents/scratch/presenterm/"
 # alias exsummary='codex exec "$CHANGE_SUMMARY_PROMPT"'
 
 
-set_default_branch() {
+function set_default_branch
   # Bail if not in a git repo
-  git rev-parse --git-dir >/dev/null 2>&1 || return 1
+  git rev-parse --git-dir >/dev/null 2>&1
+  or return 1
 
-  if git show-ref --verify --quiet refs/heads/main || \
-     git show-ref --verify --quiet refs/remotes/origin/main; then
-    export DEFAULT_BRANCH="main"
+  if git show-ref --verify --quiet refs/heads/main; or git show-ref --verify --quiet refs/remotes/origin/main
+    set -gx DEFAULT_BRANCH main
   else
-    export DEFAULT_BRANCH="master"
-  fi
-}
+    set -gx DEFAULT_BRANCH master
+  end
+end
 
 alias gcm='set_default_branch && git checkout $DEFAULT_BRANCH'
 

@@ -9,6 +9,8 @@
 # brew list output:
 # ==> Formulae
 
+# brew install starship &&
+# brew install fish &&
 # brew install zsh &&
 # brew install git-delta &&
 # brew install gcc &&
@@ -121,6 +123,10 @@
 # brew install fizz &&
 # brew install libpng &&
 # brew install luv &&
+
+# Set fish as the default shell
+# echo $(which fish) | sudo tee -a /etc/shells
+# chsh -s $(which fish)
 
 # ==> Casks
 # KEYCASTR	WARP
