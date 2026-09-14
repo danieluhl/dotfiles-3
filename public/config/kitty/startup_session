@@ -1,17 +1,6 @@
-# new_tab dot
-# cd ~/git/dotfiles/public
-# launch --title "dot"
-
-new_tab scr
-cd ~/Documents/scratch
-
-launch --title "scr"
-
-# new_tab learning
-# cd ~/git/learning
-# layout tall
-# launch --var window=main
-# launch --location=vsplit
+new_tab sync
+cd ~/sync
+launch --title "sync"
 
 new_tab proj
 cd ~/git

@@ -28,12 +28,15 @@ return {
         gleam = { "gleam", stop_after_first = true },
       },
       formatters = {
+        biome = {
+          command = "node_modules/.bin/biome",
+        },
         yamlfmt = {
           prepend_args = { "-formatter", "retain_line_breaks=true" },
         },
       },
       format_on_save = {
-        lsp_fallback = true,
+        lsp_format = "fallback",
         async = false,
         timeout_ms = 1000,
       },
@@ -45,7 +48,7 @@ return {
 
     vim.keymap.set({ "n", "v" }, "<leader>f", function()
       conform.format({
-        lsp_fallback = true,
+        lsp_format = "fallback",
         async = false,
         timeout_ms = 1000,
       })

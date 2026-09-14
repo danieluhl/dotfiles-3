@@ -131,6 +131,7 @@ end
 alias gshove='HUSKY=0 git push --force-with-lease --no-verify'
 alias gpu='pullremote'
 alias gpf='git push --force-with-lease'
+alias gpush='pushremote'
 # alias gp='pushremote'
 alias gp='git pull'
 alias gpr='git pull --rebase'

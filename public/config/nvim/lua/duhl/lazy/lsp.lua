@@ -98,6 +98,11 @@ return {
           --   command = "OrganizeImports",
           -- })
         end,
+        on_new_config = function(new_config, new_root_dir)
+          new_config.init_options.typescript = {
+            tsdk = new_root_dir .. "/node_modules/typescript/lib",
+          }
+        end,
         commands = {
           OrganizeImports = {
             organize_imports,
