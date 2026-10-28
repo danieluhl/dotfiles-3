@@ -24,6 +24,8 @@
   editor = nvim
 	fileMode = false
   pager = diffnav
+[pager]
+  log = less
 [commit]
   template = ~/.gitmessage
 	gpgSign = false

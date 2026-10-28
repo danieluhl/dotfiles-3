@@ -19,12 +19,16 @@ return {
       "astro",
       "gleam",
       "elixir",
+      "fish",
     })
+    local prose = { markdown = true, text = true, gitcommit = true }
     vim.api.nvim_create_autocmd("FileType", {
       callback = function(args)
         pcall(vim.treesitter.start, args.buf)
+        if not prose[vim.bo[args.buf].filetype] then
+          vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end
       end,
     })
-    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
   end,
 }
