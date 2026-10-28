@@ -358,7 +358,7 @@ alias py="python3"
 # set the local config
 # `rtx local nodejs@latest`
 alias rtx="mise"
-alias cc="codecrafters"
+# alias cc="codecrafters"
 
 # eza replacement for ls
 alias la='eza -al --git --icons --no-user -snew'
