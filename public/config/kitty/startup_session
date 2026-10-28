@@ -10,9 +10,10 @@ launch --location=vsplit
 
 new_tab bot
 cd ~/git/wakingup-events
-layout stack
+layout tall
 launch --var window=main
 launch --location=vsplit
+launch --location=hsplit
 
 new_tab dot
 cd ~/git/dotfiles/public/

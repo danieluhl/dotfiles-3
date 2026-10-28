@@ -8,6 +8,8 @@ vim.opt_local.tabstop = 2
 vim.opt_local.shiftwidth = 2
 vim.opt_local.spell = true
 vim.opt_local.textwidth = 80
+-- runtime ftplugin sets sts=4 (recommended style); follow shiftwidth instead
+vim.opt_local.softtabstop = -1
 
 vim.opt_local.comments = {
   "b:-",

@@ -18,7 +18,6 @@ local opts = {
   number = true,
   relativenumber = true,
   tabstop = 2,
-  smartindent = true,
   shiftwidth = 2,
   undofile = true,
   autoindent = true,
@@ -77,6 +76,17 @@ vim.filetype.add({
     ["%.env%.[%w_.-]+"] = "sh",
     ["%.vars%.[%w_.-]+"] = "sh",
   },
+})
+
+-- Fall back to fish for dotfiles whose filetype wasn't otherwise detected
+vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+  group = vim.api.nvim_create_augroup("dotfile_fish_fallback", { clear = true }),
+  callback = function(args)
+    local name = vim.fn.fnamemodify(args.file, ":t")
+    if name:sub(1, 1) == "." and vim.bo[args.buf].filetype == "" then
+      vim.bo[args.buf].filetype = "fish"
+    end
+  end,
 })
 
 
