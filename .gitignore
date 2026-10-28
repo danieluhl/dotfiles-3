@@ -19,3 +19,4 @@ local
 /public/login.json
 /public/warp/themes/random_bg
 /public/config/nvim/lazy-lock.json
+/public/agent/skills/synced
