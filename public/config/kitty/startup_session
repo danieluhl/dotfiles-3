@@ -3,13 +3,13 @@ cd ~/sync
 launch --title "sync"
 
 new_tab proj
-cd ~/git/wakingup-events
+cd ~/git/
 layout stack
 launch --var window=main
 launch --location=vsplit
 
 new_tab bot
-cd ~/git/wakingup-events
+cd ~/git/
 layout tall
 launch --var window=main
 launch --location=vsplit
